@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CareerHunt logo">
+  <rect width="64" height="64" rx="18" fill="#0f172a"/>
+  <path d="M20 18h24c4.4 0 8 3.6 8 8v8c0 4.4-3.6 8-8 8H20v-8h24v-8H20v-8Z" fill="#ffffff"/>
+  <path d="M20 42h24v4H20z" fill="#22d3ee"/>
+</svg>
