@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
@@ -36,7 +37,7 @@ const registerSchema = z.object({
 
 type RegisterFormData = z.infer<typeof registerSchema>
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const nextPath = searchParams.get('next') || '/employer'
@@ -447,5 +448,35 @@ export default function RegisterPage() {
         </CardFooter>
       </Card>
     </div>
+  )
+}
+
+function RegisterPageLoading() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8">
+      <Card className="w-full max-w-md shadow-2xl border-0">
+        <CardHeader className="space-y-3 text-center">
+          <div className="mb-2 flex justify-center">
+            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-slate-200 animate-pulse" />
+          </div>
+          <div className="space-y-2">
+            <div className="h-4 bg-slate-200 rounded animate-pulse" />
+            <div className="h-8 bg-slate-200 rounded animate-pulse" />
+            <div className="h-4 bg-slate-200 rounded animate-pulse" />
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="h-11 bg-slate-200 rounded-lg animate-pulse" />
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<RegisterPageLoading />}>
+      <RegisterForm />
+    </Suspense>
   )
 }
