@@ -2,6 +2,10 @@
 const nextConfig = {
   output: 'standalone',
   trailingSlash: true,
+  swcMinify: false,
+  experimental: {
+    optimizePackageImports: ['lodash-es'],
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
