@@ -2,7 +2,9 @@
 const nextConfig = {
   output: 'standalone',
   trailingSlash: true,
-  swcMinify: false,
+  turbopack: {
+    root: __dirname,
+  },
   experimental: {
     optimizePackageImports: ['lodash-es'],
   },
