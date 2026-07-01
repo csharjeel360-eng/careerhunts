@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Header } from '@/components/layout/Header'
@@ -8,7 +7,7 @@ import { Toaster } from '@/components/ui/toaster'
 import NavigationDebug from '@/components/dev/NavigationDebug'
 import { generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo'
 
-const inter = Inter({ subsets: ['latin'] })
+const interFontClass = 'font-sans'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://careerhunt.com'),
@@ -81,7 +80,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={interFontClass}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
