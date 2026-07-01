@@ -3,13 +3,12 @@ import { notFound } from 'next/navigation'
 import { BLOG_POSTS } from '@/lib/blogData'
 
 interface BlogDetailPageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
 }
 
-export default function BlogDetailPage({ params }: BlogDetailPageProps) {
-  const post = BLOG_POSTS.find((item) => item.slug === params.slug)
+export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
+  const { slug } = await params
+  const post = BLOG_POSTS.find((item) => item.slug === slug)
 
   if (!post) {
     notFound()

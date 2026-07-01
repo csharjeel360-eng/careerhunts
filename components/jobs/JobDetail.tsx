@@ -43,10 +43,6 @@ export default function JobDetail({ job }: JobDetailProps) {
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-right">
                   <p className="text-sm text-slate-500">Posted</p>
                   <p className="mt-1 text-lg font-semibold text-slate-900">{formatDate(job.postedDate)}</p>
-                  <p className="mt-3 flex items-center justify-end gap-2 text-sm text-slate-600">
-                    <Eye className="h-4 w-4 text-slate-500" />
-                    {job.views ?? 0} views
-                  </p>
                 </div>
               </div>
 

@@ -8,9 +8,12 @@ export function cn(...inputs: ClassValue[]) {
 export function formatDate(date: string | Date) {
   const d = new Date(date)
   const now = new Date()
-  const diffTime = Math.abs(now.getTime() - d.getTime())
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-  
+
+  if (now.toDateString() === d.toDateString()) return 'Today'
+
+  const diffDays = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24))
+
+  if (diffDays <= 0) return 'Today'
   if (diffDays === 1) return 'Yesterday'
   if (diffDays < 7) return `${diffDays} days ago`
   if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`
