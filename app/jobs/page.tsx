@@ -23,16 +23,17 @@ export const metadata: Metadata = {
 }
 
 type JobsPageProps = {
-  searchParams?: {
-    [key: string]: string | string[]
-  }
+  searchParams?: Promise<{
+    [key: string]: string | string[] | undefined
+  }>
 }
 
 export default async function JobsPage({ searchParams }: JobsPageProps) {
-  const keyword = Array.isArray(searchParams?.keyword) ? searchParams.keyword[0] : searchParams?.keyword || ''
-  const category = Array.isArray(searchParams?.category) ? searchParams.category[0] : searchParams?.category || ''
-  const country = Array.isArray(searchParams?.country) ? searchParams.country[0] : searchParams?.country || ''
-  const city = Array.isArray(searchParams?.city) ? searchParams.city[0] : searchParams?.city || ''
+  const resolvedSearchParams = searchParams ? await searchParams : {}
+  const keyword = Array.isArray(resolvedSearchParams.keyword) ? resolvedSearchParams.keyword[0] : resolvedSearchParams.keyword || ''
+  const category = Array.isArray(resolvedSearchParams.category) ? resolvedSearchParams.category[0] : resolvedSearchParams.category || ''
+  const country = Array.isArray(resolvedSearchParams.country) ? resolvedSearchParams.country[0] : resolvedSearchParams.country || ''
+  const city = Array.isArray(resolvedSearchParams.city) ? resolvedSearchParams.city[0] : resolvedSearchParams.city || ''
 
   const [categories, countries, cities] = await Promise.all([
     getCategories(),
