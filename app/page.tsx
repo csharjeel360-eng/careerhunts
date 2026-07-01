@@ -38,6 +38,8 @@ export const metadata: Metadata = {
   }
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
   const [topViewedJobs, featuredJobsFromApi, latestJobs, categories] = await Promise.all([
     getTopViewedJobs(),
