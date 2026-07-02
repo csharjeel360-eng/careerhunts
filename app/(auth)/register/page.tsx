@@ -19,7 +19,7 @@ import { useToast } from '@/components/ui/use-toast'
 
 // Validation schema
 const registerSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
+  name: z.string().min(2, 'Company name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters')
     .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
@@ -237,13 +237,13 @@ function RegisterForm() {
           {/* Registration Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">Company Name</Label>
               <div className="relative">
                 <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="name"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder="Acme Inc."
                   className="pl-10"
                   {...register('name')}
                 />
@@ -254,7 +254,7 @@ function RegisterForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="photoFile">Upload Profile Image</Label>
+              <Label htmlFor="photoFile">Company Logo</Label>
               <input
                 id="photoFile"
                 type="file"
@@ -266,12 +266,12 @@ function RegisterForm() {
                 className="block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900"
               />
               <p className="text-sm text-slate-500">
-                Choose a local image to upload to Cloudinary. If you also enter a URL below, the uploaded image will be used first.
+                Choose a local logo image to upload to Cloudinary. If you also enter a URL below, the uploaded logo will be used first.
               </p>
               {previewUrl ? (
                 <div className="mt-2 rounded-3xl border border-slate-200 bg-slate-50 p-3">
                   <p className="text-sm font-medium text-slate-600">Preview</p>
-                  <img src={previewUrl} alt="Profile preview" className="mt-2 h-32 w-full max-w-xs rounded-xl object-cover" />
+                  <img src={previewUrl} alt="Company logo preview" className="mt-2 h-32 w-full max-w-xs rounded-xl object-cover" />
                 </div>
               ) : null}
             </div>
@@ -294,7 +294,7 @@ function RegisterForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="photoURL">Image URL (Optional)</Label>
+              <Label htmlFor="photoURL">Logo URL (Optional)</Label>
               <Input
                 id="photoURL"
                 type="url"

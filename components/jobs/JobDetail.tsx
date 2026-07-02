@@ -7,7 +7,6 @@ interface JobDetailProps {
 }
 
 export default function JobDetail({ job }: JobDetailProps) {
-  const companyName = job.companyId?.name || job.companyName || 'Company'
   const companyDescription = job.companyId?.description || 'Company description is not available.'
   const workMode = job.workMode || 'Flexible'
   const employmentType = job.employmentType || 'Full-time'
@@ -34,7 +33,6 @@ export default function JobDetail({ job }: JobDetailProps) {
                   <h1 className="mt-5 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
                     {job.title}
                   </h1>
-                  <p className="mt-3 text-lg font-medium text-slate-700">{companyName}</p>
                   <p className="mt-4 text-base leading-7 text-slate-600">
                     {job.summary || 'A compelling opportunity for professionals looking to grow with a modern, ambitious team.'}
                   </p>
@@ -113,10 +111,6 @@ export default function JobDetail({ job }: JobDetailProps) {
 
             <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
               <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-sm text-slate-500">Hiring company</p>
-                  <h3 className="mt-2 text-xl font-semibold text-slate-900">{companyName}</h3>
-                </div>
                 <Globe className="h-6 w-6 text-slate-500" />
               </div>
               <p className="mt-4 text-sm leading-7 text-slate-600">{companyDescription}</p>
