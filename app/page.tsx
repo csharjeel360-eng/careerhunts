@@ -6,11 +6,13 @@ import { LatestJobs } from '@/components/home/LatestJobs'
 import { SalaryGuides } from '@/components/home/SalaryGuides'
 import { CareerResources } from '@/components/home/CareerResources'
 import { getTopViewedJobs, getFeaturedJobs, getLatestJobs, getCategories } from '@/lib/api'
+import { careerResources as careerResourceData } from '@/lib/careerResourceData'
+import { salaryGuides as salaryGuideData } from '@/lib/salaryGuideData'
 
 export const metadata: Metadata = {
-  title: 'CareerHunt | Find Modern Jobs, Salary Insights, and Career Growth Resources',
+  title: 'CareerHunt – Find Remote Jobs, Internships & Latest Job Openings',
   description:
-    'Explore curated job opportunities, salary guides, and career resources designed to help professionals grow with confidence.',
+    'Discover remote jobs, internships, and career opportunities on CareerHunt. Search thousands of jobs and apply online today.',
   keywords: [
     'jobs',
     'career opportunities',
@@ -20,21 +22,21 @@ export const metadata: Metadata = {
     'professional growth'
   ],
   alternates: {
-    canonical: 'https://careerhunt.com/'
+    canonical: 'https://careerhunt.online/'
   },
   openGraph: {
-    title: 'CareerHunt | Find Modern Jobs, Salary Insights, and Career Growth Resources',
+    title: 'CareerHunt – Find Remote Jobs, Internships & Latest Job Openings',
     description:
-      'Explore curated job opportunities, salary guides, and career resources designed to help professionals grow with confidence.',
-    url: 'https://careerhunt.com/',
+      'Discover remote jobs, internships, and career opportunities on CareerHunt. Search thousands of jobs and apply online today.',
+    url: 'https://careerhunt.online/',
     siteName: 'CareerHunt',
     type: 'website'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CareerHunt | Find Modern Jobs, Salary Insights, and Career Growth Resources',
+    title: 'CareerHunt – Find Remote Jobs, Internships & Latest Job Openings',
     description:
-      'Explore curated job opportunities, salary guides, and career resources designed to help professionals grow with confidence.'
+      'Discover remote jobs, internships, and career opportunities on CareerHunt. Search thousands of jobs and apply online today.'
   }
 }
 
@@ -50,29 +52,21 @@ export default async function HomePage() {
 
   const featuredJobs = (topViewedJobs && topViewedJobs.length > 0) ? topViewedJobs : featuredJobsFromApi
 
-  const salaryGuides = [
-    { _id: 'salary-guide-1', title: 'Software Engineer Salary Trends' },
-    { _id: 'salary-guide-2', title: 'Remote Job Salary Benchmarks' },
-    { _id: 'salary-guide-3', title: 'Salary Expectations by Industry' }
-  ]
+  const salaryGuides = salaryGuideData.slice(0, 3)
 
-  const careerResources = [
-    { _id: 'resource-1', title: 'Resume Checklist for 2026' },
-    { _id: 'resource-2', title: 'Interview Preparation Guide' },
-    { _id: 'resource-3', title: 'Networking Tips for Job Seekers' }
-  ]
+  const careerResources = careerResourceData.slice(0, 3)
 
   const homeSchema = [
     {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'CareerHunt',
-      url: 'https://careerhunt.com/',
+      url: 'https://careerhunt.online/',
       description:
-        'CareerHunt helps professionals discover job opportunities, salary insights, and career resources in one modern platform.',
+        'CareerHunt helps professionals discover job opportunities, salary insights, and career resources in one trusted platform.',
       potentialAction: {
         '@type': 'SearchAction',
-        target: 'https://careerhunt.com/jobs?keyword={search_term_string}',
+        target: 'https://careerhunt.online/jobs?keyword={search_term_string}',
         'query-input': 'required name=search_term_string'
       }
     },
@@ -80,7 +74,7 @@ export default async function HomePage() {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'CareerHunt',
-      url: 'https://careerhunt.com/',
+      url: 'https://careerhunt.online/',
       sameAs: ['https://www.linkedin.com/']
     }
   ]

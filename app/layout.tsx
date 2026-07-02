@@ -10,7 +10,7 @@ import { generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo'
 const interFontClass = 'font-sans'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://careerhunt.com'),
+  metadataBase: new URL('https://careerhunt.online'),
   title: {
     default: 'CareerHunt | Jobs, Salary Guides & Career Resources',
     template: '%s | CareerHunt'
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://careerhunt.com',
+    url: 'https://careerhunt.online',
     title: 'CareerHunt | Jobs, Salary Guides & Career Resources',
     description: 'Discover job opportunities, salary insights, and career resources to help you grow your professional path with confidence.',
     siteName: 'CareerHunt',
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     google: 'your-google-verification-code',
   },
   alternates: {
-    canonical: 'https://careerhunt.com',
+    canonical: 'https://careerhunt.online',
   },
 }
 
