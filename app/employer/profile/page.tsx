@@ -126,7 +126,10 @@ export default function EmployerProfilePage() {
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new Event('firebase-profile-updated'))
       }
-      toast({ title: 'Profile updated', description: 'Your name and profile picture were saved.' })
+      toast({
+        title: 'Profile updated',
+        description: 'Your changes have been saved. Please sign out and sign back in to see them reflected across the site.',
+      })
       router.push('/employer')
     } catch (error: any) {
       toast({
@@ -179,7 +182,7 @@ export default function EmployerProfilePage() {
             </Avatar>
             <CardTitle className="text-3xl">Employer Profile</CardTitle>
             <CardDescription className="max-w-xl mx-auto text-base text-slate-600">
-              View your current employer profile information. Click edit to update your name or profile picture.
+              Review and manage your employer profile details. Update your name or profile picture at any time, and sign out and sign back in if you want to see the changes reflected across the site.
             </CardDescription>
           </CardHeader>
 
@@ -206,7 +209,7 @@ export default function EmployerProfilePage() {
 
                 <div className="flex justify-center">
                   <Button type="button" onClick={() => setEditing(true)} className="h-11 px-6">
-                    Edit profile
+                    Edit Profile
                   </Button>
                 </div>
               </div>

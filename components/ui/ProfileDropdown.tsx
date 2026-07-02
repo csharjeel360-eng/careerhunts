@@ -47,7 +47,10 @@ export default function ProfileDropdown({ user, onSignOut }: Props) {
 
       // Notify header to reload profile
       window.dispatchEvent(new CustomEvent('firebase-profile-updated'))
-      toast({ title: 'Profile updated' })
+      toast({
+        title: 'Profile updated',
+        description: 'Please sign out and sign back in to see your updated profile everywhere.',
+      })
       setEditing(false)
       setOpen(false)
     } catch (err: any) {
@@ -93,9 +96,12 @@ export default function ProfileDropdown({ user, onSignOut }: Props) {
                 <Button size="sm" onClick={() => setEditing(true)}>Edit Profile</Button>
                 <Button size="sm" variant="ghost" onClick={() => setOpen(false)}>Close</Button>
                 <Button size="sm" variant="outline" onClick={() => { setOpen(false); onSignOut() }}>
-                  Logout
+                  Log Out
                 </Button>
               </div>
+              <p className="pt-1 text-[11px] leading-5 text-slate-500">
+                To view your updated profile everywhere, sign out and sign back in after saving changes.
+              </p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -107,6 +113,9 @@ export default function ProfileDropdown({ user, onSignOut }: Props) {
                 <Button size="sm" onClick={handleSave}>Save</Button>
                 <Button size="sm" variant="ghost" onClick={() => setEditing(false)}>Cancel</Button>
               </div>
+              <p className="text-[11px] leading-5 text-slate-500">
+                Your profile will appear updated after you sign out and sign in again.
+              </p>
             </div>
           )}
         </div>
