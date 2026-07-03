@@ -50,6 +50,17 @@ export function truncateText(text: string, maxLength: number = 100) {
   return text.slice(0, maxLength) + '...'
 }
 
+export function normalizeWebsiteUrl(url?: string) {
+  if (!url) return ''
+
+  const trimmed = url.trim()
+  if (!trimmed) return ''
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed
+  }
+  return `https://${trimmed}`
+}
+
 export function getInitials(name: string) {
   return name
     .split(' ')

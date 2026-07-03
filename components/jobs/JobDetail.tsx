@@ -1,13 +1,15 @@
 import Link from 'next/link'
 import { MapPin, Briefcase, Calendar, Globe, ArrowRight, Eye } from 'lucide-react'
-import { formatDate, formatSalary } from '@/lib/utils'
+import { formatDate, formatSalary, normalizeWebsiteUrl } from '@/lib/utils'
 
 interface JobDetailProps {
   job: any
 }
 
 export default function JobDetail({ job }: JobDetailProps) {
-  const companyDescription = job.companyId?.description || 'Company description is not available.'
+  const companyDescription = job.companyDescription || job.companyId?.description || 'Company description is not available.'
+  const companyWebsite = normalizeWebsiteUrl(job.companyWebsite || job.companyId?.website || '')
+  const companyName = job.companyId?.name || job.companyName || 'Company'
   const workMode = job.workMode || 'Flexible'
   const employmentType = job.employmentType || 'Full-time'
   const salaryLabel = formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)
@@ -114,9 +116,9 @@ export default function JobDetail({ job }: JobDetailProps) {
                 <Globe className="h-6 w-6 text-slate-500" />
               </div>
               <p className="mt-4 text-sm leading-7 text-slate-600">{companyDescription}</p>
-              {job.companyId?.website && (
+              {companyWebsite && (
                 <a
-                  href={job.companyId.website}
+                  href={companyWebsite}
                   target="_blank"
                   rel="noreferrer"
                   className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-900 transition hover:text-cyan-700"
