@@ -12,7 +12,7 @@ export default function robots(): MetadataRoute.Robots {
         '/employer/',
       ],
     },
-    sitemap: 'https://careerhunt.com/sitemap.xml',
-    host: 'https://careerhunt.com',
+    sitemap: 'https://careerhunt.online/sitemap.xml',
+    host: 'https://careerhunt.online',
   }
 }
