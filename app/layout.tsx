@@ -67,6 +67,9 @@ export const metadata: Metadata = {
   category: 'jobs',
   verification: {
     google: 'your-google-verification-code',
+    other: {
+      'msvalidate.01': 'FF72EC1DD9AE9C2F2BB277908AD0BBDD',
+    },
   },
   alternates: {
     canonical: 'https://careerhunt.online',
