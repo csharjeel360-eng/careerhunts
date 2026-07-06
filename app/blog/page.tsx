@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     'Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.',
   alternates: {
-    canonical: 'https://careerhunt.com/blog'
+    canonical: 'https://careerhunt.online/blog'
   },
   openGraph: {
     title: 'Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers',
     description:
       'Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.',
-    url: 'https://careerhunt.com/blog',
+    url: 'https://careerhunt.online/blog',
     siteName: 'CareerHunt',
     type: 'website'
   },
@@ -35,13 +35,13 @@ export default function BlogPage() {
         "@type": "CollectionPage",
         "name": "Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers",
         "description": "Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.",
-        "url": "https://careerhunt.com/blog",
+        "url": "https://careerhunt.online/blog",
         "mainEntity": {
           "@type": "ItemList",
           "itemListElement": BLOG_POSTS.map((p, i) => ({
             "@type": "ListItem",
             "position": i + 1,
-            "url": `https://careerhunt.com/blog/${p.slug}`,
+            "url": `https://careerhunt.online/blog/${p.slug}`,
             "name": p.title
           }))
         }
