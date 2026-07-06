@@ -27,6 +27,29 @@ export default function BlogPage() {
         </div>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <Link
+            href="/emirates-group-careers-uae-2026"
+            className="group rounded-[2rem] border border-[#D71920] bg-white p-8 shadow-[0_25px_70px_-24px_rgba(215,25,32,0.24)] transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#D71920] px-3 py-1 text-sm font-medium text-white">Featured</span>
+              <span className="text-sm font-medium text-slate-500">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-slate-900 transition group-hover:text-[#D71920]">
+              Emirates Group Careers in UAE 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Discover the latest Emirates Group jobs, salary insights, benefits, and how to apply online for cabin crew, engineering, IT, and airport careers.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Emirates Careers', 'UAE Jobs', 'Cabin Crew', 'Engineering'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-600">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
           {BLOG_POSTS.map((post) => (
             <Link
               key={post.slug}
