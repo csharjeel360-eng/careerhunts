@@ -1,28 +1,60 @@
 import type { Metadata } from 'next'
 import React from 'react'
 import Link from 'next/link'
+import Script from 'next/script'
 import { BLOG_POSTS } from '@/lib/blogData'
 
 export const metadata: Metadata = {
-  title: 'Career Blog | Resume Tips, Interview Advice & Salary Insights',
-  description: 'Read expert career advice, interview tips, resume guidance, and salary insights on the CareerHunt blog.',
+  title: 'Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers',
+  description:
+    'Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.',
   alternates: {
     canonical: 'https://careerhunt.com/blog'
+  },
+  openGraph: {
+    title: 'Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers',
+    description:
+      'Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.',
+    url: 'https://careerhunt.com/blog',
+    siteName: 'CareerHunt',
+    type: 'website'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers',
+    description:
+      'Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.'
   }
 }
 
 export default function BlogPage() {
   return (
     <section className="relative overflow-hidden bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)]">
+      <Script id="blog-jsonld" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers",
+        "description": "Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.",
+        "url": "https://careerhunt.com/blog",
+        "mainEntity": {
+          "@type": "ItemList",
+          "itemListElement": BLOG_POSTS.map((p, i) => ({
+            "@type": "ListItem",
+            "position": i + 1,
+            "url": `https://careerhunt.com/blog/${p.slug}`,
+            "name": p.title
+          }))
+        }
+      }) }} />
       <div className="absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top_left,_rgba(34,211,238,0.18),_transparent_45%)]" />
       <div className="container relative mx-auto px-4 py-14 sm:py-16">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Insights</p>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
-            Career advice and job search guides for 2026
+            Career Advice & Job Search Guides 2026
           </h1>
           <p className="mt-4 text-base leading-8 text-slate-600">
-            Explore detailed articles packed with practical guidance for remote work, interviews, salary growth, resumes, and AI careers.
+            Discover expert career advice, resume tips, interview strategies, salary negotiation guidance, remote work best practices, and insights into AI career trends to help you find the right job and grow your career in 2026.
           </p>
         </div>
 
