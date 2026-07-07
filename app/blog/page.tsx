@@ -82,6 +82,29 @@ export default function BlogPage() {
             </div>
           </Link>
 
+          <Link
+            href="/qatar-airways-careers-2026"
+            className="group rounded-[2rem] border border-[#5C0E62] bg-white p-8 shadow-[0_25px_70px_-24px_rgba(92,14,98,0.24)] transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#5C0E62] px-3 py-1 text-sm font-medium text-white">Featured</span>
+              <span className="text-sm font-medium text-slate-500">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-slate-900 transition group-hover:text-[#5C0E62]">
+              Qatar Airways Careers 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Explore Qatar Airways job vacancies across cabin crew, pilots, engineering, IT, customer services, cargo, and corporate roles with competitive benefits.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Qatar Airways', 'Doha Jobs', 'Pilots', 'Cabin Crew'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-600">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
           {BLOG_POSTS.map((post) => (
             <Link
               key={post.slug}
