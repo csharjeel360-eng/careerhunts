@@ -189,80 +189,80 @@ export default function EmiratesGroupCareersPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[620px] max-w-7xl flex-col justify-end px-6 pb-20 sm:px-10 lg:px-16">
-          <div className="mb-6 rounded-full bg-white/10 px-4 py-2 text-sm font-medium tracking-[0.24em] text-white/80">
+        <div className="relative mx-auto flex min-h-[400px] flex-col justify-end px-4 py-12 sm:min-h-[500px] sm:px-6 md:min-h-[600px] lg:min-h-[620px] lg:px-10 lg:py-20 xl:px-16 max-w-7xl">
+          <div className="mb-4 rounded-full bg-white/10 px-3 py-2 text-xs font-medium tracking-[0.24em] text-white/80 sm:mb-6 sm:px-4 sm:text-sm">
             <Link href="/" className="underline-offset-4 hover:text-white">Home</Link> /{' '}
             <Link href="/blog" className="underline-offset-4 hover:text-white">Blog</Link> /{' '}
             <span className="font-semibold">Emirates Group Careers</span>
           </div>
-          <div className="max-w-3xl space-y-6">
-            <span className="inline-flex rounded-full bg-red-700/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white">Emirates Careers 2026</span>
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">Emirates Group Careers in UAE 2026</h1>
-            <p className="max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl">
+          <div className="max-w-3xl space-y-4 sm:space-y-6">
+            <span className="inline-flex rounded-full bg-red-700/90 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-white sm:px-4 sm:py-2">Emirates Careers 2026</span>
+            <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl leading-tight">Emirates Group Careers in UAE 2026</h1>
+            <p className="max-w-2xl text-base leading-7 text-slate-200 sm:text-lg md:text-xl lg:leading-8">
               Explore the latest Emirates Group jobs in Dubai and across the UAE. Find vacancies in Cabin Crew, Engineering, IT, Customer Service, Pilots, and Corporate departments.
             </p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Link href="https://www.emiratesgroupcareers.com/search-and-apply/" className="inline-flex items-center justify-center rounded-full bg-[#D71920] px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-600">
+            <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center pt-2">
+              <Link href="https://www.emiratesgroupcareers.com/search-and-apply/" className="inline-flex items-center justify-center rounded-full bg-[#D71920] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-red-600 sm:py-3">
                 Apply Now
               </Link>
-              <Link href="https://www.emiratesgroupcareers.com/search-and-apply/" className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/20">
+              <Link href="https://www.emiratesgroupcareers.com/search-and-apply/" className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-white/20 sm:py-3">
                 View All Vacancies
               </Link>
             </div>
-            <div className="flex flex-wrap gap-4 text-sm text-slate-200 sm:text-base">
+            <div className="flex flex-wrap gap-2 sm:gap-4 text-xs text-slate-200 sm:text-sm pt-2">
               <span>Published: July 05, 2026</span>
-              <span>•</span>
+              <span className="hidden sm:inline">•</span>
               <span>Reading time: 8 min</span>
-              <span>•</span>
+              <span className="hidden sm:inline">•</span>
               <span>Author: CareerHunt Editorial Team</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="container mx-auto px-6 py-12 sm:px-10 lg:px-16">
-        <div className="grid gap-6 xl:grid-cols-[1.4fr_0.85fr] xl:items-start">
-          <div className="space-y-10">
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
-              <h2 className="text-2xl font-semibold text-slate-900">Emirates Group at a glance</h2>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Company name</p>
-                  <p className="mt-2 text-lg font-semibold text-slate-900">Emirates Group</p>
+      <section className="container mx-auto px-4 py-8 sm:px-6 md:py-12 lg:px-16">
+        <div className="grid gap-6 lg:gap-8 lg:grid-cols-[1.4fr_0.85fr] lg:items-start xl:grid-cols-[1.4fr_0.85fr]">
+          <div className="space-y-6 sm:space-y-8 lg:space-y-10">
+            <div className="rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm">
+              <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">Emirates Group at a glance</h2>
+              <div className="mt-5 sm:mt-6 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+                <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-medium">Company name</p>
+                  <p className="mt-2 text-base sm:text-lg font-semibold text-slate-900">Emirates Group</p>
                 </div>
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Industry</p>
-                  <p className="mt-2 text-lg font-semibold text-slate-900">Aviation & Travel Services</p>
+                <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-medium">Industry</p>
+                  <p className="mt-2 text-base sm:text-lg font-semibold text-slate-900">Aviation & Travel Services</p>
                 </div>
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Founded</p>
-                  <p className="mt-2 text-lg font-semibold text-slate-900">1985</p>
+                <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-medium">Founded</p>
+                  <p className="mt-2 text-base sm:text-lg font-semibold text-slate-900">1985</p>
                 </div>
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Headquarters</p>
-                  <p className="mt-2 text-lg font-semibold text-slate-900">Dubai, UAE</p>
+                <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-medium">Headquarters</p>
+                  <p className="mt-2 text-base sm:text-lg font-semibold text-slate-900">Dubai, UAE</p>
                 </div>
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Employment type</p>
-                  <p className="mt-2 text-lg font-semibold text-slate-900">Full-Time</p>
+                <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-medium">Employment type</p>
+                  <p className="mt-2 text-base sm:text-lg font-semibold text-slate-900">Full-Time</p>
                 </div>
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Eligible nationalities</p>
-                  <p className="mt-2 text-lg font-semibold text-slate-900">All Nationalities</p>
+                <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-medium">Eligible nationalities</p>
+                  <p className="mt-2 text-base sm:text-lg font-semibold text-slate-900">All Nationalities</p>
                 </div>
-                <div className="sm:col-span-2 rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Official website</p>
-                  <Link href="https://www.emiratesgroupcareers.com/" className="mt-2 block text-lg font-semibold text-[#D71920] underline">
+                <div className="col-span-1 sm:col-span-2 rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-medium">Official website</p>
+                  <Link href="https://www.emiratesgroupcareers.com/" className="mt-2 block text-base sm:text-lg font-semibold text-[#D71920] underline break-words">
                     www.emiratesgroupcareers.com
                   </Link>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-8">
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
-                <h2 className="text-2xl font-semibold text-slate-900">About Emirates Group</h2>
-                <div className="mt-6 space-y-5 text-base leading-8 text-slate-700">
+            <div className="space-y-6 sm:space-y-8">
+              <div className="rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm">
+                <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">About Emirates Group</h2>
+                <div className="mt-5 sm:mt-6 space-y-3 sm:space-y-5 text-sm sm:text-base leading-7 sm:leading-8 text-slate-700">
                   <p>Emirates Group has built a global aviation network since 1985, delivering award-winning service through Emirates airline, dnata, and a wide range of travel services. The company is recognized for innovation, premium passenger experiences, and strong operational excellence.</p>
                   <p>From Dubai to every major international hub, Emirates Group now operates a fleet of modern aircraft and supports a workforce of tens of thousands. Its global presence includes airline operations, airport logistics, catering, and travel technology across six continents.</p>
                   <p>The company culture blends high performance with an inclusive environment, welcoming colleagues from around the world. Emirates Group emphasizes professional development, mentoring, and multicultural teams where diverse perspectives are celebrated.</p>
@@ -271,33 +271,33 @@ export default function EmiratesGroupCareersPage() {
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <h2 className="text-2xl font-semibold text-slate-900">Current Vacancies</h2>
-                    <p className="mt-2 text-sm text-slate-500">Official jobs page with the latest available opportunities.</p>
+              <div className="rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-4">
+                  <div className="flex-1">
+                    <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">Current Vacancies</h2>
+                    <p className="mt-2 text-xs sm:text-sm text-slate-500">Official jobs page with the latest available opportunities.</p>
                   </div>
-                  <div className="rounded-full bg-[#D71920] px-4 py-2 text-sm font-semibold text-white">Current Open Positions: 120+</div>
+                  <div className="rounded-full bg-[#D71920] px-4 py-2 text-xs sm:text-sm font-semibold text-white whitespace-nowrap">Current Open Positions: 120+</div>
                 </div>
-                <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <Link href="https://www.emiratesgroupcareers.com/search-and-apply/" className="inline-flex items-center justify-center rounded-full bg-[#D71920] px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-600">
+                <div className="mt-5 sm:mt-6 flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center">
+                  <Link href="https://www.emiratesgroupcareers.com/search-and-apply/" className="inline-flex items-center justify-center rounded-full bg-[#D71920] px-6 py-2.5 sm:py-3 text-sm font-semibold text-white transition hover:bg-red-600">
                     View All Jobs
                   </Link>
-                  <Link href="https://www.emiratesgroupcareers.com/search-and-apply/" className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-slate-50 px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
+                  <Link href="https://www.emiratesgroupcareers.com/search-and-apply/" className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-slate-50 px-6 py-2.5 sm:py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
                     Official Jobs Page
                   </Link>
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
-                <h2 className="text-2xl font-semibold text-slate-900">Job Categories</h2>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm">
+                <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">Job Categories</h2>
+                <div className="mt-5 sm:mt-6 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
                   {jobCategories.map((category) => (
-                    <div key={category.title} className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#D71920]/10 text-2xl">{category.icon}</div>
-                      <h3 className="mt-5 text-xl font-semibold text-slate-900">{category.title}</h3>
-                      <p className="mt-3 text-sm leading-7 text-slate-600">{category.description}</p>
-                      <Link href={category.href} className="mt-5 inline-flex rounded-full bg-[#B4975A] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#8d7250]">
+                    <div key={category.title} className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5 sm:p-6">
+                      <div className="flex h-10 sm:h-12 w-10 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl bg-[#D71920]/10 text-xl sm:text-2xl">{category.icon}</div>
+                      <h3 className="mt-4 sm:mt-5 text-base sm:text-xl font-semibold text-slate-900">{category.title}</h3>
+                      <p className="mt-2 sm:mt-3 text-xs sm:text-sm leading-6 sm:leading-7 text-slate-600">{category.description}</p>
+                      <Link href={category.href} className="mt-4 sm:mt-5 inline-flex rounded-full bg-[#B4975A] px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-white transition hover:bg-[#8d7250]">
                         Apply
                       </Link>
                     </div>
@@ -305,20 +305,20 @@ export default function EmiratesGroupCareersPage() {
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
-                <h2 className="text-2xl font-semibold text-slate-900">Why Work at Emirates Group?</h2>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm">
+                <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">Why Work at Emirates Group?</h2>
+                <div className="mt-5 sm:mt-6 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
                   {benefits.map((benefit) => (
-                    <div key={benefit} className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                      <p className="font-semibold text-slate-900">{benefit}</p>
+                    <div key={benefit} className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                      <p className="text-sm sm:text-base font-semibold text-slate-900">{benefit}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
-                <h2 className="text-2xl font-semibold text-slate-900">Hiring Process Timeline</h2>
-                <ol className="mt-6 space-y-4">
+              <div className="rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm">
+                <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">Hiring Process Timeline</h2>
+                <ol className="mt-5 sm:mt-6 space-y-4 sm:space-y-5">
                   {[
                     'Online Application',
                     'Resume Screening',
@@ -328,26 +328,26 @@ export default function EmiratesGroupCareersPage() {
                     'Job Offer',
                     'Onboarding'
                   ].map((step, index) => (
-                    <li key={step} className="flex gap-4">
-                      <div className="mt-1 flex h-10 w-10 items-center justify-center rounded-full bg-[#D71920] text-sm font-semibold text-white">{index + 1}</div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-slate-900">{step}</h3>
-                        <p className="mt-2 text-sm leading-7 text-slate-600">{step === 'Interview' ? 'Prepare examples of customer service excellence and role-specific experience.' : 'Follow the process carefully and keep your documents ready for review.'}</p>
+                    <li key={step} className="flex gap-3 sm:gap-4">
+                      <div className="mt-1 flex h-8 sm:h-10 w-8 sm:w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#D71920] text-xs sm:text-sm font-semibold text-white">{index + 1}</div>
+                      <div className="min-w-0">
+                        <h3 className="text-base sm:text-lg font-semibold text-slate-900">{step}</h3>
+                        <p className="mt-1 sm:mt-2 text-xs sm:text-sm leading-6 sm:leading-7 text-slate-600">{step === 'Interview' ? 'Prepare examples of customer service excellence and role-specific experience.' : 'Follow the process carefully and keep your documents ready for review.'}</p>
                       </div>
                     </li>
                   ))}
                 </ol>
               </div>
 
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
-                <h2 className="text-2xl font-semibold text-slate-900">Salary Information</h2>
-                <div className="mt-6 overflow-hidden rounded-3xl border border-slate-200">
-                  <table className="w-full border-collapse text-left text-sm">
+              <div className="rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm">
+                <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">Salary Information</h2>
+                <div className="mt-5 sm:mt-6 overflow-x-auto">
+                  <table className="w-full border-collapse text-left text-xs sm:text-sm">
                     <thead className="bg-slate-100 text-slate-700">
                       <tr>
-                        <th className="px-5 py-4">Role</th>
-                        <th className="px-5 py-4">Estimated Monthly Salary</th>
-                        <th className="px-5 py-4">Benefits</th>
+                        <th className="px-3 sm:px-5 py-3 sm:py-4">Role</th>
+                        <th className="px-3 sm:px-5 py-3 sm:py-4">Salary</th>
+                        <th className="px-3 sm:px-5 py-3 sm:py-4 hidden sm:table-cell">Benefits</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200 bg-white text-slate-700">
@@ -360,9 +360,9 @@ export default function EmiratesGroupCareersPage() {
                         { role: 'Corporate Analyst', salary: 'AED 13,000 - AED 18,000', benefit: 'Career growth opportunities' }
                       ].map((item) => (
                         <tr key={item.role}>
-                          <td className="px-5 py-4 font-semibold text-slate-900">{item.role}</td>
-                          <td className="px-5 py-4">{item.salary}</td>
-                          <td className="px-5 py-4 text-slate-600">{item.benefit}</td>
+                          <td className="px-3 sm:px-5 py-3 sm:py-4 font-semibold text-slate-900 text-xs sm:text-sm">{item.role}</td>
+                          <td className="px-3 sm:px-5 py-3 sm:py-4 text-xs sm:text-sm whitespace-nowrap">{item.salary}</td>
+                          <td className="px-3 sm:px-5 py-3 sm:py-4 text-slate-600 hidden sm:table-cell text-xs sm:text-sm">{item.benefit}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -370,9 +370,9 @@ export default function EmiratesGroupCareersPage() {
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
-                <h2 className="text-2xl font-semibold text-slate-900">General Requirements</h2>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm">
+                <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">General Requirements</h2>
+                <div className="mt-5 sm:mt-6 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
                   {[
                     'Educational qualifications',
                     'English proficiency',
@@ -381,8 +381,8 @@ export default function EmiratesGroupCareersPage() {
                     'Technical certifications',
                     'Teamwork and communication skills'
                   ].map((requirement) => (
-                    <div key={requirement} className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                      <p className="text-sm font-semibold text-slate-900">{requirement}</p>
+                    <div key={requirement} className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                      <p className="text-xs sm:text-sm font-semibold text-slate-900">{requirement}</p>
                     </div>
                   ))}
                 </div>
@@ -390,25 +390,25 @@ export default function EmiratesGroupCareersPage() {
             </div>
           </div>
 
-          <aside className="hidden xl:block">
+          <aside className="hidden lg:block">
             <div className="sticky top-24 space-y-6">
-              <div className="rounded-[2rem] border border-slate-200 bg-[#FDF7F1] p-8 shadow-sm">
-                <h2 className="text-xl font-semibold text-slate-900">Quick navigation</h2>
-                <nav className="mt-6 space-y-3 text-sm text-slate-700">
+              <div className="rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-[#FDF7F1] p-6 lg:p-8 shadow-sm">
+                <h2 className="text-lg lg:text-xl font-semibold text-slate-900">Quick navigation</h2>
+                <nav className="mt-5 lg:mt-6 space-y-2 text-xs lg:text-sm text-slate-700">
                   {['About Emirates Group', 'Current Vacancies', 'Job Categories', 'Why Work at Emirates Group?', 'Hiring Process Timeline', 'Salary Information', 'FAQs'].map((label) => (
-                    <a key={label} href={`#${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="block rounded-2xl px-4 py-3 hover:bg-slate-100">
+                    <a key={label} href={`#${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="block rounded-2xl px-3 lg:px-4 py-2 lg:py-3 hover:bg-slate-100 transition">
                       {label}
                     </a>
                   ))}
                 </nav>
               </div>
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
-                <h2 className="text-xl font-semibold text-slate-900">Related careers</h2>
-                <div className="mt-6 space-y-4">
+              <div className="rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-6 lg:p-8 shadow-sm">
+                <h2 className="text-lg lg:text-xl font-semibold text-slate-900">Related careers</h2>
+                <div className="mt-5 lg:mt-6 space-y-4">
                   {relatedJobs.map((job) => (
-                    <Link key={job.title} href={job.href} className="block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:border-[#D71920]">
-                      <h3 className="font-semibold text-slate-900">{job.title}</h3>
-                      <p className="mt-2 text-sm text-slate-600">{job.description}</p>
+                    <Link key={job.title} href={job.href} className="block rounded-2xl lg:rounded-3xl border border-slate-200 bg-slate-50 p-4 lg:p-5 transition hover:border-[#D71920]">
+                      <h3 className="text-sm lg:text-base font-semibold text-slate-900">{job.title}</h3>
+                      <p className="mt-2 text-xs lg:text-sm text-slate-600 line-clamp-2">{job.description}</p>
                     </Link>
                   ))}
                 </div>
@@ -417,22 +417,34 @@ export default function EmiratesGroupCareersPage() {
           </aside>
         </div>
 
-        <div className="mt-12 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm" id="faqs">
-          <h2 className="text-2xl font-semibold text-slate-900">Frequently Asked Questions</h2>
-          <div className="mt-6 space-y-4">
+        <div className="mt-8 sm:mt-10 lg:mt-12 rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm lg:hidden" id="related-careers-mobile">
+          <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">Related Careers</h2>
+          <div className="mt-5 sm:mt-6 space-y-4">
+            {relatedJobs.map((job) => (
+              <Link key={job.title} href={job.href} className="block rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5 transition hover:border-[#D71920]">
+                <h3 className="text-sm sm:text-base font-semibold text-slate-900">{job.title}</h3>
+                <p className="mt-2 text-xs sm:text-sm text-slate-600 line-clamp-2">{job.description}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 sm:mt-10 lg:mt-12 rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm" id="faqs">
+          <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">Frequently Asked Questions</h2>
+          <div className="mt-5 sm:mt-6 space-y-3 sm:space-y-4">
             {faqItems.map((faq) => (
-              <div key={faq.question} className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                <h3 className="text-lg font-semibold text-slate-900">{faq.question}</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-700">{faq.answer}</p>
+              <div key={faq.question} className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                <h3 className="text-base sm:text-lg font-semibold text-slate-900">{faq.question}</h3>
+                <p className="mt-2 sm:mt-3 text-xs sm:text-sm leading-6 sm:leading-7 text-slate-700">{faq.answer}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <section className="mt-12 rounded-[2rem] border border-slate-200 bg-[#FEF3F2] p-10 text-center shadow-sm">
-          <p className="text-sm uppercase tracking-[0.28em] text-[#B4975A]">Ready to Join Emirates Group?</p>
-          <h2 className="mt-4 text-3xl font-semibold text-slate-900 sm:text-4xl">Apply today and start your aviation career with one of the world&apos;s leading airlines.</h2>
-          <Link href="https://www.emiratesgroupcareers.com/search-and-apply/" className="mt-8 inline-flex items-center justify-center rounded-full bg-[#D71920] px-8 py-4 text-sm font-semibold text-white transition hover:bg-red-600">
+        <section className="mt-8 sm:mt-10 lg:mt-12 rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-[#FEF3F2] p-6 sm:p-8 lg:p-10 text-center shadow-sm">
+          <p className="text-xs sm:text-sm uppercase tracking-[0.28em] text-[#B4975A] font-medium">Ready to Join Emirates Group?</p>
+          <h2 className="mt-3 sm:mt-4 text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 leading-tight">Apply today and start your aviation career with one of the world&apos;s leading airlines.</h2>
+          <Link href="https://www.emiratesgroupcareers.com/search-and-apply/" className="mt-6 sm:mt-8 inline-flex items-center justify-center rounded-full bg-[#D71920] px-6 sm:px-8 py-2.5 sm:py-4 text-sm font-semibold text-white transition hover:bg-red-600">
             Apply for Emirates Jobs
           </Link>
         </section>
