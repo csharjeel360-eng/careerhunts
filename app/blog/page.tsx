@@ -8,8 +8,22 @@ export const metadata: Metadata = {
   title: 'Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers',
   description:
     'Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.',
+  keywords: [
+    'career advice',
+    'job search guides',
+    'resume tips',
+    'interview tips',
+    'salary negotiation',
+    'remote work advice',
+    'AI careers',
+    'job opportunities 2026'
+  ],
   alternates: {
     canonical: 'https://careerhunt.online/blog'
+  },
+  robots: {
+    index: true,
+    follow: true
   },
   openGraph: {
     title: 'Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers',
@@ -98,6 +112,29 @@ export default function BlogPage() {
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {['Qatar Airways', 'Doha Jobs', 'Pilots', 'Cabin Crew'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-600">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
+          <Link
+            href="/genentech-careers-usa-2026"
+            className="group rounded-[2rem] border border-[#005EB8] bg-white p-8 shadow-[0_25px_70px_-24px_rgba(0,94,184,0.24)] transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#005EB8] px-3 py-1 text-sm font-medium text-white">Featured</span>
+              <span className="text-sm font-medium text-slate-500">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-slate-900 transition group-hover:text-[#005EB8]">
+              Genentech Careers USA 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Discover the latest Genentech biotech, research, marketing, engineering, and commercial roles across the United States with salary insights and application guidance.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Genentech Careers', 'Biotechnology Jobs', 'Marketing Jobs USA', 'Roche Careers'].map((keyword) => (
                 <span key={keyword} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-600">
                   {keyword}
                 </span>
