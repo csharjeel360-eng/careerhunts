@@ -70,7 +70,7 @@ export function HeroSection({ categories }: HeroSectionProps) {
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-white/15 bg-slate-950/80 p-4 shadow-2xl shadow-slate-950/25 backdrop-blur sm:p-6">
+            <div className="mx-auto w-full max-w-[540px] rounded-[1.75rem] border border-white/15 bg-slate-950/80 p-4 shadow-2xl shadow-slate-950/25 backdrop-blur sm:mx-0 sm:max-w-none sm:p-6">
               <form onSubmit={handleSearch} className="space-y-4">
                 <div className="flex items-center gap-2 text-sm font-medium text-cyan-100">
                   <Briefcase className="h-4 w-4" />
@@ -81,25 +81,25 @@ export function HeroSection({ categories }: HeroSectionProps) {
                   <Input
                     type="text"
                     placeholder="Search jobs, titles, or keywords"
-                    className="min-h-[54px] border border-slate-200 bg-white pl-12 text-slate-900 shadow-sm"
+                    className="min-h-[46px] sm:min-h-[54px] border border-slate-200 bg-white pl-12 text-slate-900 shadow-sm"
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
                   />
                 </div>
-                <Button type="submit" size="lg" className="w-full rounded-full bg-cyan-500 px-6 py-3 text-sm font-semibold text-white hover:bg-cyan-400">
+                <Button type="submit" size="lg" className="w-full rounded-full bg-cyan-500 px-5 py-3 text-sm font-semibold text-white hover:bg-cyan-400 sm:px-6">
                   Search jobs
                 </Button>
               </form>
 
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4">
                   <div className="flex items-center gap-2 text-sm font-medium text-cyan-100">
                     <TrendingUp className="h-4 w-4" />
                     Market insights
                   </div>
                   <p className="mt-2 text-sm text-slate-300">Track salary trends and discover what employers are paying today.</p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4">
                   <div className="flex items-center gap-2 text-sm font-medium text-cyan-100">
                     <Briefcase className="h-4 w-4" />
                     Fresh listings
@@ -114,7 +114,7 @@ export function HeroSection({ categories }: HeroSectionProps) {
                     key={category._id}
                     type="button"
                     onClick={() => router.push(`/jobs?keyword=${encodeURIComponent(category.name)}`)}
-                    className="rounded-2xl border border-white/10 bg-white/10 px-3 py-3 text-sm font-medium text-white transition hover:border-cyan-300 hover:bg-white/20"
+                    className="rounded-2xl border border-white/10 bg-white/10 px-2.5 py-2 text-xs font-medium text-white transition hover:border-cyan-300 hover:bg-white/20 sm:px-3 sm:py-3 sm:text-sm"
                   >
                     {category.name}
                   </button>

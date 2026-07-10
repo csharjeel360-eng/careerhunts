@@ -165,6 +165,29 @@ export default function BlogPage() {
             </div>
           </Link>
 
+          <Link
+            href="/amazon-careers-2026"
+            className="group rounded-[2rem] border border-[#FF9900] bg-white p-8 shadow-[0_25px_70px_-24px_rgba(255,153,0,0.24)] transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#FF9900] px-3 py-1 text-sm font-medium text-white">Featured</span>
+              <span className="text-sm font-medium text-slate-500">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-slate-900 transition group-hover:text-[#FF9900]">
+              Amazon Careers 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Discover Amazon jobs worldwide, salary insights, hiring process details, remote opportunities, internship programs, leadership principles, and benefits in one premium guide.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Amazon Careers', 'Amazon Jobs', 'AWS Careers', 'Remote Jobs'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-600">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
           {BLOG_POSTS.map((post) => (
             <Link
               key={post.slug}
@@ -180,7 +203,7 @@ export default function BlogPage() {
               </h2>
               <p className="mt-4 text-base leading-7 text-slate-600">{post.excerpt}</p>
               <div className="mt-6 flex flex-wrap gap-2">
-                {post.keywords.map((keyword) => (
+                {post.keywords.slice(0, 4).map((keyword) => (
                   <span key={keyword} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-600">
                     {keyword}
                   </span>

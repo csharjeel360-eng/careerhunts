@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { HeroSection } from '@/components/home/HeroSection'
-import { FeaturedJobs } from '@/components/home/FeaturedJobs'
 import { LatestJobs } from '@/components/home/LatestJobs'
 import { SalaryGuides } from '@/components/home/SalaryGuides'
 import { CareerResources } from '@/components/home/CareerResources'
-import { getTopViewedJobs, getFeaturedJobs, getLatestJobs, getCategories } from '@/lib/api'
+import { getTopViewedJobs, getLatestJobs, getCategories } from '@/lib/api'
 import { careerResources as careerResourceData } from '@/lib/careerResourceData'
 import { salaryGuides as salaryGuideData } from '@/lib/salaryGuideData'
 
@@ -43,14 +42,11 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
-  const [topViewedJobs, featuredJobsFromApi, latestJobs, categories] = await Promise.all([
+  const [topViewedJobs, latestJobs, categories] = await Promise.all([
     getTopViewedJobs(),
-    getFeaturedJobs(),
     getLatestJobs(),
     getCategories()
   ])
-
-  const featuredJobs = (topViewedJobs && topViewedJobs.length > 0) ? topViewedJobs : featuredJobsFromApi
 
   const salaryGuides = salaryGuideData.slice(0, 3)
 
@@ -88,7 +84,6 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
       />
       <HeroSection categories={categories} />
-      <FeaturedJobs jobs={featuredJobs} />
       <LatestJobs jobs={latestJobs} />
       <SalaryGuides guides={salaryGuides} />
       <CareerResources items={careerResources} />

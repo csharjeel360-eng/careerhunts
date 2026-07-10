@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
-import { getJobBySlug } from '@/lib/api'
+import { getJobBySlug, getLatestJobs } from '@/lib/api'
 import JobDetail from '@/components/jobs/JobDetail'
 import { generateJobSchema, generateBreadcrumbSchema } from '@/lib/seo'
 
@@ -53,6 +53,9 @@ export default async function JobPage({ params }: JobPageProps) {
   if (!job) {
     notFound()
   }
+
+  const latestJobs = await getLatestJobs()
+  const similarJobs = (latestJobs || []).filter((item: any) => item.slug !== slug).slice(0, 3)
   
   const jobSchema = generateJobSchema(job)
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -75,7 +78,7 @@ export default async function JobPage({ params }: JobPageProps) {
           __html: JSON.stringify(breadcrumbSchema)
         }}
       />
-      <JobDetail job={job} />
+      <JobDetail job={job} similarJobs={similarJobs} />
     </>
   )
 }

@@ -1,12 +1,14 @@
 import Link from 'next/link'
 import { MapPin, Briefcase, Calendar, Globe, ArrowRight, Eye } from 'lucide-react'
 import { formatDate, formatSalary, normalizeWebsiteUrl } from '@/lib/utils'
+import { JobCard } from './JobCard'
 
 interface JobDetailProps {
   job: any
+  similarJobs?: any[]
 }
 
-export default function JobDetail({ job }: JobDetailProps) {
+export default function JobDetail({ job, similarJobs }: JobDetailProps) {
   const companyDescription = job.companyDescription || job.companyId?.description || 'Company description is not available.'
   const companyWebsite = normalizeWebsiteUrl(job.companyWebsite || job.companyId?.website || '')
   const companyName = job.companyId?.name || job.companyName || 'Company'
@@ -153,6 +155,31 @@ export default function JobDetail({ job }: JobDetailProps) {
             </div>
           </aside>
         </div>
+
+        {similarJobs && similarJobs.length > 0 && (
+          <div className="mt-12 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Similar jobs</p>
+                <h2 className="mt-3 text-2xl font-semibold text-slate-900">Other roles you may be interested in</h2>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Link href="/jobs" className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">
+                  More jobs
+                </Link>
+                <Link href="/blog" className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
+                  Latest career blogs
+                </Link>
+              </div>
+            </div>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {similarJobs.map((jobItem: any) => (
+                <JobCard key={jobItem._id || jobItem.slug} job={jobItem} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )

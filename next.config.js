@@ -2,9 +2,6 @@
 const nextConfig = {
   output: 'standalone',
   trailingSlash: false,
-  turbopack: {
-    root: __dirname,
-  },
   experimental: {
     optimizePackageImports: ['lodash-es'],
   },
