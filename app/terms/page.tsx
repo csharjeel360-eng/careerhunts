@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { LegalPage } from '@/components/legal/LegalPage'
 
 export const metadata: Metadata = {
-  title: 'Terms & Conditions | CareerHunt',
+  title: 'Terms & Conditions',
   description: 'Review CareerHunt terms of use for job seekers, employers, and platform users.',
   alternates: {
     canonical: 'https://careerhunt.com/terms'

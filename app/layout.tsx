@@ -12,7 +12,7 @@ const interFontClass = 'font-sans'
 export const metadata: Metadata = {
   metadataBase: new URL('https://careerhunt.online'),
   title: {
-    default: 'CareerHunt | Jobs, Salary Guides & Career Resources',
+    default: 'CareerHunt',
     template: '%s | CareerHunt'
   },
   icons: {

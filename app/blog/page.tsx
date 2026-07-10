@@ -5,7 +5,7 @@ import Script from 'next/script'
 import { BLOG_POSTS } from '@/lib/blogData'
 
 export const metadata: Metadata = {
-  title: 'Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers',
+  title: 'Career Advice & Job Search Guides 2026',
   description:
     'Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.',
   keywords: [
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     follow: true
   },
   openGraph: {
-    title: 'Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers',
+    title: 'Career Advice & Job Search Guides 2026',
     description:
       'Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.',
     url: 'https://careerhunt.online/blog',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Career Advice & Job Search Guides 2026 | Resume, Interviews & AI Careers',
+    title: 'Career Advice & Job Search Guides 2026',
     description:
       'Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.'
   }

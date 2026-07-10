@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { LegalPage } from '@/components/legal/LegalPage'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | CareerHunt',
+  title: 'Privacy Policy',
   description: 'Read CareerHunt privacy practices for account data, job applications, and platform security.',
   alternates: {
     canonical: 'https://careerhunt.com/privacy'

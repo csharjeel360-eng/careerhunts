@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, BookOpen, Sparkles } from 'lucide-react'
 import { notFound } from 'next/navigation'
@@ -5,6 +6,38 @@ import { careerResources } from '@/lib/careerResourceData'
 
 interface CareerResourceDetailPageProps {
   params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: CareerResourceDetailPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const resource = careerResources.find((item) => item.slug === slug)
+
+  if (!resource) {
+    return {
+      title: 'Career Resources',
+      description: 'Explore practical career resources to improve your resume, interview confidence, and networking strategy.'
+    }
+  }
+
+  return {
+    title: resource.title,
+    description: resource.excerpt,
+    alternates: {
+      canonical: `https://careerhunt.com/career-resources/${resource.slug}`
+    },
+    keywords: [resource.category, 'career resources', 'job search tips', 'professional growth'],
+    openGraph: {
+      title: resource.title,
+      description: resource.excerpt,
+      url: `https://careerhunt.com/career-resources/${resource.slug}`,
+      type: 'article'
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: resource.title,
+      description: resource.excerpt
+    }
+  }
 }
 
 export default async function CareerResourceDetailPage({ params }: CareerResourceDetailPageProps) {

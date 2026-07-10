@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, TrendingUp, Briefcase, Sparkles } from 'lucide-react'
 import { notFound } from 'next/navigation'
@@ -5,6 +6,38 @@ import { salaryGuides } from '@/lib/salaryGuideData'
 
 interface SalaryGuideDetailPageProps {
   params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: SalaryGuideDetailPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const guide = salaryGuides.find((item) => item.slug === slug)
+
+  if (!guide) {
+    return {
+      title: 'Salary Guide',
+      description: 'Explore salary trends and career growth insights for today’s most in-demand roles.'
+    }
+  }
+
+  return {
+    title: guide.title,
+    description: guide.excerpt,
+    alternates: {
+      canonical: `https://careerhunt.com/salary-guide/${guide.slug}`
+    },
+    keywords: [guide.category, 'salary guide', '2026 salary', 'career growth', 'salary insights'],
+    openGraph: {
+      title: guide.title,
+      description: guide.excerpt,
+      url: `https://careerhunt.com/salary-guide/${guide.slug}`,
+      type: 'article'
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: guide.title,
+      description: guide.excerpt
+    }
+  }
 }
 
 export default async function SalaryGuideDetailPage({ params }: SalaryGuideDetailPageProps) {

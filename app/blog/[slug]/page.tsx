@@ -1,9 +1,42 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { BLOG_POSTS } from '@/lib/blogData'
 
 interface BlogDetailPageProps {
   params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const post = BLOG_POSTS.find((item) => item.slug === slug)
+
+  if (!post) {
+    return {
+      title: 'Blog',
+      description: 'Explore practical career advice, remote job tips, and growth strategies on CareerHunt.'
+    }
+  }
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: {
+      canonical: `https://careerhunt.online/blog/${post.slug}`
+    },
+    keywords: post.keywords,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `https://careerhunt.online/blog/${post.slug}`,
+      type: 'article'
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt
+    }
+  }
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
