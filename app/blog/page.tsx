@@ -74,6 +74,29 @@ export default function BlogPage() {
 
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           <Link
+            href="/dp-world-careers-2026"
+            className="group rounded-[2rem] border border-[#00A651] bg-white p-8 shadow-[0_25px_70px_-24px_rgba(0,166,81,0.24)] transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#00A651] px-3 py-1 text-sm font-medium text-white">Featured</span>
+              <span className="text-sm font-medium text-slate-500">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-slate-900 transition group-hover:text-[#00A651]">
+              DP World Careers 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Explore the latest DP World jobs in logistics, ports, supply chain, engineering, technology, warehouse operations, finance, and global operations.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['DP World Careers', 'Logistics Jobs', 'Port Jobs', 'Supply Chain'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-600">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
+          <Link
             href="/emirates-group-careers-uae-2026"
             className="group rounded-[2rem] border border-[#D71920] bg-white p-8 shadow-[0_25px_70px_-24px_rgba(215,25,32,0.24)] transition hover:-translate-y-1 hover:shadow-xl"
           >
