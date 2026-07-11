@@ -203,9 +203,14 @@ export default function NumeroJobPage() {
             <span className="text-[#111827]">Numero Senior Software Engineer</span>
           </nav>
 
-          <div className="relative overflow-hidden rounded-[32px] border border-[#F3F4F6] bg-[#111827] p-6 shadow-[0_30px_80px_-25px_rgba(17,24,39,0.45)] sm:p-8 lg:p-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,107,53,0.18),_transparent_40%),linear-gradient(135deg,_rgba(255,255,255,0.06),_rgba(255,255,255,0.01))]" />
-            <div className="relative z-10 grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
+          <div className="relative overflow-hidden rounded-[32px] border border-[#F3F4F6] shadow-[0_30px_80px_-25px_rgba(17,24,39,0.45)]">
+            <img
+              src="/jobsNumero.png"
+              alt="Numero backend engineering team and software platform"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,_rgba(17,24,39,0.92)_0%,_rgba(17,24,39,0.7)_45%,_rgba(17,24,39,0.35)_100%)]" />
+            <div className="relative z-10 flex min-h-[520px] items-center px-6 py-10 sm:px-8 lg:px-10">
               <div className="max-w-3xl">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-sm font-medium text-white/90 backdrop-blur">
                   <Sparkles className="h-4 w-4 text-[#FF6B35]" />
@@ -248,27 +253,6 @@ export default function NumeroJobPage() {
                   <span className="rounded-full border border-[#10B981]/30 bg-[#10B981]/15 px-3 py-1.5 text-[#D1FAE5]">Remote</span>
                   <span className="rounded-full border border-[#FF6B35]/30 bg-[#FF6B35]/15 px-3 py-1.5 text-[#FFE4D8]">High Salary</span>
                   <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5">YC Startup</span>
-                </div>
-              </div>
-
-              <div className="rounded-[24px] border border-white/15 bg-white/10 p-4 backdrop-blur">
-                <div className="h-56 rounded-[20px] border border-dashed border-white/35 bg-[linear-gradient(135deg,_rgba(255,255,255,0.2),_rgba(255,107,53,0.16))] p-4 shadow-inner">
-                  <div className="flex h-full flex-col justify-between rounded-[16px] border border-white/15 bg-[#111827]/70 p-5">
-                    <div>
-                      <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#F3F4F6]">Hero placeholder</p>
-                      <p className="mt-2 text-sm leading-7 text-white/80">This section intentionally uses a clean placeholder treatment for the featured banner while keeping the page polished and responsive.</p>
-                    </div>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <div className="rounded-2xl border border-white/10 bg-white/10 p-3">
-                        <p className="text-xs uppercase tracking-[0.24em] text-white/70">Focus</p>
-                        <p className="mt-1 text-sm font-semibold text-white">Backend infrastructure</p>
-                      </div>
-                      <div className="rounded-2xl border border-white/10 bg-white/10 p-3">
-                        <p className="text-xs uppercase tracking-[0.24em] text-white/70">Impact</p>
-                        <p className="mt-1 text-sm font-semibold text-white">Fundraising technology</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
