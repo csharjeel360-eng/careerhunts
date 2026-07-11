@@ -258,7 +258,7 @@ export default function ShopifyCareersPage() {
           <div className="mb-4 flex flex-wrap items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-xs font-medium tracking-[0.2em] text-white/80 backdrop-blur sm:text-sm">
             <Link href="/" className="transition hover:text-white">Home</Link>
             <span>/</span>
-            <Link href="/blog" className="transition hover:text-white">Blog</Link>
+            <Link href="/blog" className="transition hover:text-white">Career Insights</Link>
             <span>/</span>
             <span className="font-semibold text-white">Shopify Careers 2026</span>
           </div>

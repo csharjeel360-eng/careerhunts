@@ -207,7 +207,7 @@ export default function JobDetail({ job, similarJobs }: JobDetailProps) {
                   More jobs
                 </Link>
                 <Link href="/blog" className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
-                  Latest career blogs
+                  Latest career insights
                 </Link>
               </div>
             </div>

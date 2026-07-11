@@ -155,7 +155,7 @@ const relatedJobs = [
 export default function EmiratesGroupCareersPage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', item: '/' },
-    { name: 'Blog', item: '/blog' },
+    { name: 'Career Insights', item: '/blog' },
     { name: 'Emirates Group Careers in UAE 2026', item: '/emirates-group-careers-uae-2026' }
   ])
 
@@ -192,7 +192,7 @@ export default function EmiratesGroupCareersPage() {
         <div className="relative mx-auto flex min-h-[400px] flex-col justify-end px-4 py-12 sm:min-h-[500px] sm:px-6 md:min-h-[600px] lg:min-h-[620px] lg:px-10 lg:py-20 xl:px-16 max-w-7xl">
           <div className="mb-4 rounded-full bg-white/10 px-3 py-2 text-xs font-medium tracking-[0.24em] text-white/80 sm:mb-6 sm:px-4 sm:text-sm">
             <Link href="/" className="underline-offset-4 hover:text-white">Home</Link> /{' '}
-            <Link href="/blog" className="underline-offset-4 hover:text-white">Blog</Link> /{' '}
+            <Link href="/blog" className="underline-offset-4 hover:text-white">Career Insights</Link> /{' '}
             <span className="font-semibold">Emirates Group Careers</span>
           </div>
           <div className="max-w-3xl space-y-4 sm:space-y-6">

@@ -94,7 +94,7 @@ export function Header() {
   const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Jobs', href: '/jobs' },
-    { label: 'Blog', href: '/blog' },
+    { label: 'Career Insights', href: '/blog' },
   ]
 
   const handleCreateJob = () => {

@@ -140,7 +140,7 @@ export function LatestJobs({ jobs }: any) {
         </div>
         <div className="mt-8 flex justify-center">
           <Link href="/blog" className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">
-            Browse more career blogs
+            Browse more career insights
           </Link>
         </div>
       </section>

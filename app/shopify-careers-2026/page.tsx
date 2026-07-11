@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 export default function ShopifyCareersRoutePage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', item: '/' },
-    { name: 'Blog', item: '/blog' },
+    { name: 'Career Insights', item: '/blog' },
     { name: 'Shopify Careers 2026', item: '/shopify-careers-2026' }
   ])
 
@@ -95,7 +95,7 @@ export default function ShopifyCareersRoutePage() {
     url: 'https://careerhunt.online/shopify-careers-2026',
     breadcrumbItems: [
       { name: 'Home', item: '/' },
-      { name: 'Blog', item: '/blog' },
+      { name: 'Career Insights', item: '/blog' },
       { name: 'Shopify Careers 2026', item: '/shopify-careers-2026' }
     ]
   })

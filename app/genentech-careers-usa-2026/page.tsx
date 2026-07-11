@@ -330,7 +330,7 @@ const relatedJobs = [
 export default function GenentechCareersPage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', item: '/' },
-    { name: 'Blog', item: '/blog' },
+    { name: 'Career Insights', item: '/blog' },
     { name: 'Genentech Careers USA 2026', item: '/genentech-careers-usa-2026' }
   ])
 
@@ -375,7 +375,7 @@ export default function GenentechCareersPage() {
           <nav aria-label="Breadcrumb" className="mb-4 flex flex-wrap items-center gap-2 text-sm text-slate-200">
             <Link href="/" className="transition hover:text-white">Home</Link>
             <span>/</span>
-            <Link href="/blog" className="transition hover:text-white">Blog</Link>
+            <Link href="/blog" className="transition hover:text-white">Career Insights</Link>
             <span>/</span>
             <span className="font-semibold text-white">Genentech Careers USA 2026</span>
           </nav>

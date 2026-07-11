@@ -211,6 +211,29 @@ export default function BlogPage() {
             </div>
           </Link>
 
+          <Link
+            href="/jobs/numero-senior-software-engineer-backend-remote-usa"
+            className="group rounded-[2rem] border border-[#FF6B35] bg-white p-8 shadow-[0_25px_70px_-24px_rgba(255,107,53,0.24)] transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#FF6B35] px-3 py-1 text-sm font-medium text-white">Featured Job</span>
+              <span className="text-sm font-medium text-slate-500">Apply now</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-slate-900 transition group-hover:text-[#FF6B35]">
+              Senior Software Engineer (Backend) at Numero
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Explore a remote U.S. backend engineering role at Numero, a YC-backed startup building fundraising technology for campaigns and nonprofits.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Numero Careers', 'Remote Backend Jobs', 'YC Startup', 'US Remote'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-600">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
           {BLOG_POSTS.map((post) => (
             <Link
               key={post.slug}
