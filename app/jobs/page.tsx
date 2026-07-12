@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import React from 'react'
 import Link from 'next/link'
 import { Briefcase, Filter, Search, Sparkles, TrendingUp } from 'lucide-react'
-import { JobCard } from '@/components/jobs/JobCard'
+import JobsResultsClient from '@/components/jobs/JobsResultsClient'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { getCategories, getCountries, getCities, getJobs } from '@/lib/api'
@@ -220,69 +219,11 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           </form>
         </div>
 
-        <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_60px_-24px_rgba(15,23,42,0.28)]">
-          <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold text-slate-900">All opportunities</p>
-              <p className="text-sm text-slate-500">Newest roles appear first across local listings and live external sources.</p>
-            </div>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {paginatedOpportunities.length > 0 ? (
-              paginatedOpportunities.map((item: any) => {
-                if (item.type === 'live') {
-                  return (
-                    <div key={item.id || `${item.source}-${item.title}`} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 shadow-sm">
-                      <div className="flex items-center justify-between gap-3">
-                        <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] ${item.source === 'USAJOBS' ? 'bg-cyan-100 text-cyan-700' : 'bg-emerald-100 text-emerald-700'}`}>
-                          {item.source === 'USAJOBS' ? 'Government' : 'Greenhouse'}
-                        </span>
-                        <span className="text-xs font-medium text-slate-500">External</span>
-                      </div>
-                      <h3 className="mt-4 text-lg font-semibold text-slate-900">{item.title}</h3>
-                      <p className="mt-2 text-sm text-slate-600">{item.company}</p>
-                      <p className="mt-3 text-sm text-slate-500">{item.location || 'Remote / Hybrid'}</p>
-                      <a href={item.applyUrl || '/jobs'} target={item.applyUrl ? '_blank' : undefined} rel={item.applyUrl ? 'noreferrer' : undefined} className="mt-5 inline-flex items-center text-sm font-semibold text-slate-900 transition hover:text-cyan-700">
-                        View role <span className="ml-2">→</span>
-                      </a>
-                    </div>
-                  )
-                }
-
-                return (
-                  <div key={item._id} className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm">
-                    <JobCard job={item} />
-                  </div>
-                )
-              })
-            ) : (
-              <div className="rounded-[1.5rem] border border-dashed border-slate-300 bg-slate-50 p-6 text-sm text-slate-600 md:col-span-2 xl:col-span-3">
-                No jobs match your filters.
-              </div>
-            )}
-          </div>
-
-          {totalPages > 1 ? (
-            <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6">
-              <div className="text-sm text-slate-500">
-                Page {safePage} of {totalPages}
-              </div>
-              <div className="flex items-center gap-2">
-                {safePage > 1 ? (
-                  <Link href={buildPageHref(safePage - 1)} className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
-                    Previous
-                  </Link>
-                ) : null}
-                {safePage < totalPages ? (
-                  <Link href={buildPageHref(safePage + 1)} className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
-                    Next
-                  </Link>
-                ) : null}
-              </div>
-            </div>
-          ) : null}
-        </div>
+        <JobsResultsClient
+          initialOpportunities={allOpportunities}
+          initialPage={safePage}
+          totalCount={allOpportunities.length}
+        />
       </div>
     </section>
   )
