@@ -16,7 +16,7 @@ import {
   Clock3,
   Cpu,
   GraduationCap,
-  HandCoins,
+  HandIcon,
   HeartHandshake,
   Layers3,
   LifeBuoy,
