@@ -74,6 +74,52 @@ export default function BlogPage() {
 
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           <Link
+            href="/dhl-careers-uae-2026"
+            className="group rounded-[2rem] border border-[#F2C94C] bg-white p-8 shadow-[0_25px_70px_-24px_rgba(242,201,76,0.24)] transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#F2C94C] px-3 py-1 text-sm font-medium text-slate-900">Featured</span>
+              <span className="text-sm font-medium text-slate-500">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-slate-900 transition group-hover:text-[#F2C94C]">
+              DHL Careers UAE 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Explore DHL jobs in Dubai, Abu Dhabi, and across the UAE with salary insights, warehouse and logistics roles, benefits, hiring requirements, and direct application links.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['DHL Careers', 'Logistics Jobs', 'Warehouse Jobs', 'Courier Jobs'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-600">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
+          <Link
+            href="/noon-careers-uae-2026"
+            className="group rounded-[2rem] border border-[#F2C94C] bg-white p-8 shadow-[0_25px_70px_-24px_rgba(242,201,76,0.24)] transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#F2C94C] px-3 py-1 text-sm font-medium text-slate-900">Featured</span>
+              <span className="text-sm font-medium text-slate-500">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-slate-900 transition group-hover:text-[#F2C94C]">
+              Noon Careers UAE 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Explore the latest Noon careers in UAE with insights into e-commerce, technology, operations, logistics, customer service, and growth opportunities at one of the region’s fastest-growing companies.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Noon Careers', 'UAE Jobs', 'Ecommerce Jobs', 'Logistics Careers'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-600">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
+          <Link
             href="/dp-world-careers-2026"
             className="group rounded-[2rem] border border-[#00A651] bg-white p-8 shadow-[0_25px_70px_-24px_rgba(0,166,81,0.24)] transition hover:-translate-y-1 hover:shadow-xl"
           >

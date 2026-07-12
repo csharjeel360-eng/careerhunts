@@ -57,20 +57,59 @@ const careerBlogItems = [
   }
 ]
 
-export function LatestJobs({ jobs }: any) {
+export function LatestJobs({ jobs, mixedJobs }: { jobs?: any[]; mixedJobs?: any[] }) {
   return (
     <section className="mx-auto max-w-[1280px] px-4 sm:px-6 py-16">
-
-      {(!jobs || jobs.length === 0) ? (
-        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 text-slate-600">No latest jobs available yet.</div>
-      ) : (
-        <>
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {(jobs || []).slice(0, 9).map((job: any) => (
-              <JobCard key={job._id} job={job} />
-            ))}
+      {mixedJobs && mixedJobs.length > 0 ? (
+        <div className="mb-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-sm sm:p-8">
+          <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Latest opportunities</p>
+              <h3 className="mt-2 text-2xl font-semibold text-slate-900">9 newest jobs from the latest sources</h3>
+            </div>
+            <Link href="/jobs" className="text-sm font-semibold text-slate-700 transition hover:text-slate-900">
+              View all roles
+            </Link>
           </div>
-        </>
+
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {mixedJobs.slice(0, 9).map((item: any) => {
+              const isLiveJob = item.source === 'Greenhouse' || item.source === 'USAJOBS'
+
+              if (isLiveJob) {
+                return (
+                  <div key={item.id || `${item.source}-${item.title}`} className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] ${item.source === 'USAJOBS' ? 'bg-cyan-100 text-cyan-700' : 'bg-emerald-100 text-emerald-700'}`}>
+                        {item.source === 'USAJOBS' ? 'Government' : 'Greenhouse'}
+                      </span>
+                      <span className="text-xs font-medium text-slate-500">External</span>
+                    </div>
+                    <h4 className="mt-4 text-lg font-semibold text-slate-900">{item.title}</h4>
+                    <p className="mt-2 text-sm text-slate-600">{item.company}</p>
+                    <p className="mt-3 text-sm text-slate-500">{item.location || 'Remote / Hybrid'}</p>
+                    <a
+                      href={item.applyUrl || '/jobs'}
+                      target={item.applyUrl ? '_blank' : undefined}
+                      rel={item.applyUrl ? 'noreferrer' : undefined}
+                      className="mt-5 inline-flex items-center text-sm font-semibold text-slate-900 transition hover:text-cyan-700"
+                    >
+                      View role <span className="ml-2">→</span>
+                    </a>
+                  </div>
+                )
+              }
+
+              return (
+                <div key={item._id} className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm">
+                  <JobCard job={item} variant="featured" />
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      ) : (
+        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 text-slate-600">No latest jobs available yet.</div>
       )}
 
       <div className="mt-10 rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-sm">

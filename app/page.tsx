@@ -4,7 +4,8 @@ import { HeroSection } from '@/components/home/HeroSection'
 import { LatestJobs } from '@/components/home/LatestJobs'
 import { SalaryGuides } from '@/components/home/SalaryGuides'
 import { CareerResources } from '@/components/home/CareerResources'
-import { getTopViewedJobs, getLatestJobs, getCategories } from '@/lib/api'
+import { getLatestJobs, getCategories } from '@/lib/api'
+import { getLiveJobs } from '@/lib/live-jobs'
 import { careerResources as careerResourceData } from '@/lib/careerResourceData'
 import { salaryGuides as salaryGuideData } from '@/lib/salaryGuideData'
 
@@ -42,11 +43,41 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
-  const [topViewedJobs, latestJobs, categories] = await Promise.all([
-    getTopViewedJobs(),
+  const [latestJobs, categories, liveJobs] = await Promise.all([
     getLatestJobs(),
-    getCategories()
+    getCategories(),
+    getLiveJobs()
   ])
+
+  const getSortTimestamp = (value?: string) => {
+    if (!value) return 0
+    const parsed = Date.parse(value)
+    return Number.isNaN(parsed) ? 0 : parsed
+  }
+
+  const serverJobs = (latestJobs || []).map((job: any) => ({
+    ...job,
+    sourceLabel: 'Server',
+    sortDate: job.postedDate || job.createdAt || '',
+  }))
+  const greenhouseJobs = (liveJobs || [])
+    .filter((job: any) => job.source === 'Greenhouse')
+    .map((job: any) => ({
+      ...job,
+      sourceLabel: 'Greenhouse',
+      sortDate: job.postedDate || '',
+    }))
+  const governmentJobs = (liveJobs || [])
+    .filter((job: any) => job.source === 'USAJOBS')
+    .map((job: any) => ({
+      ...job,
+      sourceLabel: 'Government',
+      sortDate: job.postedDate || '',
+    }))
+
+  const mixedJobs = [...serverJobs, ...greenhouseJobs, ...governmentJobs]
+    .sort((a, b) => getSortTimestamp(b.sortDate) - getSortTimestamp(a.sortDate))
+    .slice(0, 9)
 
   const salaryGuides = salaryGuideData.slice(0, 3)
 
@@ -84,7 +115,7 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
       />
       <HeroSection categories={categories} />
-      <LatestJobs jobs={latestJobs} />
+      <LatestJobs jobs={latestJobs} mixedJobs={mixedJobs} />
       <SalaryGuides guides={salaryGuides} />
       <CareerResources items={careerResources} />
     </>

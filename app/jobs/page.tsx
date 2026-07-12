@@ -6,6 +6,9 @@ import { JobCard } from '@/components/jobs/JobCard'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { getCategories, getCountries, getCities, getJobs } from '@/lib/api'
+import { getLiveJobs } from '@/lib/live-jobs'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Find Jobs in Pakistan and Worldwide',
@@ -34,6 +37,9 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   const category = Array.isArray(resolvedSearchParams.category) ? resolvedSearchParams.category[0] : resolvedSearchParams.category || ''
   const country = Array.isArray(resolvedSearchParams.country) ? resolvedSearchParams.country[0] : resolvedSearchParams.country || ''
   const city = Array.isArray(resolvedSearchParams.city) ? resolvedSearchParams.city[0] : resolvedSearchParams.city || ''
+  const pageParam = Array.isArray(resolvedSearchParams.page) ? resolvedSearchParams.page[0] : resolvedSearchParams.page || '1'
+  const currentPage = Number.parseInt(pageParam, 10) || 1
+  const pageSize = 21
 
   const [categories, countries, cities] = await Promise.all([
     getCategories(),
@@ -50,7 +56,48 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     ...(city ? { city } : {}),
   })
 
+  let liveJobs: Awaited<ReturnType<typeof getLiveJobs>> = []
+  let liveJobsError = ''
+
+  try {
+    liveJobs = await getLiveJobs()
+  } catch (error) {
+    liveJobsError = 'Live jobs are temporarily unavailable. Please try again shortly.'
+  }
+
   const jobs = response.data || []
+  const getSortTimestamp = (value?: string) => {
+    if (!value) return 0
+    const parsed = Date.parse(value)
+    return Number.isNaN(parsed) ? 0 : parsed
+  }
+
+  const allOpportunities = [
+    ...jobs.map((job: any) => ({
+      ...job,
+      type: 'local',
+      sortDate: job.postedDate || job.createdAt || '',
+    })),
+    ...liveJobs.map((job: any) => ({
+      ...job,
+      type: 'live',
+      sortDate: job.postedDate || '',
+    })),
+  ].sort((a, b) => getSortTimestamp(b.sortDate) - getSortTimestamp(a.sortDate))
+
+  const totalPages = Math.max(1, Math.ceil(allOpportunities.length / pageSize))
+  const safePage = Math.min(currentPage, totalPages)
+  const startIndex = (safePage - 1) * pageSize
+  const paginatedOpportunities = allOpportunities.slice(startIndex, startIndex + pageSize)
+  const buildPageHref = (page: number) => {
+    const params = new URLSearchParams()
+    if (keyword) params.set('keyword', keyword)
+    if (category) params.set('category', category)
+    if (country) params.set('country', country)
+    if (city) params.set('city', city)
+    params.set('page', String(page))
+    return `/jobs?${params.toString()}`
+  }
   const jobCategories = Array.from(new Set(jobs.map((job: any) => job.category).filter(Boolean))).sort()
   const jobCountries = Array.from(new Set(jobs.map((job: any) => job.country).filter(Boolean))).sort()
   const jobCities = Array.from(new Set(jobs.map((job: any) => job.city).filter(Boolean))).sort()
@@ -77,12 +124,20 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
-          <div className="rounded-[1.5rem] border border-slate-200 bg-white/90 p-5 shadow-sm backdrop-blur">
-            <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-              <Briefcase className="h-4 w-4 text-cyan-600" />
-              Active openings
+          <div className="rounded-[1.5rem] border border-slate-200 bg-white/90 p-5 shadow-sm backdrop-blur md:col-span-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                  <Briefcase className="h-4 w-4 text-cyan-600" />
+                  Live job count
+                </div>
+                <p className="mt-2 text-3xl font-semibold text-slate-900">{allOpportunities.length} jobs available</p>
+                <p className="mt-1 text-sm text-slate-500">Fresh openings from local listings and live external sources.</p>
+              </div>
+              <div className="rounded-full border border-cyan-100 bg-cyan-50 px-4 py-2 text-sm font-semibold text-cyan-700">
+                Updated today
+              </div>
             </div>
-            <p className="mt-2 text-2xl font-semibold text-slate-900">{jobs.length}+ roles</p>
           </div>
           <div className="rounded-[1.5rem] border border-slate-200 bg-white/90 p-5 shadow-sm backdrop-blur">
             <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
@@ -100,7 +155,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           </div>
         </div>
 
-        <div className="mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_60px_-24px_rgba(15,23,42,0.28)]">
+        <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_60px_-24px_rgba(15,23,42,0.28)]">
           <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-semibold text-slate-900">Refine your search</p>
@@ -160,25 +215,73 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
               <button type="submit" className="inline-flex justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
                 Apply filters
               </button>
-              <p className="text-sm text-slate-500">Showing {jobs.length} job{jobs.length === 1 ? '' : 's'}.</p>
+              <p className="text-sm text-slate-500">Showing {paginatedOpportunities.length} of {allOpportunities.length} jobs.</p>
             </div>
           </form>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {jobs.length > 0 ? (
-            jobs.map((job: any) => (
-              <JobCard key={job._id} job={job} />
-            ))
-          ) : (
-            <div className="rounded-[2rem] border border-dashed border-slate-300 bg-slate-50 p-12 text-center text-slate-700 md:col-span-2">
-              <p className="text-lg font-medium">No jobs match your filters.</p>
-              <p className="mt-2">Try adjusting the search criteria or clear filters to see more openings.</p>
-              <Link href="/jobs" className="mt-5 inline-flex rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">
-                Clear filters
-              </Link>
+        <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_60px_-24px_rgba(15,23,42,0.28)]">
+          <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold text-slate-900">All opportunities</p>
+              <p className="text-sm text-slate-500">Newest roles appear first across local listings and live external sources.</p>
             </div>
-          )}
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {paginatedOpportunities.length > 0 ? (
+              paginatedOpportunities.map((item: any) => {
+                if (item.type === 'live') {
+                  return (
+                    <div key={item.id || `${item.source}-${item.title}`} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 shadow-sm">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] ${item.source === 'USAJOBS' ? 'bg-cyan-100 text-cyan-700' : 'bg-emerald-100 text-emerald-700'}`}>
+                          {item.source === 'USAJOBS' ? 'Government' : 'Greenhouse'}
+                        </span>
+                        <span className="text-xs font-medium text-slate-500">External</span>
+                      </div>
+                      <h3 className="mt-4 text-lg font-semibold text-slate-900">{item.title}</h3>
+                      <p className="mt-2 text-sm text-slate-600">{item.company}</p>
+                      <p className="mt-3 text-sm text-slate-500">{item.location || 'Remote / Hybrid'}</p>
+                      <a href={item.applyUrl || '/jobs'} target={item.applyUrl ? '_blank' : undefined} rel={item.applyUrl ? 'noreferrer' : undefined} className="mt-5 inline-flex items-center text-sm font-semibold text-slate-900 transition hover:text-cyan-700">
+                        View role <span className="ml-2">→</span>
+                      </a>
+                    </div>
+                  )
+                }
+
+                return (
+                  <div key={item._id} className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm">
+                    <JobCard job={item} />
+                  </div>
+                )
+              })
+            ) : (
+              <div className="rounded-[1.5rem] border border-dashed border-slate-300 bg-slate-50 p-6 text-sm text-slate-600 md:col-span-2 xl:col-span-3">
+                No jobs match your filters.
+              </div>
+            )}
+          </div>
+
+          {totalPages > 1 ? (
+            <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6">
+              <div className="text-sm text-slate-500">
+                Page {safePage} of {totalPages}
+              </div>
+              <div className="flex items-center gap-2">
+                {safePage > 1 ? (
+                  <Link href={buildPageHref(safePage - 1)} className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                    Previous
+                  </Link>
+                ) : null}
+                {safePage < totalPages ? (
+                  <Link href={buildPageHref(safePage + 1)} className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                    Next
+                  </Link>
+                ) : null}
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

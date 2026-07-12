@@ -280,7 +280,7 @@ export default function DPWorldCareersPage() {
           <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-medium uppercase tracking-[0.3em] text-slate-200 backdrop-blur">
             <Link href="/" className="hover:text-white">Home</Link>
             <span>/</span>
-            <Link href="/jobs" className="hover:text-white">Jobs</Link>
+            <Link href="/blog" className="hover:text-white">careerinsights</Link>
             <span>/</span>
             <span className="text-white">DP World Careers 2026</span>
           </div>
