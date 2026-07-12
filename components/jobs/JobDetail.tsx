@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { MapPin, Briefcase, Calendar, Globe, ArrowRight, Eye } from 'lucide-react'
 import { formatDate, formatSalary, normalizeWebsiteUrl } from '@/lib/utils'
 import { JobCard } from './JobCard'
+import { NativeAd } from '@/components/ads/NativeAd'
 
 interface JobDetailProps {
   job: any
@@ -77,6 +78,10 @@ export default function JobDetail({ job, similarJobs }: JobDetailProps) {
                 <p className="mt-4 whitespace-pre-line text-sm leading-7 text-slate-700 sm:text-base">
                   {job.description || 'No description available yet.'}
                 </p>
+              </div>
+
+              <div className="mx-auto max-w-3xl rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+                <NativeAd className="" />
               </div>
 
               <div className="grid gap-5 lg:grid-cols-2">

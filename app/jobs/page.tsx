@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Briefcase, Filter, Search, Sparkles, TrendingUp } from 'lucide-react'
 import JobsResultsClient from '@/components/jobs/JobsResultsClient'
+import { NativeAd } from '@/components/ads/NativeAd'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { getCategories, getCountries, getCities, getJobs } from '@/lib/api'
@@ -120,6 +121,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600">
             Search by title, category, country, or city to discover roles that match your ambitions and experience.
           </p>
+
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -224,6 +226,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           initialPage={safePage}
           totalCount={allOpportunities.length}
         />
+
+        <div className="mt-8">
+          <NativeAd className="w-full" />
+        </div>
       </div>
     </section>
   )

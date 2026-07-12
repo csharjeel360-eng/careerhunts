@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { NativeAd } from '@/components/ads/NativeAd'
 import NoonCareersPage from '@/components/company/NoonCareersPage'
 
 const pageTitle = 'Noon Careers UAE 2026 | Latest Noon Jobs in Dubai, Abu Dhabi & Across UAE – Apply Online'
@@ -50,5 +51,10 @@ export const metadata: Metadata = {
 }
 
 export default function NoonCareersRoutePage() {
-  return <NoonCareersPage />
+  return (
+    <>
+      <NativeAd className="mx-auto my-10 max-w-3xl" />
+      <NoonCareersPage />
+    </>
+  )
 }

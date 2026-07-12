@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { NativeAd } from '@/components/ads/NativeAd'
 import AmazonCareersPage from '@/components/company/AmazonCareersPage'
 
 const pageTitle = 'Amazon Careers 2026 | Latest Amazon Jobs Worldwide & Apply Online'
@@ -37,5 +38,10 @@ export const metadata: Metadata = {
 }
 
 export default function AmazonCareersRoutePage() {
-  return <AmazonCareersPage />
+  return (
+    <>
+      <NativeAd className="mx-auto my-10 max-w-3xl" />
+      <AmazonCareersPage />
+    </>
+  )
 }

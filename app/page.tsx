@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { BannerAd300x250 } from '@/components/ads/BannerAd300x250'
 import { HeroSection } from '@/components/home/HeroSection'
 import { LatestJobs } from '@/components/home/LatestJobs'
 import { SalaryGuides } from '@/components/home/SalaryGuides'
@@ -116,6 +117,7 @@ export default async function HomePage() {
       />
       <HeroSection categories={categories} />
       <LatestJobs jobs={latestJobs} mixedJobs={mixedJobs} />
+      <BannerAd300x250 className="my-10 mx-auto max-w-[320px]" />
       <SalaryGuides guides={salaryGuides} />
       <CareerResources items={careerResources} />
     </>

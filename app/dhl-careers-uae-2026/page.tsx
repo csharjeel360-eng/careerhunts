@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { NativeAd } from '@/components/ads/NativeAd'
 import DhlCareersPage from '@/components/company/DhlCareersPage'
 
 const pageTitle = 'DHL Careers UAE 2026 | Latest DHL Dubai Jobs & Apply Online'
@@ -41,5 +42,10 @@ export const metadata: Metadata = {
 }
 
 export default function DhlCareersRoutePage() {
-  return <DhlCareersPage />
+  return (
+    <>
+      <NativeAd className="mx-auto my-10 max-w-3xl" />
+      <DhlCareersPage />
+    </>
+  )
 }

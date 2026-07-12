@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { NativeAd } from '@/components/ads/NativeAd'
 import DPWorldCareersPage from '@/components/company/DPWorldCareersPage'
 import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, generateWebPageSchema } from '@/lib/seo'
 
@@ -104,6 +105,7 @@ export default function DPWorldCareersRoutePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <NativeAd className="mx-auto my-10 max-w-3xl" />
       <DPWorldCareersPage />
     </>
   )

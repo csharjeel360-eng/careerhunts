@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { NativeAd } from '@/components/ads/NativeAd'
 import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema } from '@/lib/seo'
 
 const pageTitle = 'Qatar Airways Careers 2026 | Latest Job Vacancies & Apply Online'
@@ -243,6 +244,7 @@ export default function QatarAirwaysCareersPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <NativeAd className="mx-auto my-10 max-w-3xl" />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-slate-900 text-white">
