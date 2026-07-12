@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { cache } from 'react'
 
 const normalizeApiUrl = (url: string) => {
   const trimmed = url.replace(/\/+$/, '')
@@ -78,7 +79,7 @@ export const getTopViewedJobs = async () => {
   }
 }
 
-export const getLatestJobs = async () => {
+export const getLatestJobs = cache(async () => {
   try {
     const response = await api.get('/jobs?limit=9&sort=-postedDate')
     return response.data.data
@@ -88,13 +89,9 @@ export const getLatestJobs = async () => {
     console.error('getLatestJobs error:', error)
     return []
   }
-}
+})
 
-
-
-
-
-export const getJobBySlug = async (slug: string) => {
+export const getJobBySlug = cache(async (slug: string) => {
   try {
     const response = await api.get(`/jobs/${slug}`)
     return response.data.data
@@ -103,7 +100,7 @@ export const getJobBySlug = async (slug: string) => {
     console.error('getJobBySlug error:', error)
     return null
   }
-}
+})
 
 export const getJobs = async (params: any = {}) => {
   try {
@@ -222,7 +219,7 @@ export const getCompanies = async () => {
   }
 }
 
-export const getCategories = async () => {
+export const getCategories = cache(async () => {
   try {
     const response = await api.get('/categories')
     return response.data.data
@@ -231,9 +228,9 @@ export const getCategories = async () => {
     console.error('getCategories error:', error)
     return []
   }
-}
+})
 
-export const getCountries = async () => {
+export const getCountries = cache(async () => {
   try {
     const response = await api.get('/countries')
     return response.data.data
@@ -242,9 +239,9 @@ export const getCountries = async () => {
     console.error('getCountries error:', error)
     return []
   }
-}
+})
 
-export const getCities = async () => {
+export const getCities = cache(async () => {
   try {
     const response = await api.get('/cities')
     return response.data.data
@@ -253,7 +250,7 @@ export const getCities = async () => {
     console.error('getCities error:', error)
     return []
   }
-}
+})
 
 export const getBlogPosts = async () => {
   try {

@@ -8,7 +8,7 @@ import { Select } from '@/components/ui/select'
 import { getCategories, getCountries, getCities, getJobs } from '@/lib/api'
 import { getLiveJobs } from '@/lib/live-jobs'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Find Jobs in Pakistan and Worldwide',

@@ -48,13 +48,16 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
 
 export default async function JobPage({ params }: JobPageProps) {
   const { slug } = await params
-  const job = await getJobBySlug(slug)
-  
+
+  const [job, latestJobs] = await Promise.all([
+    getJobBySlug(slug),
+    getLatestJobs(),
+  ])
+
   if (!job) {
     notFound()
   }
 
-  const latestJobs = await getLatestJobs()
   const similarJobs = (latestJobs || []).filter((item: any) => item.slug !== slug).slice(0, 3)
   
   const jobSchema = generateJobSchema(job)
