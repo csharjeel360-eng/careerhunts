@@ -61,22 +61,13 @@ export default async function HomePage() {
     sourceLabel: 'Server',
     sortDate: job.postedDate || job.createdAt || '',
   }))
-  const greenhouseJobs = (liveJobs || [])
-    .filter((job: any) => job.source === 'Greenhouse')
-    .map((job: any) => ({
-      ...job,
-      sourceLabel: 'Greenhouse',
-      sortDate: job.postedDate || '',
-    }))
-  const governmentJobs = (liveJobs || [])
-    .filter((job: any) => job.source === 'USAJOBS')
-    .map((job: any) => ({
-      ...job,
-      sourceLabel: 'Government',
-      sortDate: job.postedDate || '',
-    }))
+  const liveExternalJobs = (liveJobs || []).map((job: any) => ({
+    ...job,
+    sourceLabel: 'External',
+    sortDate: job.postedDate || '',
+  }))
 
-  const mixedJobs = [...serverJobs, ...greenhouseJobs, ...governmentJobs]
+  const mixedJobs = [...serverJobs, ...liveExternalJobs]
     .sort((a, b) => getSortTimestamp(b.sortDate) - getSortTimestamp(a.sortDate))
     .slice(0, 9)
 

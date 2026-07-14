@@ -370,7 +370,7 @@ export default function GenentechCareersPage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a]/90 via-[#0f172a]/70 to-[#005EB8]/70" />
+          
         </div>
 
         <div className="relative mx-auto flex min-h-[460px] max-w-7xl flex-col justify-end px-4 py-14 sm:px-6 lg:px-10 lg:py-20">

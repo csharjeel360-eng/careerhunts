@@ -18,7 +18,7 @@ export default async function CompaniesPage() {
           <Link key={company._id} href={`/companies/${company.slug}`} className="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-xl">
             <h2 className="text-xl font-semibold text-slate-900">{company.name}</h2>
             <p className="mt-3 text-sm leading-6 text-slate-600 line-clamp-4">{company.description || 'View company details and open jobs.'}</p>
-            <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-900 transition group-hover:text-primary">
+            <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-900 transition">
               View profile
             </div>
           </Link>

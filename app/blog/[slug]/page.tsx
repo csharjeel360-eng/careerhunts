@@ -49,6 +49,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
   return (
     <section className="relative overflow-hidden bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)]">
+      <div className="absolute inset-0 -z-20 bg-cover bg-center" style={{ backgroundImage: `url('${post.image ?? '/jobsNumero.png'}')`, height: '100%' }} />
       <div className="absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top_left,_rgba(34,211,238,0.18),_transparent_45%)]" />
       <div className="container relative mx-auto px-4 py-14 sm:py-16">
         <Link href="/blog" className="inline-flex items-center text-sm font-semibold text-slate-700 transition hover:text-slate-900">

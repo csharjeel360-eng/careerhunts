@@ -87,7 +87,7 @@ export function JobCard({ job, variant = 'latest' }: JobCardProps) {
         </div>
 
         <Link href={`/jobs/${job.slug}`} className="mt-3 block" aria-label={`${job.title} in ${job.city}, ${job.country}`}>
-          <h2 className="text-base font-semibold text-slate-900 transition-colors group-hover:text-cyan-700 line-clamp-2">
+          <h2 className="text-base font-semibold text-slate-900 transition-colors line-clamp-2">
             {job.title}
           </h2>
         </Link>

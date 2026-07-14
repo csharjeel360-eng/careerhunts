@@ -209,12 +209,7 @@ const relatedPages = [
   {
     title: 'DHL Careers',
     description: 'Explore global logistics and supply chain roles with one of the world’s leading express delivery networks.',
-    href: '/jobs/dhl-careers',
-  },
-  {
-    title: 'Maersk Careers',
-    description: 'Discover ocean shipping, port services, and container logistics opportunities with a global industry leader.',
-    href: '/jobs/maersk-careers',
+    href: '/dhl-careers-uae-2026',
   },
   {
     title: 'Emirates Group Careers',
@@ -234,7 +229,12 @@ const relatedPages = [
   {
     title: 'FedEx Careers',
     description: 'See current roles in transport, operations, engineering, and customer-facing logistics teams.',
-    href: '/jobs/fedex-careers',
+    href: '/fedex-careers-usa-2026',
+  },
+  {
+    title: 'Noon Careers UAE',
+    description: 'Discover regional e-commerce and logistics career growth opportunities.',
+    href: '/noon-careers-uae-2026',
   },
 ]
 
@@ -272,7 +272,7 @@ export default function DPWorldCareersPage() {
             className="object-cover object-center"
             quality={100}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/50 via-slate-900/30 to-slate-900/20" />
+          
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(0,166,81,0.22),_transparent_40%),radial-gradient(circle_at_bottom_right,_rgba(0,90,135,0.22),_transparent_35%)]" />
         </div>
 
@@ -431,7 +431,7 @@ export default function DPWorldCareersPage() {
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f4fff8] text-2xl">{card.icon}</div>
               <h3 className="mt-5 text-xl font-semibold text-slate-900">{card.title}</h3>
               <p className="mt-3 text-sm leading-7 text-slate-600">{card.description}</p>
-              <Link href="https://careers.dpworld.com" className="mt-5 inline-flex rounded-full bg-[#005A87] px-4 py-2 text-sm font-semibold text-white transition group-hover:bg-[#00A651]">
+              <Link href="https://careers.dpworld.com" className="mt-5 inline-flex rounded-full bg-[#005A87] px-4 py-2 text-sm font-semibold text-white transition">
                 Apply Now
               </Link>
             </div>

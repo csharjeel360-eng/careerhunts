@@ -60,9 +60,9 @@ export default function SalaryGuidePage() {
               href={`/salary-guide/${guide.slug}`}
               className="group rounded-[1.5rem] border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
             >
-              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center justify-between gap-3">
                 <span className="rounded-full bg-cyan-50 px-3 py-1 text-sm font-medium text-cyan-700">{guide.category}</span>
-                <ArrowRight className="h-4 w-4 text-slate-400 transition group-hover:translate-x-1 group-hover:text-slate-900" />
+                <ArrowRight className="h-4 w-4 text-slate-400 transition" />
               </div>
               <h2 className="mt-5 text-xl font-semibold text-slate-900">{guide.title}</h2>
               <p className="mt-3 text-sm leading-7 text-slate-600">{guide.excerpt}</p>

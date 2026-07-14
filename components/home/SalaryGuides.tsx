@@ -43,7 +43,7 @@ export function SalaryGuides({ guides = [] }: any) {
                   </CardDescription>
                   <div className="mt-auto flex items-center justify-between pt-2 text-sm font-medium text-slate-700">
                     <span>View full guide</span>
-                    <ArrowRight className="h-4 w-4 shrink-0 transition duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4 shrink-0 transition duration-300" />
                   </div>
                 </CardContent>
               </Card>

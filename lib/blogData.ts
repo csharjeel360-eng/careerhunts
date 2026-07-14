@@ -8,6 +8,7 @@ export interface BlogPost {
   title: string
   excerpt: string
   category: string
+  image?: string
   keywords: string[]
   topics: string[]
   sections: BlogSection[]
@@ -20,6 +21,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       'Looking for your first remote job in 2026? The good news is that many companies are hiring beginners for work-from-home positions that do not require years of experience. This guide covers the best entry-level remote roles, what they involve, and how to get hired quickly.',
     category: 'Remote Careers',
+    image: '/jobsNumero.png',
     keywords: [
       'remote jobs 2026',
       'work from home jobs',
@@ -164,6 +166,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       'A well-written resume is one of the most important tools in your job search. It’s often the first impression you make on a recruiter, and in many cases, you have only 6–10 seconds to capture their attention.',
     category: 'Career Growth',
+    image: '/jobsNumero.png',
     keywords: ['professional resume', 'resume writing tips', 'ATS-friendly resume', 'resume format', 'CV writing guide', 'resume template'],
     topics: ['Resume format', 'Resume summary', 'Resume skills', 'ATS-friendly resumes', 'Resume tips'],
     sections: [
@@ -321,6 +324,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       'Pakistan’s job market is evolving fast. Discover the highest-paying careers in Pakistan for 2026, including software engineering, AI, data science, cybersecurity, and digital marketing.',
     category: 'Salary Guide',
+    image: '/jobsNumero.png',
     keywords: [
       'highest paying jobs in Pakistan',
       'best careers in Pakistan 2026',
@@ -607,6 +611,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       'Prepare for your next interview with 50 common interview questions, sample answers, and practical tips that help you speak confidently and make a strong impression.',
     category: 'Interview Prep',
+    image: '/jobsNumero.png',
     keywords: [
       'job interview questions',
       'interview questions and answers',
@@ -862,6 +867,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       'Artificial Intelligence is one of the biggest drivers of innovation across industries. Discover the top AI jobs, salary expectations, skills, and career paths for 2026.',
     category: 'AI Careers',
+    image: '/jobsNumero.png',
     keywords: [
       'AI jobs 2026',
       'AI careers',

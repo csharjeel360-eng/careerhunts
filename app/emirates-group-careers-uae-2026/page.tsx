@@ -188,7 +188,7 @@ export default function EmiratesGroupCareersPage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70" />
+          
         </div>
 
         <div className="relative mx-auto flex min-h-[400px] flex-col justify-end px-4 py-12 sm:min-h-[500px] sm:px-6 md:min-h-[600px] lg:min-h-[620px] lg:px-10 lg:py-20 xl:px-16 max-w-7xl">

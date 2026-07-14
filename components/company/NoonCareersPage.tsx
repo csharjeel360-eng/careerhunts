@@ -241,13 +241,12 @@ const faqItems: FAQItem[] = [
 ]
 
 const relatedJobs = [
-  { title: 'Amazon UAE Careers', href: 'https://www.amazon.jobs', description: 'Explore global opportunities in technology, operations, and customer experience.' },
-  { title: 'Talabat Careers', href: 'https://careers.talabat.com', description: 'Discover delivery, operations, technology, and support roles across the region.' },
-  { title: 'Careem Careers', href: 'https://careers.careem.com', description: 'Find opportunities in mobility, technology, logistics, and business support.' },
-  { title: 'DP World Careers', href: 'https://www.dpworld.com/careers', description: 'View logistics, port, engineering, and supply chain roles across global hubs.' },
-  { title: 'Emirates Careers', href: 'https://careers.emirates.com', description: 'Browse aviation, customer service, engineering, and corporate roles.' },
-  { title: 'Etihad Careers', href: 'https://careers.etihad.com', description: 'Explore aviation and corporate job openings across the UAE and beyond.' },
-  { title: 'Dubai Airport Careers', href: 'https://careers.dubaiairport.com', description: 'Search airport operations, customer experience, and logistics roles.' },
+  { title: 'Amazon Careers', href: '/amazon-careers-2026', description: 'Explore global opportunities in technology, operations, and customer experience.' },
+  { title: 'DHL Careers UAE', href: '/dhl-careers-uae-2026', description: 'Discover logistics, warehouse, and transport roles across the UAE.' },
+  { title: 'DP World Careers', href: '/dp-world-careers-2026', description: 'View logistics, port, engineering, and supply chain roles across global hubs.' },
+  { title: 'Emirates Group Careers', href: '/emirates-group-careers-uae-2026', description: 'Browse aviation, customer service, engineering, and corporate roles.' },
+  { title: 'FedEx Careers USA', href: '/fedex-careers-usa-2026', description: 'Compare delivery, warehouse, and operations roles in the U.S. market.' },
+  { title: 'Qatar Airways Careers', href: '/qatar-airways-careers-2026', description: 'Explore aviation and corporate job openings in the region.' },
 ]
 
 function AnimatedCounter({ to }: { to: number }) {

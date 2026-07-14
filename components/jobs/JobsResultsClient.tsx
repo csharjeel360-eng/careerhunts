@@ -44,8 +44,8 @@ export default function JobsResultsClient({ initialOpportunities, initialPage, t
                 return (
                   <div key={item.id || `${item.source}-${item.title}`} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 shadow-sm">
                     <div className="flex items-center justify-between gap-3">
-                      <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] ${item.source === 'USAJOBS' ? 'bg-cyan-100 text-cyan-700' : 'bg-emerald-100 text-emerald-700'}`}>
-                        {item.source === 'USAJOBS' ? 'Government' : 'Greenhouse'}
+                      <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] bg-emerald-100 text-emerald-700`}>
+                        External
                       </span>
                       <span className="text-xs font-medium text-slate-500">External</span>
                     </div>

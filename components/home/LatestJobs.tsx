@@ -9,12 +9,12 @@ const careerBlogItems = [
       'Discover Genentech job opportunities in biotech, research, engineering, and commercial roles across the United States with salary insights and application guidance.',
     category: 'Career Guide',
     href: '/genentech-careers-usa-2026',
+    image: '/Genentech%20Careers%20USA%202026.png',
     tags: ['Genentech Careers', 'Biotech Jobs', 'USA Roles'],
     border: 'border-[#005EB8]',
     shadow: 'shadow-[0_25px_70px_-24px_rgba(0,94,184,0.24)]',
     badgeBg: 'bg-[#005EB8]',
     badgeText: 'text-white',
-    titleHover: 'group-hover:text-[#005EB8]'
   },
   {
     title: 'Shopify Careers 2026',
@@ -22,12 +22,12 @@ const careerBlogItems = [
       'Explore Shopify remote jobs, internships, engineering roles, product opportunities, and customer support positions with insights on salaries and benefits.',
     category: 'Career Guide',
     href: '/shopify-careers-2026',
+    image: '/shopify-careers-2026.png',
     tags: ['Shopify Careers', 'Remote Jobs', 'Ecommerce Roles'],
     border: 'border-[#95BF47]',
     shadow: 'shadow-[0_25px_70px_-24px_rgba(149,191,71,0.24)]',
     badgeBg: 'bg-[#95BF47]',
     badgeText: 'text-slate-950',
-    titleHover: 'group-hover:text-[#95BF47]'
   },
   {
     title: 'Emirates Group Careers in UAE 2026',
@@ -35,12 +35,12 @@ const careerBlogItems = [
       'Learn about the latest Emirates Group jobs in UAE across cabin crew, engineering, IT, and airport careers, plus how to apply online successfully.',
     category: 'Career Guide',
     href: '/emirates-group-careers-uae-2026',
+    image: '/Emirates%20Group%20Careers.png',
     tags: ['Emirates Careers', 'UAE Jobs', 'Aviation Roles'],
     border: 'border-[#D71920]',
     shadow: 'shadow-[0_25px_70px_-24px_rgba(215,25,32,0.24)]',
     badgeBg: 'bg-[#D71920]',
     badgeText: 'text-white',
-    titleHover: 'group-hover:text-[#D71920]'
   },
   {
     title: 'Qatar Airways Careers 2026',
@@ -48,12 +48,12 @@ const careerBlogItems = [
       'Explore Qatar Airways job openings across cabin crew, pilots, engineering, operations, and customer service with insight into company benefits and application tips.',
     category: 'Career Guide',
     href: '/qatar-airways-careers-2026',
+    image: '/Qatar%20Airways%20Careers.png',
     tags: ['Qatar Airways', 'Doha Jobs', 'Aviation Careers'],
     border: 'border-[#5C0E62]',
     shadow: 'shadow-[0_25px_70px_-24px_rgba(92,14,98,0.24)]',
     badgeBg: 'bg-[#5C0E62]',
     badgeText: 'text-white',
-    titleHover: 'group-hover:text-[#5C0E62]'
   }
 ]
 
@@ -73,39 +73,11 @@ export function LatestJobs({ jobs, mixedJobs }: { jobs?: any[]; mixedJobs?: any[
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {mixedJobs.slice(0, 9).map((item: any) => {
-              const isLiveJob = item.source === 'Greenhouse' || item.source === 'USAJOBS'
-
-              if (isLiveJob) {
-                return (
-                  <div key={item.id || `${item.source}-${item.title}`} className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] ${item.source === 'USAJOBS' ? 'bg-cyan-100 text-cyan-700' : 'bg-emerald-100 text-emerald-700'}`}>
-                        {item.source === 'USAJOBS' ? 'Government' : 'Greenhouse'}
-                      </span>
-                      <span className="text-xs font-medium text-slate-500">External</span>
-                    </div>
-                    <h4 className="mt-4 text-lg font-semibold text-slate-900">{item.title}</h4>
-                    <p className="mt-2 text-sm text-slate-600">{item.company}</p>
-                    <p className="mt-3 text-sm text-slate-500">{item.location || 'Remote / Hybrid'}</p>
-                    <a
-                      href={item.applyUrl || '/jobs'}
-                      target={item.applyUrl ? '_blank' : undefined}
-                      rel={item.applyUrl ? 'noreferrer' : undefined}
-                      className="mt-5 inline-flex items-center text-sm font-semibold text-slate-900 transition hover:text-cyan-700"
-                    >
-                      View role <span className="ml-2">→</span>
-                    </a>
-                  </div>
-                )
-              }
-
-              return (
-                <div key={item._id} className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm">
-                  <JobCard job={item} variant="featured" />
-                </div>
-              )
-            })}
+            {mixedJobs.slice(0, 9).map((item: any) => (
+              <div key={item._id || item.id || `${item.source}-${item.title}`} className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm">
+                <JobCard job={item} variant="featured" />
+              </div>
+            ))}
           </div>
         </div>
       ) : (
@@ -137,39 +109,41 @@ export function LatestJobs({ jobs, mixedJobs }: { jobs?: any[]; mixedJobs?: any[
             <Link
               key={item.href}
               href={item.href}
-              className={`group flex min-h-[280px] flex-col justify-between overflow-hidden rounded-[2rem] border ${item.border} bg-white p-6 md:p-7 ${item.shadow} transition duration-300 hover:-translate-y-1 hover:shadow-xl`}
+              className={`group relative flex min-h-[280px] flex-col justify-between overflow-hidden rounded-[2rem] border ${item.border} bg-cover bg-center p-6 md:p-7 ${item.shadow} transition duration-300 hover:-translate-y-1 hover:shadow-xl`}
+              style={{ backgroundImage: `url('${item.image}')` }}
             >
-              <div>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/55 to-black/70" />
+              <div className="relative z-10">
                 <div className={`mb-3 h-1 w-16 rounded-full ${item.badgeBg}`} />
                 <div className="mb-3 flex items-center justify-between gap-3">
                   <span className={`rounded-full px-3 py-1 text-sm font-semibold ${item.badgeBg} ${item.badgeText}`}>
                     {item.category}
                   </span>
-                  <span className="text-sm font-medium text-slate-500">Read guide</span>
+                  <span className="text-sm font-medium text-white">Read guide</span>
                 </div>
                 <div>
-                  <h4 className={`text-xl md:text-2xl font-semibold tracking-tight ${item.titleHover}`}>
+                  <h4 className="text-xl md:text-2xl font-semibold tracking-tight text-white">
                     {item.title}
                   </h4>
-                  <p className="mt-3 text-sm md:text-base leading-6 md:leading-7 text-slate-600 max-h-[4.5rem] overflow-hidden">
+                  <p className="mt-3 text-sm md:text-base leading-6 md:leading-7 text-white/90 max-h-[4.5rem] overflow-hidden">
                     {item.excerpt}
                   </p>
                 </div>
               </div>
-              <div className="mt-6 flex flex-col gap-3 border-t border-slate-200 pt-4 sm:mt-8">
+              <div className="relative z-10 mt-6 flex flex-col gap-3 border-t border-white/25 pt-4 sm:mt-8">
                 <div className="flex flex-wrap gap-2">
                   {item.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs md:text-sm font-medium text-slate-600"
+                      className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-xs md:text-sm font-medium text-white/90"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-slate-900">View full guide</span>
-                  <span className="inline-flex items-center justify-center rounded-full bg-slate-100 px-3 py-1.5 text-sm font-semibold text-slate-900">
+                  <span className="text-sm font-semibold text-white">View full guide</span>
+                  <span className="inline-flex items-center justify-center rounded-full bg-white/15 px-3 py-1.5 text-sm font-semibold text-white">
                     Go
                   </span>
                 </div>

@@ -162,14 +162,12 @@ const faqItems: FAQItem[] = [
 ]
 
 const relatedPages = [
-  { title: 'Amazon Careers UAE', description: 'Explore Amazon jobs in UAE and global tech opportunities.', href: '/amazon-careers-2026' },
-  { title: 'Noon Careers UAE', description: 'Discover retail, operations, logistics, and corporate vacancies.', href: '/noon-careers-uae-2026' },
-  { title: 'Emirates Group Careers', description: 'Find aviation, customer service, and corporate roles in the UAE.', href: '/emirates-group-careers-uae-2026' },
-  { title: 'DP World Careers', description: 'Explore port, logistics, and supply chain career opportunities.', href: '/dp-world-careers-2026' },
-  { title: 'Aramex Careers', description: 'Learn about regional courier and logistics vacancies.', href: '/jobs' },
-  { title: 'Remote Jobs', description: 'Browse remote and hybrid opportunities across the region.', href: '/jobs' },
-  { title: 'Warehouse Jobs in UAE', description: 'Find warehouse and fulfillment jobs across the UAE market.', href: '/jobs' },
-  { title: 'Logistics Jobs in Dubai', description: 'Explore logistics and supply chain roles in Dubai.', href: '/jobs' },
+  { title: 'Amazon Careers', description: 'Explore Amazon jobs in operations, tech, and global logistics.', href: '/amazon-careers-2026' },
+  { title: 'Noon Careers UAE', description: 'Discover e-commerce, logistics, and regional growth opportunities.', href: '/noon-careers-uae-2026' },
+  { title: 'Emirates Group Careers', description: 'Browse aviation, airport, and corporate careers in the UAE.', href: '/emirates-group-careers-uae-2026' },
+  { title: 'DP World Careers', description: 'See port, logistics, and global supply chain roles.', href: '/dp-world-careers-2026' },
+  { title: 'FedEx Careers USA', description: 'Compare warehouse, delivery, and logistics careers in the US.', href: '/fedex-careers-usa-2026' },
+  { title: 'Qatar Airways Careers', description: 'Explore aviation and premium customer-service roles.', href: '/qatar-airways-careers-2026' },
 ]
 
 function FAQAccordion() {

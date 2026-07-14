@@ -178,12 +178,12 @@ const faqItems: FAQItem[] = [
 ]
 
 const relatedJobs = [
-  { title: 'Google Careers', href: 'https://careers.google.com', description: 'Explore global engineering, product, and operations opportunities.' },
-  { title: 'Microsoft Careers', href: 'https://careers.microsoft.com', description: 'Discover roles across cloud, AI, product, and enterprise technology.' },
-  { title: 'Amazon Careers', href: 'https://www.amazon.jobs', description: 'Find innovation-focused roles in e-commerce, operations, and technology.' },
-  { title: 'Apple Careers', href: 'https://jobs.apple.com', description: 'Search roles in design, engineering, operations, and services.' },
-  { title: 'Meta Careers', href: 'https://www.metacareers.com', description: 'Join teams shaping social platforms, AI, and the future of connection.' },
-  { title: 'Stripe Careers', href: 'https://stripe.com/jobs', description: 'Browse opportunities across payments, infrastructure, and fintech.' }
+  { title: 'Amazon Careers', href: '/amazon-careers-2026', description: 'Find innovation-focused roles in e-commerce, operations, and technology.' },
+  { title: 'Genentech Careers USA', href: '/genentech-careers-usa-2026', description: 'Explore biotech, science, and research roles in the United States.' },
+  { title: 'FedEx Careers USA', href: '/fedex-careers-usa-2026', description: 'Browse logistics, delivery, warehouse, and operations careers.' },
+  { title: 'Qatar Airways Careers', href: '/qatar-airways-careers-2026', description: 'Discover aviation, customer service, and corporate opportunities.' },
+  { title: 'DHL Careers UAE', href: '/dhl-careers-uae-2026', description: 'View logistics, warehouse, and transport roles in the UAE.' },
+  { title: 'Noon Careers UAE', href: '/noon-careers-uae-2026', description: 'Explore regional e-commerce and operations career openings.' }
 ]
 
 function AnimatedCounter({ to }: { to: number }) {
@@ -420,7 +420,7 @@ export default function ShopifyCareersPage() {
                   </div>
                   <h3 className={`${poppins.className} mt-4 text-lg font-semibold text-slate-900`}>{category.title}</h3>
                   <p className="mt-2 text-sm leading-7 text-slate-600">{category.description}</p>
-                  <Link href={category.href} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 transition group-hover:gap-3">
+                  <Link href={category.href} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 transition">
                     View opportunities <ArrowRight className="h-4 w-4" />
                   </Link>
                 </motion.div>

@@ -38,9 +38,7 @@ export function LiveJobsFeed({ jobs, error }: LiveJobsFeedProps) {
               <h3 className="mt-2 text-lg font-semibold text-slate-900">{job.title}</h3>
               <p className="mt-1 text-sm text-slate-500">{job.company}</p>
             </div>
-            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600">
-              {job.source === 'USAJOBS' ? 'Government' : 'Private sector'}
-            </span>
+            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600">Private sector</span>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2 text-sm text-slate-600">
