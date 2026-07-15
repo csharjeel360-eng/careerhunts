@@ -253,6 +253,31 @@ export default function BlogPage() {
           </Link>
 
           <Link
+            href="/aecom-careers-uae-2026"
+            className="group relative overflow-hidden rounded-[2rem] border border-[#005DAA] bg-cover bg-center p-8 shadow-[0_25px_70px_-24px_rgba(0,93,170,0.24)] transition"
+            style={{ backgroundImage: `url('/aecom-careers-uae-2026.png')` }}
+          >
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/70 via-white/80 to-white/90" />
+            <div className="relative z-10 flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#005DAA] px-3 py-1 text-sm font-medium text-white">Featured</span>
+              <span className="text-sm font-medium text-white">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-white transition">
+              AECOM Careers in UAE 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-white/90">
+              Explore the latest AECOM vacancies in Dubai, Abu Dhabi, and across the UAE with engineering, architecture, BIM, project management, HSE, and corporate career insights.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['AECOM Careers', 'Engineering Jobs', 'Architecture Jobs', 'Infrastructure Jobs'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-sm text-white/90">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
+          <Link
             href="/amazon-careers-2026"
             className="group relative overflow-hidden rounded-[2rem] border border-[#FF9900] bg-cover bg-center p-8 shadow-[0_25px_70px_-24px_rgba(255,153,0,0.24)] transition"
             style={{ backgroundImage: `url('/amazon-careers-2026.png')` }}
