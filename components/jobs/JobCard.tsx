@@ -67,7 +67,7 @@ export function JobCard({ job, variant = 'latest' }: JobCardProps) {
   const seoSummary = `${job.title} in ${job.city}, ${job.country}. ${job.employmentType} role in ${job.category} with ${salaryText} compensation.`
 
   return (
-    <Card className={`group overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg ${variant === 'featured' ? 'ring-2 ring-cyan-100' : ''}`}>
+    <Card className={`group mx-auto w-[90%] overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg sm:w-full ${variant === 'featured' ? 'ring-2 ring-cyan-100' : ''}`}>
       <CardContent className="p-3 sm:p-4">
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1" />
