@@ -359,7 +359,6 @@ export default function GenentechCareersPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <NativeAd className="mx-auto my-10 max-w-3xl" />
 
       <section className="relative overflow-hidden bg-slate-900 text-white">
         <div className="absolute inset-0">
@@ -414,6 +413,9 @@ export default function GenentechCareersPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+        <div className="mb-8">
+          <NativeAd className="mx-auto max-w-3xl" />
+        </div>
         <div className="grid gap-8 xl:grid-cols-[1.25fr_0.5fr] xl:items-start">
           <div className="space-y-8">
             <div id="about" className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.25)] sm:p-8">
@@ -675,9 +677,16 @@ export default function GenentechCareersPage() {
               <h2 className="mt-2 text-2xl font-semibold text-slate-900">Related Jobs</h2>
               <div className="mt-6 grid gap-4 md:grid-cols-2">
                 {relatedJobs.map((job) => (
-                  <Link key={job.title} href={job.href} className="rounded-[1.25rem] border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:shadow-lg">
-                    <h3 className="text-lg font-semibold text-slate-900">{job.title}</h3>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">{job.description}</p>
+                  <Link key={job.title} href={job.href} className="group flex h-full flex-col rounded-[1.5rem] border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-[#005EB8] hover:shadow-lg">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="text-lg font-semibold text-slate-900">{job.title}</h3>
+                      <span className="rounded-full bg-[#005EB8]/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#005EB8]">Read</span>
+                    </div>
+                    <p className="mt-3 flex-1 text-sm leading-7 text-slate-600">{job.description}</p>
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition group-hover:text-[#005EB8]">
+                      Explore job page
+                      <span className="transition group-hover:translate-x-1">→</span>
+                    </span>
                   </Link>
                 ))}
               </div>

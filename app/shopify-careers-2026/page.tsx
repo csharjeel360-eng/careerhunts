@@ -108,7 +108,6 @@ export default function ShopifyCareersRoutePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-      <NativeAd className="mx-auto my-10 max-w-3xl" />
       <ShopifyCareersPage />
     </>
   )

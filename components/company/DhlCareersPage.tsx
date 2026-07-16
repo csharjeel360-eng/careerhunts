@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { NativeAd } from '@/components/ads/NativeAd'
 import { Inter, Poppins } from 'next/font/google'
 import {
   ArrowRight,
@@ -333,6 +334,7 @@ export default function DhlCareersPage() {
         </section>
 
         <section id="vacancies" className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <NativeAd className="mx-auto mb-8 max-w-3xl" />
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className={`${poppins.className} text-sm font-semibold uppercase tracking-[0.24em] text-[#D40511]`}>Current open vacancies</p>

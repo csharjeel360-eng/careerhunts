@@ -44,7 +44,6 @@ export const metadata: Metadata = {
 export default function DhlCareersRoutePage() {
   return (
     <>
-      <NativeAd className="mx-auto my-10 max-w-3xl" />
       <DhlCareersPage />
     </>
   )

@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { NativeAd } from '@/components/ads/NativeAd'
 import { Inter, Poppins } from 'next/font/google'
 import {
   ArrowRight,
@@ -217,6 +218,7 @@ export default function AmazonCareersPage() {
       </section>
 
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
+        <NativeAd className="mx-auto mb-8 max-w-3xl" />
         <div className="mb-8 hidden rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4 shadow-sm lg:block">
           <div className="flex flex-wrap gap-2">
             {tocItems.map((item) => (

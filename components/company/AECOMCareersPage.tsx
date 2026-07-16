@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { NativeAd } from '@/components/ads/NativeAd'
 
 const sections = [
   { id: 'overview', label: 'Overview' },
@@ -225,6 +226,7 @@ export default function AECOMCareersPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-10 xl:px-16" id="vacancies" data-section>
+        <NativeAd className="mx-auto mb-8 max-w-3xl" />
         <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-gradient-to-br from-[#005DAA] via-[#0c69ae] to-[#f58220] p-6 text-white shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8 lg:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">

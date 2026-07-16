@@ -328,6 +328,31 @@ export default function BlogPage() {
           </Link>
 
           <Link
+            href="/carrefour-hypermarket-careers-2026"
+            className="group relative overflow-hidden rounded-[2rem] border border-[#ff6b2c] bg-cover bg-center p-8 shadow-[0_25px_70px_-24px_rgba(255,107,44,0.24)] transition"
+            style={{ backgroundImage: `url('/carrefour-hypermarket-careers.png')` }}
+          >
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/70 via-white/80 to-white/90" />
+            <div className="relative z-10 flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#ff6b2c] px-3 py-1 text-sm font-medium text-white">Featured</span>
+              <span className="text-sm font-medium text-white">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-white transition">
+              Carrefour Hypermarket Careers 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-white/90">
+              Discover Carrefour retail, warehouse, customer service, supervisor, and store management opportunities with salary guidance, benefits, hiring requirements, and application tips.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Carrefour Careers', 'Retail Jobs', 'Warehouse Jobs', 'Customer Service Jobs'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-sm text-white/90">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
+          <Link
             href="/jobs/numero-senior-software-engineer-backend-remote-usa"
             className="group relative overflow-hidden rounded-[2rem] border border-[#FF6B35] bg-cover bg-center p-8 shadow-[0_25px_70px_-24px_rgba(255,107,53,0.24)] transition"
             style={{ backgroundImage: `url('/jobsNumero.png')` }}

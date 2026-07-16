@@ -208,11 +208,14 @@ export default function JobDetail({ job, similarJobs }: JobDetailProps) {
                 <h2 className="mt-3 text-xl font-semibold text-slate-900 sm:text-2xl">Other roles you may be interested in</h2>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
-                <Link href="/jobs" className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">
-                  More jobs
+                <Link href="/jobs" className="inline-flex items-center justify-center rounded-full bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-700">
+                  Browse Available Positions
                 </Link>
-                <Link href="/blog" className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
-                  Latest career insights
+                <Link href="/jobs" className="inline-flex items-center justify-center rounded-full bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">
+                  Learn How to Apply
+                </Link>
+                <Link href="/blog" className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50">
+                  Review Job Requirements
                 </Link>
               </div>
             </div>
@@ -224,6 +227,47 @@ export default function JobDetail({ job, similarJobs }: JobDetailProps) {
             </div>
           </div>
         )}
+
+        <div className="mt-10 rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:mt-12 sm:p-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Career insights</p>
+              <h2 className="mt-3 text-xl font-semibold text-slate-900 sm:text-2xl">Related career articles & resources</h2>
+            </div>
+            <Link href="/blog" className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">
+              View all articles
+            </Link>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <Link href="/blog" className="group rounded-[1.5rem] border border-slate-200 bg-gradient-to-br from-blue-50 to-cyan-50 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+              <div className="rounded-2xl bg-blue-100 p-3 w-fit text-blue-600 text-lg">📚</div>
+              <h3 className="mt-4 text-lg font-semibold text-slate-900 group-hover:text-cyan-700">Getting Started in Your Career</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Essential tips and strategies for launching your professional journey and making a strong first impression.</p>
+              <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600">
+                Read <ArrowRight className="h-4 w-4" />
+              </div>
+            </Link>
+
+            <Link href="/blog" className="group rounded-[1.5rem] border border-slate-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+              <div className="rounded-2xl bg-emerald-100 p-3 w-fit text-emerald-600 text-lg">💼</div>
+              <h3 className="mt-4 text-lg font-semibold text-slate-900 group-hover:text-emerald-700">Mastering Job Interviews</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Proven techniques to ace interviews, ask smart questions, and demonstrate your value to employers.</p>
+              <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600">
+                Read <ArrowRight className="h-4 w-4" />
+              </div>
+            </Link>
+
+            <Link href="/blog" className="group rounded-[1.5rem] border border-slate-200 bg-gradient-to-br from-purple-50 to-pink-50 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+              <div className="rounded-2xl bg-purple-100 p-3 w-fit text-purple-600 text-lg">🚀</div>
+              <h3 className="mt-4 text-lg font-semibold text-slate-900 group-hover:text-purple-700">Career Growth Strategies</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Learn how to advance your career, develop new skills, and build a professional network that opens doors.</p>
+              <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-purple-600">
+                Read <ArrowRight className="h-4 w-4" />
+              </div>
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   )

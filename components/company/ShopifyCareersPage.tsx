@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { NativeAd } from '@/components/ads/NativeAd'
 import { motion } from 'framer-motion'
 import { Inter, Poppins } from 'next/font/google'
 import {
@@ -311,6 +312,9 @@ export default function ShopifyCareersPage() {
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 md:px-8 lg:grid-cols-[1.15fr_0.55fr] lg:gap-10 lg:px-10 lg:py-12 xl:px-16">
+        <div className="lg:col-span-2">
+          <NativeAd className="mx-auto mb-8 max-w-3xl" />
+        </div>
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_80px_-30px_rgba(15,23,42,0.3)] sm:p-8">
           <div className="flex items-center gap-3">
             <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700"><Building2 className="h-6 w-6" /></div>
@@ -595,13 +599,17 @@ export default function ShopifyCareersPage() {
             </div>
             <div className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {relatedJobs.map((job) => (
-                <div key={job.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                  <p className={`${poppins.className} text-base font-semibold text-slate-900`}>{job.title}</p>
-                  <p className="mt-2 text-sm leading-7 text-slate-600">{job.description}</p>
-                  <Link href={job.href} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700">
-                    Explore <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
+                <Link key={job.title} href={job.href} target="_blank" rel="noreferrer" className="group flex h-full flex-col rounded-[1.5rem] border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-emerald-500 hover:shadow-lg">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className={`${poppins.className} text-base font-semibold text-slate-900`}>{job.title}</p>
+                    <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">Read</span>
+                  </div>
+                  <p className="mt-3 flex-1 text-sm leading-7 text-slate-600">{job.description}</p>
+                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition group-hover:text-emerald-700">
+                    Explore job page
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                  </span>
+                </Link>
               ))}
             </div>
           </section>

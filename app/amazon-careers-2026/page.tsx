@@ -40,7 +40,6 @@ export const metadata: Metadata = {
 export default function AmazonCareersRoutePage() {
   return (
     <>
-      <NativeAd className="mx-auto my-10 max-w-3xl" />
       <AmazonCareersPage />
     </>
   )

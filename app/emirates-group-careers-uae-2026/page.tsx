@@ -177,7 +177,6 @@ export default function EmiratesGroupCareersPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <NativeAd className="mx-auto my-10 max-w-3xl" />
 
       <section className="relative overflow-hidden bg-slate-900 text-white">
         <div className="absolute inset-0 opacity-80">
@@ -223,6 +222,7 @@ export default function EmiratesGroupCareersPage() {
       </section>
 
       <section className="container mx-auto px-4 py-8 sm:px-6 md:py-12 lg:px-16">
+        <NativeAd className="mx-auto mb-8 max-w-3xl" />
         <div className="grid gap-6 lg:gap-8 lg:grid-cols-[1.4fr_0.85fr] lg:items-start xl:grid-cols-[1.4fr_0.85fr]">
           <div className="space-y-6 sm:space-y-8 lg:space-y-10">
             <div className="rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 lg:p-8 shadow-sm">
@@ -408,9 +408,16 @@ export default function EmiratesGroupCareersPage() {
                 <h2 className="text-lg lg:text-xl font-semibold text-slate-900">Related careers</h2>
                 <div className="mt-5 lg:mt-6 space-y-4">
                   {relatedJobs.map((job) => (
-                    <Link key={job.title} href={job.href} className="block rounded-2xl lg:rounded-3xl border border-slate-200 bg-slate-50 p-4 lg:p-5 transition hover:border-[#D71920]">
-                      <h3 className="text-sm lg:text-base font-semibold text-slate-900">{job.title}</h3>
+                    <Link key={job.title} href={job.href} className="group flex flex-col rounded-2xl lg:rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-4 lg:p-5 shadow-sm transition hover:-translate-y-1 hover:border-[#D71920] hover:shadow-lg">
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="text-sm lg:text-base font-semibold text-slate-900">{job.title}</h3>
+                        <span className="rounded-full bg-[#D71920]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D71920]">Read</span>
+                      </div>
                       <p className="mt-2 text-xs lg:text-sm text-slate-600 line-clamp-2">{job.description}</p>
+                      <span className="mt-3 inline-flex items-center gap-2 text-xs lg:text-sm font-semibold text-slate-700 transition group-hover:text-[#D71920]">
+                        Explore job page
+                        <span className="transition group-hover:translate-x-1">→</span>
+                      </span>
                     </Link>
                   ))}
                 </div>
@@ -423,9 +430,16 @@ export default function EmiratesGroupCareersPage() {
           <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">Related Careers</h2>
           <div className="mt-5 sm:mt-6 space-y-4">
             {relatedJobs.map((job) => (
-              <Link key={job.title} href={job.href} className="block rounded-2xl sm:rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5 transition hover:border-[#D71920]">
-                <h3 className="text-sm sm:text-base font-semibold text-slate-900">{job.title}</h3>
+              <Link key={job.title} href={job.href} className="group flex flex-col rounded-2xl sm:rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-4 sm:p-5 shadow-sm transition hover:-translate-y-1 hover:border-[#D71920] hover:shadow-lg">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-sm sm:text-base font-semibold text-slate-900">{job.title}</h3>
+                  <span className="rounded-full bg-[#D71920]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D71920]">Read</span>
+                </div>
                 <p className="mt-2 text-xs sm:text-sm text-slate-600 line-clamp-2">{job.description}</p>
+                <span className="mt-3 inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700 transition group-hover:text-[#D71920]">
+                  Explore job page
+                  <span className="transition group-hover:translate-x-1">→</span>
+                </span>
               </Link>
             ))}
           </div>

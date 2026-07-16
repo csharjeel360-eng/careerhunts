@@ -44,6 +44,7 @@ import {
   generateOrganizationSchema,
   generateWebPageSchema,
 } from '@/lib/seo'
+import { NativeAd } from '@/components/ads/NativeAd'
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
 const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
@@ -335,7 +336,11 @@ export default function FedExCareersPage() {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-8">
-            <section id="about" className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-10 xl:px-16">
+        <NativeAd className="mx-auto max-w-3xl" />
+      </div>
+
+      <section id="about" className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
               <div className="flex items-center gap-3">
                 <div className="rounded-2xl bg-[#F4ECFF] p-3 text-[#4D148C]">
                   <Building2 className="h-5 w-5" />

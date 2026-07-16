@@ -124,7 +124,6 @@ export default function AECOMCareersRoutePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingCollectionSchema) }} />
-      <NativeAd className="mx-auto my-10 max-w-3xl" />
       <AECOMCareersPage />
     </>
   )

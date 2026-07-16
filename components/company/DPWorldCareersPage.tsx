@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { NativeAd } from '@/components/ads/NativeAd'
 
 const sections = [
   { id: 'overview', label: 'Overview' },
@@ -315,6 +316,14 @@ export default function DPWorldCareersPage() {
           </div>
         </div>
       </section>
+
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-10 xl:px-16">
+        <NativeAd className="mx-auto max-w-3xl" />
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-10 xl:px-16">
+        <NativeAd className="mx-auto max-w-3xl" />
+      </div>
 
       <section className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1.3fr_0.7fr] lg:px-10 lg:py-12 xl:px-16" id="overview" data-section>
         <div className="space-y-6">
