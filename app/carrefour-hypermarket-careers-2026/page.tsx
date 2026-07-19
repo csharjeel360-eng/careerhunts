@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import CarrefourCareersPage from '@/components/company/CarrefourCareersPage'
+import { getCanonicalUrl } from '@/lib/seo'
 
 const pageTitle = 'Carrefour Hypermarket Careers 2026 – Latest Job Vacancies & Apply Online'
 const pageDescription = 'Explore Carrefour Hypermarket Careers 2026. Discover latest Carrefour jobs, retail and warehouse roles, salaries, benefits, hiring process, and apply through the official careers portal.'
@@ -20,12 +21,12 @@ export const metadata: Metadata = {
     'Carrefour Salary',
   ],
   alternates: {
-    canonical: 'https://careerhunt.online/carrefour-hypermarket-careers-2026',
+    canonical: getCanonicalUrl('/carrefour-hypermarket-careers-2026'),
   },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/carrefour-hypermarket-careers-2026',
+    url: getCanonicalUrl('/carrefour-hypermarket-careers-2026'),
     siteName: 'CareerHunt',
     type: 'article',
   },

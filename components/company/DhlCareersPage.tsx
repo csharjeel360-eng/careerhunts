@@ -37,6 +37,7 @@ import {
   generateFAQSchema,
   generateOrganizationSchema,
   generateWebPageSchema,
+  getCanonicalUrl,
 } from '@/lib/seo'
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
@@ -209,7 +210,7 @@ export default function DhlCareersPage() {
   const articleSchema = useMemo(() => generateArticleSchema({
     title: 'DHL Careers UAE 2026 | Latest DHL Dubai Jobs & Apply Online',
     description: 'Explore the latest DHL careers in UAE. Discover DHL jobs in Dubai and Abu Dhabi, including warehouse assistant, courier, logistics, air freight, customer service, supply chain, sales, and corporate opportunities.',
-    url: 'https://careerhunt.com/dhl-careers-uae-2026',
+    url: getCanonicalUrl('/dhl-careers-uae-2026'),
     datePublished: '2026-07-10',
     authorName: 'CareerHunt Editorial Team',
     keywords: ['DHL Careers UAE', 'DHL Jobs Dubai', 'DHL Careers Dubai', 'DHL Warehouse Jobs', 'DHL Logistics Jobs UAE', 'DHL Courier Jobs', 'DHL Supply Chain Careers', 'DHL Express Careers', 'DHL Driver Jobs UAE', 'Logistics Jobs Dubai', 'Warehouse Jobs UAE', 'Air Freight Jobs Dubai', 'UAE Logistics Careers', 'DHL Careers 2026'],
@@ -219,7 +220,7 @@ export default function DhlCareersPage() {
   const webPageSchema = useMemo(() => generateWebPageSchema({
     title: 'DHL Careers UAE 2026 | Latest DHL Dubai Jobs & Apply Online',
     description: 'Explore the latest DHL careers in UAE. Discover DHL jobs in Dubai and Abu Dhabi, including warehouse assistant, courier, logistics, air freight, customer service, supply chain, sales, and corporate opportunities.',
-    url: 'https://careerhunt.com/dhl-careers-uae-2026',
+    url: getCanonicalUrl('/dhl-careers-uae-2026'),
     breadcrumbItems: [
       { name: 'Home', item: '/' },
       { name: 'Jobs', item: '/jobs' },

@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { getCategories, getCountries, getCities, getJobs } from '@/lib/api'
 import { getLiveJobs } from '@/lib/live-jobs'
+import { getCanonicalUrl } from '@/lib/seo'
 
 export const revalidate = 60
 
@@ -14,12 +15,12 @@ export const metadata: Metadata = {
   title: 'Find Jobs in Pakistan and Worldwide',
   description: 'Browse live job opportunities, filter by category, location, and experience level, and discover your next career move with CareerHunt.',
   alternates: {
-    canonical: 'https://careerhunt.com/jobs'
+    canonical: getCanonicalUrl('/jobs')
   },
   openGraph: {
     title: 'Find Jobs in Pakistan and Worldwide',
     description: 'Browse live job opportunities, filter by category, location, and experience level, and discover your next career move with CareerHunt.',
-    url: 'https://careerhunt.com/jobs',
+    url: getCanonicalUrl('/jobs'),
     siteName: 'CareerHunt',
     type: 'website'
   }

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { NativeAd } from '@/components/ads/NativeAd'
-import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema } from '@/lib/seo'
+import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, getCanonicalUrl } from '@/lib/seo'
 
 const pageTitle = 'Qatar Airways Careers 2026 | Latest Job Vacancies & Apply Online'
 const pageDescription = 'Explore the latest Qatar Airways Careers in 2026. Find Cabin Crew, Engineering, Pilots, IT, Airport Operations, Customer Services, Cargo, and Corporate job vacancies. Learn about eligibility, salary, employee benefits, hiring process, and apply online.'
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: pageDescription,
   keywords: ['Qatar Airways Careers', 'Qatar Airways Jobs', 'Qatar Jobs', 'Doha Jobs', 'Cabin Crew Jobs', 'Pilot Jobs', 'Engineering Jobs Qatar', 'Airport Jobs Qatar', 'Aviation Jobs 2026', 'Customer Service Jobs Qatar'],
   alternates: {
-    canonical: 'https://careerhunt.online/qatar-airways-careers-2026'
+    canonical: getCanonicalUrl('/qatar-airways-careers-2026')
   },
   openGraph: {
     title: pageTitle,

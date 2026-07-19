@@ -37,6 +37,9 @@ export function Footer() {
               <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
             </li>
             <li>
+              <Link href="/cookies" className="hover:text-white">Cookie Policy</Link>
+            </li>
+            <li>
               <Link href="/terms" className="hover:text-white">Terms</Link>
             </li>
             <li>

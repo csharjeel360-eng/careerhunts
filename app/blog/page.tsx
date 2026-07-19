@@ -128,6 +128,31 @@ export default function BlogPage() {
           </Link>
 
           <Link
+            href="/gems-education-careers-uae-2026"
+            className="group relative overflow-hidden rounded-[2rem] border border-[#FF6B35] bg-cover bg-center p-8 shadow-[0_25px_70px_-24px_rgba(255,107,53,0.24)] transition"
+            style={{ backgroundImage: `url('/UAE%20education%20careers%20(1).png')` }}
+          >
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/70 via-white/80 to-white/90" />
+            <div className="relative z-10 flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#FF6B35] px-3 py-1 text-sm font-medium text-white">Featured</span>
+              <span className="text-sm font-medium text-white">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-white transition">
+              GEMS Education Careers UAE 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-white/90">
+              Explore GEMS Education teaching and corporate careers across the UAE, including school leadership, salary expectations, benefits, visa guidance, and application insights.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['GEMS Education', 'UAE Jobs', 'Teaching Careers', 'School Leadership'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-sm text-white/90">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
+          <Link
             href="/dp-world-careers-2026"
             className="group relative overflow-hidden rounded-[2rem] border border-[#00A651] bg-cover bg-center p-8 shadow-[0_25px_70px_-24px_rgba(0,166,81,0.24)] transition"
             style={{ backgroundImage: `url('/DP%20World%20Careers.png')` }}

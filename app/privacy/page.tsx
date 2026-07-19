@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import { LegalPage } from '@/components/legal/LegalPage'
+import { getCanonicalUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'Read CareerHunt privacy practices for account data, job applications, and platform security.',
   alternates: {
-    canonical: 'https://careerhunt.com/privacy'
+    canonical: getCanonicalUrl('/privacy')
   }
 }
 
@@ -35,7 +36,7 @@ const sections = [
     heading: 'Your Choices',
     body: [
       'You may update or request deletion of your account information where applicable and as permitted by law.',
-      'If you have any questions about your personal data, please contact us at support@jobboard.com.'
+      'If you have any questions about your personal data, please contact us at careerhunt233@gmail.com.'
     ]
   }
 ]

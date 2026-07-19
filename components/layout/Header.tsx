@@ -23,11 +23,13 @@ export function Header() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedAdmin = localStorage.getItem('adminUser')
-      if (storedAdmin) {
+      if (storedAdmin && storedAdmin.trim()) {
         try {
           const parsedAdmin = JSON.parse(storedAdmin)
-          if (parsedAdmin?.role === 'admin') {
+          if (parsedAdmin && typeof parsedAdmin === 'object' && parsedAdmin.role === 'admin') {
             setAdminUser(parsedAdmin)
+          } else {
+            localStorage.removeItem('adminUser')
           }
         } catch {
           localStorage.removeItem('adminUser')

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { NativeAd } from '@/components/ads/NativeAd'
 import DPWorldCareersPage from '@/components/company/DPWorldCareersPage'
-import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, generateWebPageSchema } from '@/lib/seo'
+import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, generateWebPageSchema, getCanonicalUrl } from '@/lib/seo'
 
 const pageTitle = 'DP World Careers 2026 | Latest Logistics, Port & Supply Chain Jobs'
 const pageDescription = 'Discover the latest DP World Careers 2026. Explore logistics, engineering, IT, warehouse, finance, supply chain, and port operations jobs. Learn about salaries, benefits, hiring process, and apply online.'
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     'Dubai Logistics Jobs',
   ],
   alternates: {
-    canonical: 'https://careerhunt.online/dp-world-careers-2026',
+    canonical: getCanonicalUrl('/dp-world-careers-2026'),
   },
   openGraph: {
     title: pageTitle,

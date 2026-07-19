@@ -1,6 +1,11 @@
+import { DelayedRouteLoader } from '@/components/ui/DelayedRouteLoader'
+
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)] px-4 py-10 sm:px-6 lg:px-8">
+    <DelayedRouteLoader
+      delayMs={250}
+      className="min-h-screen bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)] px-4 py-10 sm:px-6 lg:px-8"
+    >
       <div className="mx-auto max-w-7xl space-y-8">
         <div className="mx-auto max-w-4xl space-y-4 text-center">
           <div className="mx-auto h-10 w-40 animate-pulse rounded-full bg-slate-200" />
@@ -30,6 +35,6 @@ export default function Loading() {
           ))}
         </div>
       </div>
-    </div>
+    </DelayedRouteLoader>
   )
 }

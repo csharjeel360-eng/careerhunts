@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface BannerAd728x90Props {
   className?: string
@@ -9,9 +9,16 @@ interface BannerAd728x90Props {
 export function BannerAd728x90({ className = '' }: BannerAd728x90Props) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const scriptIdRef = useRef(`adsterra-banner-728x90-${Math.random().toString(36).slice(2)}`)
+  const [showFallback, setShowFallback] = useState(false)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
+
+    const isLocalEnvironment = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+    if (process.env.NODE_ENV !== 'production' || isLocalEnvironment) {
+      setShowFallback(true)
+      return
+    }
 
     const win = window as any
     win.atOptions = {
@@ -26,6 +33,8 @@ export function BannerAd728x90({ className = '' }: BannerAd728x90Props) {
     script.id = scriptIdRef.current
     script.src = 'https://www.highperformanceformat.com/2f69d75f7efe51fce97e0290d98b88d8/invoke.js'
     script.async = true
+    script.onload = () => setShowFallback(false)
+    script.onerror = () => setShowFallback(true)
 
     if (containerRef.current) {
       containerRef.current.appendChild(script)
@@ -46,7 +55,13 @@ export function BannerAd728x90({ className = '' }: BannerAd728x90Props) {
           <p className="text-xs text-slate-500">Non-disruptive 728x90 ad placement</p>
         </div>
       </div>
-      <div ref={containerRef} className="mt-4 flex justify-center" />
+      {showFallback ? (
+        <div className="mt-4 flex min-h-[90px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 text-center text-sm text-slate-500">
+          Banner ad is unavailable in this environment.
+        </div>
+      ) : (
+        <div ref={containerRef} className="mt-4 flex justify-center" />
+      )}
     </div>
   )
 }

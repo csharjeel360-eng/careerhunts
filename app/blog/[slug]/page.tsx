@@ -82,12 +82,12 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
           </div>
 
           <div className="mt-10 space-y-8">
-            {post.sections.map((section) => (
-              <div key={section.heading} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            {post.sections.map((section, sectionIndex) => (
+              <div key={`${section.heading}-${sectionIndex}`} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                 <h2 className="text-xl font-semibold text-slate-900">{section.heading}</h2>
                 <div className="mt-4 space-y-3 text-base leading-8 text-slate-700">
-                  {section.content.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
+                  {section.content.map((paragraph, paragraphIndex) => (
+                    <p key={`${sectionIndex}-${paragraphIndex}`}>{paragraph}</p>
                   ))}
                 </div>
               </div>

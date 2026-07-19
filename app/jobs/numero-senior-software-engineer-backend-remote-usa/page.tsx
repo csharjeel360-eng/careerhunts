@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import NumeroJobPage from '@/components/jobs/NumeroJobPage'
+import { getCanonicalUrl } from '@/lib/seo'
 
 const structuredData = [
   {
@@ -78,9 +79,9 @@ const structuredData = [
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://careerhunt.com/' },
-      { '@type': 'ListItem', position: 2, name: 'Jobs', item: 'https://careerhunt.com/jobs' },
-      { '@type': 'ListItem', position: 3, name: 'Senior Software Engineer (Backend)', item: 'https://careerhunt.com/numero-senior-software-engineer-backend-remote-usa' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: getCanonicalUrl('/') },
+      { '@type': 'ListItem', position: 2, name: 'Jobs', item: getCanonicalUrl('/jobs') },
+      { '@type': 'ListItem', position: 3, name: 'Senior Software Engineer (Backend)', item: getCanonicalUrl('/numero-senior-software-engineer-backend-remote-usa') },
     ],
   },
   {
@@ -117,7 +118,7 @@ const structuredData = [
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'Senior Software Engineer (Backend) at Numero',
-    url: 'https://careerhunt.com/numero-senior-software-engineer-backend-remote-usa',
+    url: getCanonicalUrl('/numero-senior-software-engineer-backend-remote-usa'),
     description: 'Explore the Numero Senior Software Engineer (Backend) role, responsibilities, benefits, salary range, and hiring process.',
     inLanguage: 'en-US',
   },
@@ -139,12 +140,12 @@ export const metadata: Metadata = {
     'Career Hunt',
   ],
   alternates: {
-    canonical: 'https://careerhunt.com/numero-senior-software-engineer-backend-remote-usa',
+    canonical: getCanonicalUrl('/numero-senior-software-engineer-backend-remote-usa'),
   },
   openGraph: {
     title: 'Senior Software Engineer (Backend) at Numero | Remote USA | Apply Online',
     description: 'Apply for the Senior Software Engineer (Backend) job at Numero. Remote U.S. position with a salary of $160,000–$200,000 per year.',
-    url: 'https://careerhunt.com/numero-senior-software-engineer-backend-remote-usa',
+    url: getCanonicalUrl('/numero-senior-software-engineer-backend-remote-usa'),
     siteName: 'Career Hunt',
     type: 'article',
     locale: 'en_US',

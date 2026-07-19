@@ -1,5 +1,82 @@
-const SITE_URL = 'https://careerhunt.com'
+import type { Metadata } from 'next'
+
+export const SITE_URL = 'https://careerhunt.online'
+export const SITE_HOSTNAME = 'careerhunt.online'
 const SITE_NAME = 'CareerHunt'
+
+export function getCanonicalUrl(path: string) {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`
+  return new URL(normalizedPath, SITE_URL).toString()
+}
+
+export function getDefaultMetadata(): Metadata {
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: 'CareerHunt',
+      template: '%s | CareerHunt'
+    },
+    icons: {
+      icon: '/icon.svg',
+      shortcut: '/icon.svg',
+      apple: '/icon.svg',
+    },
+    description:
+      'Discover job opportunities, salary insights, and career resources to help you grow your professional path with confidence.',
+    keywords: ['jobs', 'career opportunities', 'salary guide', 'job search', 'recruitment', 'professional growth'],
+    authors: [{ name: 'CareerHunt' }],
+    creator: 'CareerHunt',
+    publisher: 'CareerHunt',
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    openGraph: {
+      type: 'website',
+      locale: 'en_US',
+      url: SITE_URL,
+      title: 'CareerHunt | Jobs, Salary Guides & Career Resources',
+      description: 'Discover job opportunities, salary insights, and career resources to help you grow your professional path with confidence.',
+      siteName: 'CareerHunt',
+      images: [
+        {
+          url: '/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'CareerHunt'
+        }
+      ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'CareerHunt | Jobs, Salary Guides & Career Resources',
+      description: 'Discover job opportunities, salary insights, and career resources to help you grow your professional path with confidence.',
+      images: ['/og-image.jpg']
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    category: 'jobs',
+    verification: {
+      google: '',
+      other: {
+        'msvalidate.01': 'FF72EC1DD9AE9C2F2BB277908AD0BBDD',
+      },
+    },
+    alternates: {
+      canonical: getCanonicalUrl('/'),
+    },
+  }
+}
 
 export function generateOrganizationSchema() {
   return {

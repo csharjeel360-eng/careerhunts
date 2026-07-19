@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { NativeAd } from '@/components/ads/NativeAd'
 import DhlCareersPage from '@/components/company/DhlCareersPage'
+import { getCanonicalUrl } from '@/lib/seo'
 
 const pageTitle = 'DHL Careers UAE 2026 | Latest DHL Dubai Jobs & Apply Online'
 const pageDescription = 'Explore the latest DHL Careers in UAE. Discover DHL jobs in Dubai and Abu Dhabi, including Warehouse Assistant, Courier, Logistics, Air Freight, Customer Service, Supply Chain, Sales, and Corporate opportunities. Learn about salaries, benefits, hiring requirements, and apply through the official DHL Careers website.'
@@ -25,12 +26,12 @@ export const metadata: Metadata = {
     'DHL Careers 2026',
   ],
   alternates: {
-    canonical: 'https://careerhunt.com/dhl-careers-uae-2026',
+    canonical: getCanonicalUrl('/dhl-careers-uae-2026'),
   },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.com/dhl-careers-uae-2026',
+    url: getCanonicalUrl('/dhl-careers-uae-2026'),
     siteName: 'CareerHunt',
     type: 'article',
   },

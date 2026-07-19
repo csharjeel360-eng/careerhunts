@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowLeft, BookOpen, Sparkles } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { careerResources } from '@/lib/careerResourceData'
+import { getCanonicalUrl } from '@/lib/seo'
 
 interface CareerResourceDetailPageProps {
   params: Promise<{ slug: string }>
@@ -23,13 +24,13 @@ export async function generateMetadata({ params }: CareerResourceDetailPageProps
     title: resource.title,
     description: resource.excerpt,
     alternates: {
-      canonical: `https://careerhunt.com/career-resources/${resource.slug}`
+      canonical: getCanonicalUrl(`/career-resources/${resource.slug}`)
     },
     keywords: [resource.category, 'career resources', 'job search tips', 'professional growth'],
     openGraph: {
       title: resource.title,
       description: resource.excerpt,
-      url: `https://careerhunt.com/career-resources/${resource.slug}`,
+      url: getCanonicalUrl(`/career-resources/${resource.slug}`),
       type: 'article'
     },
     twitter: {

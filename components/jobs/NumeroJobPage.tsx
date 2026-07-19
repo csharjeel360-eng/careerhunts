@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { getCanonicalUrl } from '@/lib/seo'
 import {
   ArrowRight,
   Briefcase,
@@ -279,7 +280,7 @@ export default function NumeroJobPage() {
                     {copied ? 'Copied' : 'Copy Link'}
                   </button>
                   <a
-                    href="https://www.linkedin.com/sharing/share-offsite/?url=https://careerhunt.com/numero-senior-software-engineer-backend-remote-usa"
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${getCanonicalUrl('/numero-senior-software-engineer-backend-remote-usa')}`}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-full border border-[#F3F4F6] bg-[#F9FAFB] px-3 py-2 text-sm font-medium text-[#111827] transition hover:border-[#FF6B35] hover:text-[#FF6B35]"

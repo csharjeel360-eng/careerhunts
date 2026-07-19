@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, TrendingUp, Briefcase, Sparkles } from 'lucide-react'
 import { salaryGuides } from '@/lib/salaryGuideData'
+import { getCanonicalUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'Salary Guide 2026 | CareerHunt',
   description: 'Explore salary trends, compensation benchmarks, and career growth insights for in-demand roles in 2026.',
   alternates: {
-    canonical: 'https://careerhunt.com/salary-guide'
+    canonical: getCanonicalUrl('/salary-guide')
   }
 }
 

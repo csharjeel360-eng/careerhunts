@@ -6,7 +6,8 @@ import {
   generateArticleSchema,
   generateBreadcrumbSchema,
   generateFAQSchema,
-  generateOrganizationSchema
+  generateOrganizationSchema,
+  getCanonicalUrl
 } from '@/lib/seo'
 
 const pageTitle = 'Genentech Careers USA 2026 | Latest Biotechnology & Marketing Jobs Apply Online'
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
     'Healthcare Jobs USA'
   ],
   alternates: {
-    canonical: 'https://careerhunt.online/genentech-careers-usa-2026'
+    canonical: getCanonicalUrl('/genentech-careers-usa-2026')
   },
   openGraph: {
     title: pageTitle,

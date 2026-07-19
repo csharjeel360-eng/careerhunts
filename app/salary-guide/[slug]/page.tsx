@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowLeft, TrendingUp, Briefcase, Sparkles } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { salaryGuides } from '@/lib/salaryGuideData'
+import { getCanonicalUrl } from '@/lib/seo'
 
 interface SalaryGuideDetailPageProps {
   params: Promise<{ slug: string }>
@@ -23,13 +24,13 @@ export async function generateMetadata({ params }: SalaryGuideDetailPageProps): 
     title: guide.title,
     description: guide.excerpt,
     alternates: {
-      canonical: `https://careerhunt.com/salary-guide/${guide.slug}`
+      canonical: getCanonicalUrl(`/salary-guide/${guide.slug}`)
     },
     keywords: [guide.category, 'salary guide', '2026 salary', 'career growth', 'salary insights'],
     openGraph: {
       title: guide.title,
       description: guide.excerpt,
-      url: `https://careerhunt.com/salary-guide/${guide.slug}`,
+      url: getCanonicalUrl(`/salary-guide/${guide.slug}`),
       type: 'article'
     },
     twitter: {

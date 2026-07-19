@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import React from 'react'
+import { getCanonicalUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'About CareerHunt | Trusted Job Board & Career Platform',
   description: 'Learn about CareerHunt, our mission, values, and how we help job seekers and employers connect with confidence.',
   alternates: {
-    canonical: 'https://careerhunt.com/about'
+    canonical: getCanonicalUrl('/about')
   }
 }
 

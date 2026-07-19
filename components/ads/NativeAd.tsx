@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Script from 'next/script'
 
 interface NativeAdProps {
@@ -16,6 +17,14 @@ export function NativeAd({
   scriptSrc = defaultScriptSrc,
   className = '',
 }: NativeAdProps) {
+  const [showFallback, setShowFallback] = useState(false)
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') {
+      setShowFallback(true)
+    }
+  }, [])
+
   return (
     <div className={`rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm ${className}`}>
       <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-slate-500">
@@ -23,13 +32,22 @@ export function NativeAd({
         Sponsored content
       </div>
       <div className="min-h-[180px]">
-        <Script
-          id={`adsterra-${containerId}`}
-          strategy="afterInteractive"
-          src={scriptSrc}
-          data-cfasync="false"
-        />
-        <div id={containerId}></div>
+        {showFallback ? (
+          <div className="flex min-h-[180px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 text-center text-sm text-slate-500">
+            Sponsored content is temporarily unavailable in this environment.
+          </div>
+        ) : (
+          <>
+            <Script
+              id={`adsterra-${containerId}`}
+              strategy="afterInteractive"
+              src={scriptSrc}
+              data-cfasync="false"
+              onError={() => setShowFallback(true)}
+            />
+            <div id={containerId}></div>
+          </>
+        )}
       </div>
     </div>
   )

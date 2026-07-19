@@ -63,11 +63,14 @@ export default function AdminDashboard() {
         await loadAnalytics()
       }
 
-      if (storedUser) {
+      if (storedUser && storedUser.trim()) {
         try {
           const parsedUser = JSON.parse(storedUser)
-          await verifyAndLoad(parsedUser)
-          return
+          if (parsedUser && typeof parsedUser === 'object') {
+            await verifyAndLoad(parsedUser)
+            return
+          }
+          localStorage.removeItem('adminUser')
         } catch {
           localStorage.removeItem('adminUser')
         }

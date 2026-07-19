@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import { getJobBySlug, getLatestJobs } from '@/lib/api'
 import JobDetail from '@/components/jobs/JobDetail'
-import { generateJobSchema, generateBreadcrumbSchema } from '@/lib/seo'
+import { generateJobSchema, generateBreadcrumbSchema, getCanonicalUrl } from '@/lib/seo'
 
 interface JobPageProps {
   params: Promise<{ slug: string }>
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
     openGraph: {
       title: `${job.title} at ${companyName}`,
       description: job.summary || `Apply for ${job.title} position at ${companyName}`,
-      url: `https://your-job-board.com/jobs/${job.slug}`,
+      url: getCanonicalUrl(`/jobs/${job.slug}`),
       type: 'article',
       publishedTime: job.postedDate,
       modifiedTime: job.updatedAt,
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
       description: job.summary || `Apply for ${job.title} position at ${companyName}`,
     },
     alternates: {
-      canonical: `https://your-job-board.com/jobs/${job.slug}`,
+      canonical: getCanonicalUrl(`/jobs/${job.slug}`),
     },
   }
 }
