@@ -36,7 +36,7 @@ const sections = [
     heading: 'Your Choices',
     body: [
       'You may update or request deletion of your account information where applicable and as permitted by law.',
-      'If you have any questions about your personal data, please contact us at careerhunt233@gmail.com.'
+      'If you have any questions about your personal data, please contact us at contact@careerhunt.online.'
     ]
   }
 ]

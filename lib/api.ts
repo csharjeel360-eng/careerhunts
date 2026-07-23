@@ -16,10 +16,16 @@ const getDefaultApiUrl = () => {
 const resolveApiUrl = (envUrl?: string) => {
   const trimmed = envUrl?.trim() || ''
   if (!trimmed) return getDefaultApiUrl()
-  if (typeof window !== 'undefined' && trimmed.includes('localhost:5000') && !window.location.hostname.includes('localhost')) {
+
+  if (trimmed.includes('localhost:5000')) {
     return getDefaultApiUrl()
   }
-  return normalizeApiUrl(trimmed)
+
+  if (trimmed.includes('vercel.app') || trimmed.includes('netlify.app') || trimmed.includes('render.com')) {
+    return normalizeApiUrl(trimmed)
+  }
+
+  return getDefaultApiUrl()
 }
 
 const baseURL = resolveApiUrl(process.env.NEXT_PUBLIC_API_URL)

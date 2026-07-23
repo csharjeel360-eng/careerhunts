@@ -48,7 +48,7 @@ const sections = [
     heading: 'Privacy and data',
     body: [
       'We do not use cookies to collect personal data for advertising purposes. Any analytics data is limited to aggregate usage patterns and is handled in line with our privacy practices.',
-      'If you have questions, contact us at careerhunt233@gmail.com.'
+      'If you have questions, contact us at contact@careerhunt.online.'
     ],
   },
 ]

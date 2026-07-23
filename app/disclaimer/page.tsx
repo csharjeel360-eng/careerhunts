@@ -1,4 +1,13 @@
+import type { Metadata } from 'next'
+import { getPageMetadata } from '@/lib/seo'
 import { LegalPage } from '@/components/legal/LegalPage'
+
+export const metadata: Metadata = getPageMetadata({
+  title: 'Disclaimer | CareerHunt',
+  description: 'Read the CareerHunt disclaimer covering site content and third-party information.',
+  path: '/disclaimer',
+  keywords: ['disclaimer', 'legal', 'CareerHunt', 'site policy'],
+})
 
 const sections = [
   {

@@ -1,5 +1,7 @@
 'use client'
 
+import type { Metadata } from 'next'
+import { getNoIndexMetadata } from '@/lib/seo'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'

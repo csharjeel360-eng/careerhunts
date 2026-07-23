@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { MapPin, Briefcase, DollarSign, Calendar } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { formatSalary } from '@/lib/utils'
+import { formatLocation, formatSalary } from '@/lib/utils'
 
 interface JobCardProps {
   job: {
@@ -64,7 +64,8 @@ export function JobCard({ job, variant = 'latest' }: JobCardProps) {
     ? postedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     : ''
   const salaryText = formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)
-  const seoSummary = `${job.title} in ${job.city}, ${job.country}. ${job.employmentType} role in ${job.category} with ${salaryText} compensation.`
+  const locationText = formatLocation(job.city, job.country)
+  const seoSummary = `${job.title}${locationText ? ` in ${locationText}` : ''}. ${job.employmentType} role in ${job.category} with ${salaryText} compensation.`
 
   return (
     <Card className={`group mx-auto w-[90%] overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg sm:w-full ${variant === 'featured' ? 'ring-2 ring-cyan-100' : ''}`}>
@@ -86,7 +87,7 @@ export function JobCard({ job, variant = 'latest' }: JobCardProps) {
           </div>
         </div>
 
-        <Link href={`/jobs/${job.slug}`} className="mt-3 block" aria-label={`${job.title} in ${job.city}, ${job.country}`}>
+        <Link href={`/jobs/${job.slug}`} className="mt-3 block" aria-label={`${job.title}${locationText ? ` in ${locationText}` : ''}`}>
           <h2 className="text-base font-semibold text-slate-900 transition-colors line-clamp-2">
             {job.title}
           </h2>
@@ -104,10 +105,12 @@ export function JobCard({ job, variant = 'latest' }: JobCardProps) {
         </div>
 
         <div className="mt-2 flex flex-wrap gap-2 text-xs text-slate-600">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2.5 py-1.5 ring-1 ring-slate-200">
-            <MapPin className="h-3.5 w-3.5 text-slate-500" />
-            {job.city}, {job.country}
-          </span>
+          {locationText && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2.5 py-1.5 ring-1 ring-slate-200">
+              <MapPin className="h-3.5 w-3.5 text-slate-500" />
+              {locationText}
+            </span>
+          )}
           <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2.5 py-1.5 ring-1 ring-slate-200">
             <Briefcase className="h-3.5 w-3.5 text-slate-500" />
             {job.employmentType}

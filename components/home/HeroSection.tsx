@@ -86,25 +86,25 @@ export function HeroSection({ categories }: HeroSectionProps) {
                     onChange={(e) => setKeyword(e.target.value)}
                   />
                 </div>
-                <Button type="submit" size="lg" className="w-full rounded-full bg-cyan-500 px-5 py-3 text-sm font-semibold text-white hover:bg-cyan-400 sm:px-6">
+                <Button type="submit" size="lg" className="w-full rounded-full bg-cyan-600 px-5 py-3 text-sm font-semibold text-white hover:bg-cyan-500 sm:px-6">
                   Search jobs
                 </Button>
               </form>
 
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4">
-                  <div className="flex items-center gap-2 text-sm font-medium text-cyan-100">
+                  <div className="flex items-center gap-2 text-sm font-medium text-cyan-50">
                     <TrendingUp className="h-4 w-4" />
                     Market insights
                   </div>
-                  <p className="mt-2 text-sm text-slate-300">Track salary trends and discover what employers are paying today.</p>
+                  <p className="mt-2 text-sm text-slate-200">Track salary trends and discover what employers are paying today.</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4">
-                  <div className="flex items-center gap-2 text-sm font-medium text-cyan-100">
+                  <div className="flex items-center gap-2 text-sm font-medium text-cyan-50">
                     <Briefcase className="h-4 w-4" />
                     Fresh listings
                   </div>
-                  <p className="mt-2 text-sm text-slate-300">Browse new opportunities across growth-focused companies and industries.</p>
+                  <p className="mt-2 text-sm text-slate-200">Browse new opportunities across growth-focused companies and industries.</p>
                 </div>
               </div>
 

@@ -1,6 +1,15 @@
+import type { Metadata } from 'next'
+import { getPageMetadata } from '@/lib/seo'
 import React from 'react'
 import Link from 'next/link'
 import { getCompanies } from '@/lib/api'
+
+export const metadata: Metadata = getPageMetadata({
+  title: 'Companies Hiring | CareerHunt',
+  description: 'Explore top employers currently hiring on CareerHunt and view their open roles.',
+  path: '/companies',
+  keywords: ['companies hiring', 'employers', 'job openings', 'CareerHunt'],
+})
 
 export default async function CompaniesPage() {
   const companies = await getCompanies()

@@ -65,7 +65,7 @@ export function LatestJobs({ jobs, mixedJobs }: { jobs?: any[]; mixedJobs?: any[
           <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Latest opportunities</p>
-              <h3 className="mt-2 text-2xl font-semibold text-slate-900">9 newest jobs from the latest sources</h3>
+              <h2 className="mt-2 text-2xl font-semibold text-slate-900">Latest opportunities from trusted sources</h2>
             </div>
             <Link href="/jobs" className="text-sm font-semibold text-slate-700 transition hover:text-slate-900">
               View all roles
@@ -86,7 +86,7 @@ export function LatestJobs({ jobs, mixedJobs }: { jobs?: any[]; mixedJobs?: any[
 
       <div className="mt-10 rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-sm">
         <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Explore more opportunities</p>
-        <h3 className="mt-3 text-2xl font-semibold text-slate-900">Find the right role for your next career move</h3>
+        <h2 className="mt-3 text-2xl font-semibold text-slate-900">Find the right role for your next career move</h2>
         <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600">
           Browse all current openings, filter by industry, location and experience, and apply to the jobs that match your goals.
         </p>
@@ -98,7 +98,7 @@ export function LatestJobs({ jobs, mixedJobs }: { jobs?: any[]; mixedJobs?: any[
       <section className="mt-16 rounded-[2rem] border border-slate-200 bg-slate-50 p-8 shadow-sm">
         <div className="mb-8 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Career insights</p>
-          <h3 className="mt-3 text-3xl font-semibold text-slate-900">Featured career guides</h3>
+          <h2 className="mt-3 text-3xl font-semibold text-slate-900">Featured career guides</h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600">
             Explore major company career guides with detailed hiring and salary insights for top employers in 2026.
           </p>

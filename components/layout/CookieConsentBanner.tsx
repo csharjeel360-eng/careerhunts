@@ -46,8 +46,8 @@ export function CookieConsentBanner() {
           <p className="text-sm font-semibold">We use cookies to improve site experience and measurement.</p>
           <p className="mt-1 text-sm text-slate-300">
             Accept for analytics and essential site functionality, or reject non-essential tracking.{' '}
-            <Link href="/cookies" className="font-medium text-cyan-300 underline-offset-2 hover:underline">
-              Learn more
+            <Link href="/cookies" aria-label="Cookie Policy — CareerHunt" className="font-medium text-cyan-300 underline-offset-2 hover:underline">
+              Cookie Policy
             </Link>
             .
           </p>

@@ -26,8 +26,8 @@ export default function ContactPage() {
           <div className="mt-8 space-y-6 text-slate-700">
             <div>
               <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Email</p>
-              <a href="mailto:careerhunt233@gmail.com" className="mt-2 block text-base text-slate-900 hover:text-slate-700">
-                careerhunt233@gmail.com
+              <a href="mailto:contact@careerhunt.online" className="mt-2 block text-base text-slate-900 hover:text-slate-700">
+                contact@careerhunt.online
               </a>
             </div>
             <div>
@@ -54,8 +54,8 @@ export default function ContactPage() {
           <div className="mt-8 space-y-4 rounded-3xl bg-white p-6 shadow-sm">
             <div>
               <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Support email</p>
-              <a href="mailto:careerhunt233@gmail.com" className="mt-2 block text-base font-medium text-slate-900 hover:text-slate-700">
-                careerhunt233@gmail.com
+              <a href="mailto:contact@careerhunt.online" className="mt-2 block text-base font-medium text-slate-900 hover:text-slate-700">
+                contact@careerhunt.online
               </a>
             </div>
             <div>

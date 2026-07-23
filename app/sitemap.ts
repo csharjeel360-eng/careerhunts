@@ -76,6 +76,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/markq-trading-llc-storekeeper-dubai`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    },
+    {
       url: `${baseUrl}/noon-careers-uae-2026`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,

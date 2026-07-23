@@ -118,6 +118,22 @@ export function normalizeWebsiteUrl(url?: string) {
   return `https://${trimmed}`
 }
 
+export function formatLocation(city?: string, country?: string) {
+  const cityText = city?.trim()
+  const countryText = country?.trim()
+
+  if (cityText && countryText) {
+    return `${cityText}, ${countryText}`
+  }
+  if (countryText) {
+    return countryText
+  }
+  if (cityText) {
+    return cityText
+  }
+  return ''
+}
+
 export function getInitials(name: string) {
   return name
     .split(' ')

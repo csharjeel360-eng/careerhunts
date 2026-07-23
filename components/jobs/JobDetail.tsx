@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { MapPin, Briefcase, Calendar, Globe, ArrowRight, Eye } from 'lucide-react'
-import { formatDate, formatSalary, normalizeWebsiteUrl } from '@/lib/utils'
+import { formatDate, formatLocation, formatSalary, normalizeWebsiteUrl } from '@/lib/utils'
 import { JobCard } from './JobCard'
 import { NativeAd } from '@/components/ads/NativeAd'
 
@@ -13,6 +13,7 @@ export default function JobDetail({ job, similarJobs }: JobDetailProps) {
   const companyDescription = job.companyDescription || job.companyId?.description || 'Company description is not available.'
   const companyWebsite = normalizeWebsiteUrl(job.companyWebsite || job.companyId?.website || '')
   const companyName = job.companyId?.name || job.companyName || 'Company'
+  const locationText = formatLocation(job.city, job.country)
   const workMode = job.workMode || 'Flexible'
   const employmentType = job.employmentType || 'Full-time'
   const salaryLabel = formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)
@@ -55,7 +56,7 @@ export default function JobDetail({ job, similarJobs }: JobDetailProps) {
               <div className="mt-7 grid gap-3 sm:grid-cols-2 2xl:grid-cols-4">
                 <div className="rounded-2xl bg-slate-50 p-4">
                   <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Location</p>
-                  <p className="mt-2 text-sm font-medium text-slate-700">{job.city}, {job.country}</p>
+                  <p className="mt-2 text-sm font-medium text-slate-700">{locationText || 'Not specified'}</p>
                 </div>
                 <div className="rounded-2xl bg-slate-50 p-4">
                   <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Salary</p>

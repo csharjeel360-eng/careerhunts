@@ -6,7 +6,88 @@ const SITE_NAME = 'CareerHunt'
 
 export function getCanonicalUrl(path: string) {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
-  return new URL(normalizedPath, SITE_URL).toString()
+  const canonicalPath = normalizedPath === '/' ? '/' : normalizedPath.replace(/\/+$/, '')
+  return new URL(canonicalPath, SITE_URL).toString()
+}
+
+export function getPageMetadata({
+  title,
+  description,
+  path,
+  keywords,
+}: {
+  title: string
+  description: string
+  path: string
+  keywords?: string[]
+}): Metadata {
+  const canonical = getCanonicalUrl(path)
+
+  return {
+    title,
+    description,
+    keywords,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      siteName: SITE_NAME,
+      type: 'website',
+      images: [
+        {
+          url: '/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/og-image.jpg'],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
+    },
+  }
+}
+
+export function getNoIndexMetadata({
+  title,
+  description,
+  path,
+  keywords,
+}: {
+  title: string
+  description: string
+  path: string
+  keywords?: string[]
+}): Metadata {
+  const metadata = getPageMetadata({ title, description, path, keywords })
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: false,
+      googleBot: {
+        index: false,
+        follow: false,
+      },
+    },
+  }
 }
 
 export function getDefaultMetadata(): Metadata {
@@ -89,7 +170,7 @@ export function generateOrganizationSchema() {
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer support',
-      email: 'careerhunt233@gmail.com',
+      email: 'contact@careerhunt.online',
       telephone: '+923259579107',
       areaServed: 'PK',
       availableLanguage: ['English']

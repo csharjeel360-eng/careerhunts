@@ -1,5 +1,7 @@
 'use client'
 
+import type { Metadata } from 'next'
+import { getNoIndexMetadata } from '@/lib/seo'
 import { Suspense } from 'react'
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'

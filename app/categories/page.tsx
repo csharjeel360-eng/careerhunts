@@ -1,5 +1,14 @@
+import type { Metadata } from 'next'
+import { getPageMetadata } from '@/lib/seo'
 import Link from 'next/link'
 import { getCategories } from '@/lib/api'
+
+export const metadata: Metadata = getPageMetadata({
+  title: 'Job Categories | CareerHunt',
+  description: 'Browse job categories across tech, design, marketing, operations, and more on CareerHunt.',
+  path: '/categories',
+  keywords: ['job categories', 'career categories', 'find jobs', 'CareerHunt'],
+})
 
 export default async function CategoriesPage() {
   const categories = await getCategories()

@@ -82,7 +82,7 @@ export default function BlogPage() {
             className="group relative overflow-hidden rounded-[2rem] border border-[#F2C94C] bg-cover bg-center p-8 shadow-[0_25px_70px_-24px_rgba(242,201,76,0.24)] transition"
             style={{ backgroundImage: `url('/DHL%20Careers%20UAE.png')` }}
           >
-            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/70 via-white/80 to-white/90" />
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/55 to-black/70" />
             <div className="relative z-10 flex items-center justify-between gap-3">
               <span className="rounded-full bg-[#F2C94C] px-3 py-1 text-sm font-medium text-slate-900">Featured</span>
               <span className="text-sm font-medium text-white">Read article</span>
@@ -95,6 +95,31 @@ export default function BlogPage() {
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {['DHL Careers', 'Logistics Jobs', 'Warehouse Jobs', 'Courier Jobs'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-sm text-white/90">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
+          <Link
+            href="/markq-trading-llc-storekeeper-dubai"
+            className="group relative overflow-hidden rounded-[2rem] border border-[#0ea5a4] bg-cover bg-center p-8 shadow-[0_25px_70px_-24px_rgba(14,165,164,0.18)] transition"
+            style={{ backgroundImage: `url('/MARKQ%20Trading%20LLC.png')` }}
+          >
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/55 to-black/70" />
+            <div className="relative z-10 flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#0ea5a4] px-3 py-1 text-sm font-medium text-white">Featured Job</span>
+              <span className="text-sm font-medium text-white">Apply via Glassdoor</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-white drop-shadow-lg transition">
+              MARKQ Trading LLC — Storekeeper (DIP 1, Dubai)
+            </h2>
+            <p className="mt-4 text-base leading-7 text-white/90 drop-shadow-md">
+              Entry-level storekeeper position at MARKQ Trading LLC in Dubai Investments Park. Salary AED 2,200–2,700/month. Easy Apply on Glassdoor.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Storekeeper', 'Warehouse Jobs', 'Dubai Jobs', 'Glassdoor'].map((keyword) => (
                 <span key={keyword} className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-sm text-white/90">
                   {keyword}
                 </span>

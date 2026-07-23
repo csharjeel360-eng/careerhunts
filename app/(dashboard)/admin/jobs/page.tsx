@@ -1,5 +1,7 @@
 'use client'
 
+import type { Metadata } from 'next'
+import { getNoIndexMetadata } from '@/lib/seo'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
