@@ -2,11 +2,9 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState, useTransition } from 'react'
 import Image from 'next/image'
 import { Menu, Sparkles, X } from 'lucide-react'
-import { auth } from '@/lib/firebase'
-import { onAuthStateChanged } from 'firebase/auth'
 import { signOut } from '@/lib/auth'
 import ProfileDropdown from '@/components/ui/ProfileDropdown'
 import AdminProfileDropdown from '@/components/ui/AdminProfileDropdown'
@@ -19,7 +17,9 @@ export function Header() {
   const [user, setUser] = useState<any>(null)
   const [adminUser, setAdminUser] = useState<any>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
+  // Initialize admin user immediately (synchronous)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedAdmin = localStorage.getItem('adminUser')
@@ -36,35 +36,70 @@ export function Header() {
         }
       }
     }
+  }, [])
 
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (!firebaseUser) {
-        setUser(null)
-        return
-      }
+  // Defer Firebase initialization - this is the heavy operation
+  useEffect(() => {
+    let unsubscribe: (() => void) | null = null
+    let isMounted = true
 
-      setUser({
-        displayName: firebaseUser.displayName,
-        email: firebaseUser.email,
-        photoURL: firebaseUser.photoURL || firebaseUser.providerData?.[0]?.photoURL || '',
+    // Use a small delay to ensure page shell renders first
+    const timeoutId = setTimeout(() => {
+      if (!isMounted) return
+
+      startTransition(async () => {
+        try {
+          const { auth } = await import('@/lib/firebase')
+          const { onAuthStateChanged } = await import('firebase/auth')
+
+          unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            if (!isMounted) return
+
+            if (!firebaseUser) {
+              setUser(null)
+              return
+            }
+
+            setUser({
+              displayName: firebaseUser.displayName,
+              email: firebaseUser.email,
+              photoURL: firebaseUser.photoURL || firebaseUser.providerData?.[0]?.photoURL || '',
+            })
+          })
+        } catch (error) {
+          console.error('Failed to initialize Firebase:', error)
+        }
       })
-    })
+    }, 100) // 100ms delay allows page shell to render first
 
     const handleProfileUpdated = async () => {
-      if (auth.currentUser) {
-        await auth.currentUser.reload()
-        setUser({
-          displayName: auth.currentUser.displayName,
-          email: auth.currentUser.email,
-          photoURL: auth.currentUser.photoURL || auth.currentUser.providerData?.[0]?.photoURL || '',
-        })
-      }
+      if (!isMounted) return
+
+      startTransition(async () => {
+        try {
+          const { auth } = await import('@/lib/firebase')
+          if (auth.currentUser) {
+            await auth.currentUser.reload()
+            setUser({
+              displayName: auth.currentUser.displayName,
+              email: auth.currentUser.email,
+              photoURL: auth.currentUser.photoURL || auth.currentUser.providerData?.[0]?.photoURL || '',
+            })
+          }
+        } catch (error) {
+          console.error('Failed to update profile:', error)
+        }
+      })
     }
 
     window.addEventListener('firebase-profile-updated', handleProfileUpdated)
 
     return () => {
-      unsubscribe()
+      isMounted = false
+      clearTimeout(timeoutId)
+      if (unsubscribe) {
+        unsubscribe()
+      }
       window.removeEventListener('firebase-profile-updated', handleProfileUpdated)
     }
   }, [])

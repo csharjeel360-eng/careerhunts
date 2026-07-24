@@ -54,6 +54,19 @@ const careerBlogItems = [
     shadow: 'shadow-[0_25px_70px_-24px_rgba(92,14,98,0.24)]',
     badgeBg: 'bg-[#5C0E62]',
     badgeText: 'text-white',
+  },
+  {
+    title: 'UAE Work Visa Sponsorship Guide 2026',
+    excerpt:
+      'Get the latest 2026 guide for UAE employment visas, work permit sponsorship, Golden Visa basics, costs, and timelines for foreign professionals.',
+    category: 'Career Guide',
+    href: '/uae-work-visa-sponsorship-guide-2026',
+    image: '/UAE%20Work%20Visa%20%26%20Sponsorship%20Guide.png',
+    tags: ['UAE Work Visa', 'Visa Sponsorship', 'Golden Visa'],
+    border: 'border-[#0f766e]',
+    shadow: 'shadow-[0_25px_70px_-24px_rgba(15,118,110,0.24)]',
+    badgeBg: 'bg-[#0f766e]',
+    badgeText: 'text-white',
   }
 ]
 

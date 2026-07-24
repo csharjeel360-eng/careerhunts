@@ -452,6 +452,31 @@ export default function BlogPage() {
             </div>
           </Link>
 
+          <Link
+            href="/uae-work-visa-sponsorship-guide-2026"
+            className="group relative overflow-hidden rounded-[2rem] border border-[#0f766e] bg-cover bg-center p-8 shadow-[0_25px_70px_-24px_rgba(15,118,110,0.24)] transition"
+            style={{ backgroundImage: `url('/UAE%20Work%20Visa%20%26%20Sponsorship%20Guide.png')` }}
+          >
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/55 to-black/70" />
+            <div className="relative z-10 flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#0f766e] px-3 py-1 text-sm font-medium text-white">Career Guide</span>
+              <span className="text-sm font-medium text-white">Read article</span>
+            </div>
+            <h2 className="mt-5 text-2xl font-semibold text-white transition">
+              UAE Work Visa Sponsorship Guide 2026
+            </h2>
+            <p className="mt-4 text-base leading-7 text-white/90">
+              A step-by-step guide to UAE work visas, employer sponsorship, Golden Visa requirements, and application costs for 2026.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['UAE Work Visa', 'Visa Sponsorship', 'Golden Visa', 'UAE Jobs'].map((keyword) => (
+                <span key={keyword} className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-sm text-white/90">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </Link>
+
           {BLOG_POSTS.map((post) => (
             <Link
               key={post.slug}

@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   }
 }
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60 // Revalidate every 60 seconds instead of forcing dynamic
 
 export default async function HomePage() {
   const [latestJobs, categories, liveJobs] = await Promise.all([
