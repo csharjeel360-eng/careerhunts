@@ -16,8 +16,10 @@ function setConsentCookie(choice: 'accepted' | 'rejected') {
 export function CookieConsentBanner() {
   const [open, setOpen] = useState(false)
   const [showPreferences, setShowPreferences] = useState(false)
+  const [isHydrated, setIsHydrated] = useState(false)
 
   useEffect(() => {
+    setIsHydrated(true)
     const stored = window.localStorage.getItem(CONSENT_STORAGE_KEY)
     if (!stored) {
       setOpen(true)
@@ -35,7 +37,7 @@ export function CookieConsentBanner() {
     window.dispatchEvent(new CustomEvent('cookie-consent-changed', { detail: choice }))
   }
 
-  if (!open) {
+  if (!isHydrated || !open) {
     return null
   }
 

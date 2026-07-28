@@ -1,0 +1,84 @@
+
+> job-board-frontend@0.1.0 build
+> next build
+
+  Gû¦ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ G£ô Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/48) ...
+   Generating static pages (12/48) 
+   Generating static pages (24/48) 
+   Generating static pages (36/48) 
+ G£ô Generating static pages (48/48)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                                   Size     First Load JS
+Göî Gùï /                                                         5.63 kB         111 kB
+Gö£ Gùï /_not-found                                               151 B          87.5 kB
+Gö£ Gùï /about                                                    151 B          87.5 kB
+Gö£ Gùï /admin                                                    3.59 kB         175 kB
+Gö£ Gùï /admin/jobs                                               4.85 kB         133 kB
+Gö£ ¦Æ /admin/jobs/[slug]/edit                                   3.65 kB         155 kB
+Gö£ Gùï /admin/jobs/create                                        3.18 kB         154 kB
+Gö£ Gùï /admin/login                                              5.12 kB         160 kB
+Gö£ Gùï /admin/register                                           5.78 kB         161 kB
+Gö£ Gùï /admin/users                                              4.66 kB         137 kB
+Gö£ Gùï /aecom-careers-uae-2026                                   8.38 kB         110 kB
+Gö£ Gùï /amazon-careers-2026                                      8.94 kB         110 kB
+Gö£ ¦Æ /api/auth/[...nextauth]                                   0 B                0 B
+Gö£ ¦Æ /api/live-jobs                                            0 B                0 B
+Gö£ Gùï /blog                                                     188 B          98.7 kB
+Gö£ ¦Æ /blog/[slug]                                              216 B          96.3 kB
+Gö£ ¦Æ /career-resources/[slug]                                  216 B          96.3 kB
+Gö£ Gùï /carrefour-hypermarket-careers-2026                       14.1 kB         115 kB
+Gö£ Gùï /categories                                               216 B          96.3 kB
+Gö£ Gùï /companies                                                216 B          96.3 kB
+Gö£ Gùï /contact                                                  151 B          87.5 kB
+Gö£ Gùï /cookies                                                  216 B          96.3 kB
+Gö£ Gùï /countries                                                216 B          96.3 kB
+Gö£ Gùï /dhl-careers-uae-2026                                     10.7 kB         115 kB
+Gö£ Gùï /disclaimer                                               216 B          96.3 kB
+Gö£ Gùï /dp-world-careers-2026                                    9.21 kB         110 kB
+Gö£ Gùï /emirates-group-careers-uae-2026                          249 B           101 kB
+Gö£ Gùï /employer                                                 6.01 kB         177 kB
+Gö£ Gùï /employer/jobs                                            4.87 kB         137 kB
+Gö£ ¦Æ /employer/jobs/[slug]/edit                                4.27 kB         155 kB
+Gö£ Gùï /employer/jobs/create                                     3.69 kB         155 kB
+Gö£ Gùï /employer/profile                                         3.53 kB         189 kB
+Gö£ Gùï /fedex-careers-usa-2026                                   10.8 kB         115 kB
+Gö£ Gùï /forgot-password                                          2.08 kB         196 kB
+Gö£ Gùï /gems-education-careers-uae-2026                          9.76 kB         111 kB
+Gö£ Gùï /genentech-careers-usa-2026                               249 B           101 kB
+Gö£ ¦Æ /jobs                                                     4.02 kB         107 kB
+Gö£ ¦Æ /jobs/[slug]                                              232 B          96.3 kB
+Gö£ Gùï /jobs/numero-senior-software-engineer-backend-remote-usa  10.2 kB         106 kB
+Gö£ Gùï /login                                                    4.12 kB         203 kB
+Gö£ Gùï /markq-trading-llc-storekeeper-dubai                      218 B          87.6 kB
+Gö£ Gùï /noon-careers-uae-2026                                    12.2 kB         147 kB
+Gö£ Gùï /privacy                                                  216 B          96.3 kB
+Gö£ Gùï /qatar-airways-careers-2026                               249 B           101 kB
+Gö£ Gùï /register                                                 5.64 kB         205 kB
+Gö£ Gùï /robots.txt                                               0 B                0 B
+Gö£ Gùï /salary-guide                                             216 B          96.3 kB
+Gö£ ¦Æ /salary-guide/[slug]                                      216 B          96.3 kB
+Gö£ Gùï /salary-guide/uae                                         216 B          96.3 kB
+Gö£ Gùï /shopify-careers-2026                                     9.87 kB         145 kB
+Gö£ Gùï /sitemap.xml                                              0 B                0 B
+Gö£ Gùï /terms                                                    216 B          96.3 kB
+Gö£ Gùï /uae-work-visa-sponsorship-guide-2026                     198 B           104 kB
+Göö Gùï /warehouse-jobs-uae-2026                                  249 B           101 kB
++ First Load JS shared by all                                 87.4 kB
+  Gö£ chunks/2117-8e78a00943211bc7.js                           31.7 kB
+  Gö£ chunks/fd9d1056-1a36dc8e7c2a2b09.js                       53.6 kB
+  Göö other shared chunks (total)                               2.02 kB
+
+
+Gùï  (Static)   prerendered as static content
+¦Æ  (Dynamic)  server-rendered on demand
+
+

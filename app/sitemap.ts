@@ -1,123 +1,73 @@
 import { MetadataRoute } from 'next'
 import { getJobs, getCategories, getCountries } from '@/lib/api'
 
+const getBaseUrl = () => {
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || 'https://careerhunt.online'
+  return configuredUrl.replace(/\/+$/, '')
+}
+
+const buildUrl = (
+  path: string,
+  lastModified: Date | string = new Date(),
+  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] = 'weekly',
+  priority = 0.6,
+) => ({
+  url: `${getBaseUrl()}${path.startsWith('/') ? path : `/${path}`}`,
+  lastModified,
+  changeFrequency,
+  priority,
+})
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://careerhunt.online'
-  
-  // Get all jobs
-  const jobs = await getJobs({ limit: 1000 })
-  const jobUrls = jobs.data.map((job: any) => ({
-    url: `${baseUrl}/jobs/${job.slug}`,
-    lastModified: job.updatedAt || job.postedDate,
+  const staticUrls = [
+    buildUrl('/', new Date(), 'daily', 1),
+    buildUrl('/jobs', new Date(), 'daily', 0.95),
+    buildUrl('/about', new Date(), 'monthly', 0.7),
+    buildUrl('/contact', new Date(), 'monthly', 0.6),
+    buildUrl('/companies', new Date(), 'weekly', 0.8),
+    buildUrl('/categories', new Date(), 'weekly', 0.75),
+    buildUrl('/countries', new Date(), 'weekly', 0.75),
+    buildUrl('/blog', new Date(), 'weekly', 0.7),
+    buildUrl('/career-resources', new Date(), 'weekly', 0.7),
+    buildUrl('/career-insights', new Date(), 'weekly', 0.7),
+    buildUrl('/guides', new Date(), 'weekly', 0.65),
+    buildUrl('/visa', new Date(), 'weekly', 0.65),
+    buildUrl('/salary-guide', new Date(), 'monthly', 0.8),
+    buildUrl('/uae-work-visa-sponsorship-guide-2026', new Date(), 'monthly', 0.75),
+    buildUrl('/amazon-careers-2026', new Date(), 'weekly', 0.9),
+    buildUrl('/fedex-careers-usa-2026', new Date(), 'weekly', 0.9),
+    buildUrl('/noon-careers-uae-2026', new Date(), 'weekly', 0.9),
+    buildUrl('/markq-trading-llc-storekeeper-dubai', new Date(), 'monthly', 0.7),
+    buildUrl('/privacy', new Date(), 'monthly', 0.4),
+    buildUrl('/terms', new Date(), 'monthly', 0.4),
+    buildUrl('/disclaimer', new Date(), 'monthly', 0.4),
+    buildUrl('/cookies', new Date(), 'monthly', 0.4),
+  ]
+
+  const jobsResponse = await getJobs({ limit: 1000 }).catch(() => ({ data: [] as Array<{ slug: string; updatedAt?: string; postedDate?: string }> }))
+  const categoriesResponse = await getCategories().catch(() => [] as Array<{ slug: string }>)
+  const countriesResponse = await getCountries().catch(() => [] as Array<{ slug: string }>)
+
+  const jobUrls = (jobsResponse.data || []).map((job) => ({
+    url: `${getBaseUrl()}/jobs/${job.slug}`,
+    lastModified: job.updatedAt || job.postedDate || new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }))
-  
-  // Get all categories
-  const categories = await getCategories()
-  const categoryUrls = categories.map((category: any) => ({
-    url: `${baseUrl}/categories/${category.slug}`,
+
+  const categoryUrls = (categoriesResponse || []).map((category) => ({
+    url: `${getBaseUrl()}/categories/${category.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.6,
   }))
-  
-  // Get all countries
-  const countries = await getCountries()
-  const countryUrls = countries.map((country: any) => ({
-    url: `${baseUrl}/countries/${country.slug}`,
+
+  const countryUrls = (countriesResponse || []).map((country) => ({
+    url: `${getBaseUrl()}/countries/${country.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.6,
   }))
-  
-  // Static pages
-  const staticUrls = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/jobs`,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/uae-work-visa-sponsorship-guide-2026`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/amazon-careers-2026`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/fedex-careers-usa-2026`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/markq-trading-llc-storekeeper-dubai`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/noon-careers-uae-2026`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/salary-guide`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.4,
-    },
-    {
-      url: `${baseUrl}/terms`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.4,
-    },
-    {
-      url: `${baseUrl}/disclaimer`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.4,
-    },
-  ]
-  
+
   return [...staticUrls, ...jobUrls, ...categoryUrls, ...countryUrls]
 }

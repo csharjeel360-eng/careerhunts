@@ -2,13 +2,20 @@ import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
+import dynamic from 'next/dynamic'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Toaster } from '@/components/ui/toaster'
-import NavigationDebug from '@/components/dev/NavigationDebug'
-import { generateOrganizationSchema, generateWebsiteSchema, getDefaultMetadata } from '@/lib/seo'
+import { generateOrganizationSchema, generateWebsiteSchema, getDefaultMetadata, SITE_URL } from '@/lib/seo'
 import { CookieConsentBanner } from '@/components/layout/CookieConsentBanner'
 import { GtmScript } from '@/components/layout/GtmScript'
+
+const NavigationDebug = dynamic(() => import('@/components/dev/NavigationDebug'), {
+  ssr: false,
+  loading: () => null,
+})
+
+const showNavigationDebug = process.env.NODE_ENV !== 'production'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'], variable: '--font-poppins', display: 'swap' })
@@ -28,11 +35,12 @@ export default function RootLayout({
       <head>
          <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="naver-site-verification" content="" />
+        <link rel="canonical" href={SITE_URL} />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
         <link rel="preload" href="/icon.svg" as="image" />
       </head>
-      <body className={interFontClass} style={{ fontFamily: 'var(--font-inter)' }}>
+      <body className={interFontClass} style={{ fontFamily: 'var(--font-inter)' }} suppressHydrationWarning>
         <GtmScript />
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDB5G9J8" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
         <ThemeProvider
@@ -43,7 +51,7 @@ export default function RootLayout({
         >
           <div className="min-h-screen flex flex-col">
             <Header />
-            <NavigationDebug />
+            {showNavigationDebug ? <NavigationDebug /> : null}
             <main className="flex-1">{children}</main>
             <Footer />
           </div>

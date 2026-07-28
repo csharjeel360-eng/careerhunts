@@ -12,6 +12,10 @@ export interface BlogPost {
   keywords: string[]
   topics: string[]
   sections: BlogSection[]
+  authorName?: string
+  authorInitials?: string
+  readTime?: string
+  publishedAt?: string
 }
 
 export const BLOG_POSTS: BlogPost[] = [

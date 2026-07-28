@@ -21,6 +21,7 @@ import { Loader2 } from 'lucide-react'
 
 const jobSchema = z.object({
   title: z.string().min(5),
+  companyName: z.string().min(2).optional(),
   companyWebsite: z.string().url().or(z.literal('')).optional(),
   category: z.string().min(1),
   employmentType: z.enum(['full-time', 'part-time', 'contract', 'internship', 'freelance']),
@@ -68,6 +69,7 @@ export default function EmployerCreateJobPage() {
     resolver: zodResolver(jobSchema),
     defaultValues: {
       title: '',
+      companyName: '',
       companyWebsite: '',
       category: '',
       employmentType: 'full-time',
@@ -105,6 +107,7 @@ export default function EmployerCreateJobPage() {
     try {
       await createJob({
         title: data.title,
+        companyName: data.companyName,
         companyWebsite: data.companyWebsite,
         category: data.category,
         employmentType: data.employmentType,
@@ -168,10 +171,17 @@ export default function EmployerCreateJobPage() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="companyWebsite">Company Website</Label>
-              <Input id="companyWebsite" placeholder="https://acme.com" {...register('companyWebsite')} />
-              {errors.companyWebsite && <p className="text-sm text-destructive">{errors.companyWebsite.message}</p>}
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="companyName">Company Name</Label>
+                <Input id="companyName" placeholder="Acme Studio" {...register('companyName')} />
+                {errors.companyName && <p className="text-sm text-destructive">{errors.companyName.message}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="companyWebsite">Company Website</Label>
+                <Input id="companyWebsite" placeholder="https://acme.com" {...register('companyWebsite')} />
+                {errors.companyWebsite && <p className="text-sm text-destructive">{errors.companyWebsite.message}</p>}
+              </div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">

@@ -1,272 +1,197 @@
 import Link from 'next/link'
-import { MapPin, Briefcase, Calendar, Globe, ArrowRight, Eye } from 'lucide-react'
+import { MapPin, Briefcase, Calendar, Globe, Mail, ExternalLink, Building2, Clock3, Share2, Flag, ArrowLeft } from 'lucide-react'
 import { formatDate, formatLocation, formatSalary, normalizeWebsiteUrl } from '@/lib/utils'
-import { JobCard } from './JobCard'
-import { NativeAd } from '@/components/ads/NativeAd'
 
 interface JobDetailProps {
   job: any
   similarJobs?: any[]
 }
 
-export default function JobDetail({ job, similarJobs }: JobDetailProps) {
+export default function JobDetail({ job, similarJobs = [] }: JobDetailProps) {
   const companyDescription = job.companyDescription || job.companyId?.description || 'Company description is not available.'
   const companyWebsite = normalizeWebsiteUrl(job.companyWebsite || job.companyId?.website || '')
-  const companyName = job.companyId?.name || job.companyName || 'Company'
+  const companyName = job.companyName || job.companyId?.name || 'Company'
   const locationText = formatLocation(job.city, job.country)
   const workMode = job.workMode || 'Flexible'
   const employmentType = job.employmentType || 'Full-time'
   const salaryLabel = formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)
+  const experienceLevel = job.experienceLevel ? job.experienceLevel.replace('-', ' ') : 'Not specified'
+  const educationLevel = job.educationLevel ? job.educationLevel.replace('-', ' ') : 'Not specified'
+  const responsibilities = Array.isArray(job.responsibilities) ? job.responsibilities : []
+  const requirements = Array.isArray(job.requirements) ? job.requirements : []
+  const preferredQualifications = Array.isArray(job.preferredQualifications) ? job.preferredQualifications : []
+  const requiredSkills = Array.isArray(job.requiredSkills) ? job.requiredSkills : []
+  const benefits = Array.isArray(job.benefits) ? job.benefits : []
+  const summary = job.summary || job.description || 'No summary provided yet.'
+  const applicationDeadline = job.applicationDeadline ? formatDate(job.applicationDeadline) : 'Not specified'
+  const applicationUrl = job.applicationUrl ? normalizeWebsiteUrl(job.applicationUrl) : ''
+  const initials = companyName
+    .split(' ')
+    .map((name: string) => name.charAt(0))
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
 
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)]">
-      <div className="absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top_left,_rgba(34,211,238,0.18),_transparent_45%)]" />
-      <div className="container relative mx-auto px-3 py-6 sm:px-6 sm:py-10 lg:px-8 lg:py-14">
+    <section className="bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)] py-6 sm:py-10 lg:py-14">
+      <div className="container mx-auto px-3 sm:px-6 lg:px-8">
         <Link
           href="/jobs"
-          className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:text-slate-900"
+          className="inline-flex items-center rounded-full border border-slate-200 bg-white/90 px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:text-slate-900"
         >
-          <span className="mr-2">←</span>
+          <ArrowLeft className="mr-2 h-4 w-4" />
           Back to jobs
         </Link>
 
-        <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_340px]">
-          <div className="space-y-5 sm:space-y-6">
-            <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-[0_20px_70px_-24px_rgba(15,23,42,0.3)] backdrop-blur sm:p-7 lg:p-8">
-              <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-                <div className="max-w-2xl">
-                  <div className="inline-flex items-center rounded-full border border-cyan-100 bg-cyan-50 px-3 py-1 text-sm font-medium text-cyan-700">
-                    <Briefcase className="mr-2 h-4 w-4" />
-                    {job.category || 'Career opportunity'}
-                  </div>
-                  <h1 className="mt-4 text-2xl font-semibold tracking-tight text-slate-900 sm:mt-5 sm:text-3xl lg:text-4xl">
-                    {job.title}
-                  </h1>
-                  <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
-                    {job.summary || 'A compelling opportunity for professionals looking to grow with a modern, ambitious team.'}
-                  </p>
-                </div>
-
-                <div className="w-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:max-w-[220px] sm:text-left lg:text-right">
-                  <p className="text-sm text-slate-500">Posted</p>
-                  <p className="mt-1 text-base font-semibold text-slate-900">{formatDate(job.postedDate)}</p>
-                </div>
-              </div>
-
-              <div className="mt-7 grid gap-3 sm:grid-cols-2 2xl:grid-cols-4">
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Location</p>
-                  <p className="mt-2 text-sm font-medium text-slate-700">{locationText || 'Not specified'}</p>
-                </div>
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Salary</p>
-                  <p className="mt-2 text-sm font-medium text-slate-700">{salaryLabel}</p>
-                </div>
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Employment type</p>
-                  <p className="mt-2 text-sm font-medium text-slate-700">{employmentType}</p>
-                </div>
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Work mode</p>
-                  <p className="mt-2 text-sm font-medium text-slate-700">{workMode}</p>
-                </div>
-              </div>
-            </div>
-
-            <article className="space-y-5 sm:space-y-6">
-              <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-                <h2 className="text-xl font-semibold text-slate-900">Job description</h2>
-                <p className="mt-4 whitespace-pre-line text-sm leading-7 text-slate-700 sm:text-base">
-                  {job.description || 'No description available yet.'}
-                </p>
-              </div>
-
-              <div className="mx-auto max-w-3xl rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-                <NativeAd className="" />
-              </div>
-
-              <div className="grid gap-5 lg:grid-cols-2">
-                <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-                  <h3 className="text-lg font-semibold text-slate-900">Responsibilities</h3>
-                  <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-slate-700 sm:text-base">
-                    {job.responsibilities?.length ? job.responsibilities.map((item: string, index: number) => (
-                      <li key={index}>{item}</li>
-                    )) : <li>No responsibilities specified.</li>}
-                  </ul>
-                </div>
-                <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-                  <h3 className="text-lg font-semibold text-slate-900">Qualifications</h3>
-                  <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-slate-700 sm:text-base">
-                    {job.requirements?.length ? job.requirements.map((item: string, index: number) => (
-                      <li key={index}>{item}</li>
-                    )) : <li>No qualifications specified.</li>}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-                <h3 className="text-lg font-semibold text-slate-900">Additional job details</h3>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Preferred Qualifications</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-700">{job.preferredQualifications?.length ? job.preferredQualifications.join(', ') : 'Not specified'}</p>
-                  </div>
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Required Skills</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-700">{job.requiredSkills?.length ? job.requiredSkills.join(', ') : 'Not specified'}</p>
-                  </div>
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Benefits</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-700">{job.benefits?.length ? job.benefits.join(', ') : 'Not specified'}</p>
-                  </div>
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Experience Level</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-700">{job.experienceLevel || 'Not specified'}</p>
-                  </div>
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Education Level</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-700">{job.educationLevel || 'Not specified'}</p>
-                  </div>
-                  <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Number Of Vacancies</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-700">{job.numberOfVacancies || 'Not specified'}</p>
-                  </div>
-                  <div className="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
-                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Application Email</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-700">{job.applicationEmail || 'Not specified'}</p>
-                  </div>
-                </div>
-              </div>
-            </article>
+        <div className="mt-5 rounded-[20px] border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:p-7">
+          <div className="mb-4 text-sm text-slate-500">
+            Home / Jobs / {job.category || 'Technology'} / {job.title}
           </div>
 
-          <aside className="space-y-5 xl:sticky xl:top-6 xl:self-start">
-            <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
-              <div className="space-y-4">
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Apply by</p>
-                  <p className="mt-2 text-sm text-slate-700">{job.applicationDeadline ? formatDate(job.applicationDeadline) : 'Open until filled'}</p>
+          <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+              <div className="flex items-start gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white">
+                  {initials}
                 </div>
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Employment type</p>
-                  <p className="mt-2 text-sm text-slate-700">{employmentType}</p>
-                </div>
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Work mode</p>
-                  <p className="mt-2 text-sm text-slate-700">{workMode}</p>
+                <div>
+                  <h1 className="text-xl font-semibold text-slate-900">{job.title}</h1>
+                  <p className="mt-1 text-sm text-slate-500">{companyName} · {locationText}</p>
                 </div>
               </div>
-            </div>
 
-            <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
-              <div className="flex items-center justify-between gap-4">
-                <Globe className="h-6 w-6 text-slate-500" />
-              </div>
-              <p className="mt-4 text-sm leading-7 text-slate-600">{companyDescription}</p>
-              {companyWebsite && (
-                <a
-                  href={companyWebsite}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-900 transition hover:text-cyan-700"
-                >
-                  Visit website <ArrowRight className="h-4 w-4" />
-                </a>
-              )}
-            </div>
-
-            <div className="rounded-[1.75rem] border border-slate-200 bg-slate-900 p-6 text-white shadow-sm sm:p-7">
-              <h3 className="text-lg font-semibold">Apply for this role</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-300">Take the next step and connect with the hiring team directly.</p>
-              {job.applicationUrl ? (
-                <a
-                  href={job.applicationUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
-                >
-                  Apply now
-                </a>
-              ) : job.applicationEmail ? (
-                <a
-                  href={`mailto:${job.applicationEmail}`}
-                  className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
-                >
-                  Email application
-                </a>
-              ) : (
-                <p className="mt-6 text-sm text-slate-400">No application link provided yet.</p>
-              )}
-            </div>
-          </aside>
-        </div>
-
-        {similarJobs && similarJobs.length > 0 && (
-          <div className="mt-10 rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:mt-12 sm:p-8">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Similar jobs</p>
-                <h2 className="mt-3 text-xl font-semibold text-slate-900 sm:text-2xl">Other roles you may be interested in</h2>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Link href="/jobs" className="inline-flex items-center justify-center rounded-full bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-700">
-                  Browse Available Positions
-                </Link>
-                <Link href="/jobs" className="inline-flex items-center justify-center rounded-full bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">
-                  Learn How to Apply
-                </Link>
-                <Link href="/blog" className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50">
-                  Review Job Requirements
-                </Link>
+                {job.applicationUrl ? (
+                  <a href={applicationUrl} target="_blank" rel="noreferrer" className="inline-flex items-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white">
+                    Apply now
+                  </a>
+                ) : job.applicationEmail ? (
+                  <a href={`mailto:${job.applicationEmail}`} className="inline-flex items-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white">
+                    Apply now
+                  </a>
+                ) : null}
               </div>
             </div>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {similarJobs.map((jobItem: any) => (
-                <JobCard key={jobItem._id || jobItem.slug} job={jobItem} />
-              ))}
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">{employmentType}</span>
+              <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">{workMode}</span>
+              <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">{salaryLabel}</span>
+              <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">Posted {formatDate(job.postedDate)}</span>
             </div>
           </div>
-        )}
 
-        <div className="mt-10 rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:mt-12 sm:p-8">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Career insights</p>
-              <h2 className="mt-3 text-xl font-semibold text-slate-900 sm:text-2xl">Related career articles & resources</h2>
+          <div className="mt-5 grid gap-6 lg:grid-cols-[2fr_1fr]">
+            <div className="space-y-4">
+              <div>
+                <h2 className="mb-2 text-sm font-semibold text-slate-900">Job description</h2>
+                <p className="text-sm leading-7 text-slate-600">{summary}</p>
+              </div>
+
+              <div>
+                <h3 className="mb-2 text-sm font-semibold text-slate-900">Responsibilities</h3>
+                {responsibilities.length ? (
+                  <ul className="list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600">
+                    {responsibilities.map((item: string) => <li key={item}>{item}</li>)}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-slate-500">No responsibilities specified.</p>
+                )}
+              </div>
+
+              <div>
+                <h3 className="mb-2 text-sm font-semibold text-slate-900">Requirements</h3>
+                {requirements.length ? (
+                  <ul className="list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600">
+                    {requirements.map((item: string) => <li key={item}>{item}</li>)}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-slate-500">No requirements specified.</p>
+                )}
+              </div>
+
+              <div>
+                <h3 className="mb-2 text-sm font-semibold text-slate-900">Preferred qualifications</h3>
+                {preferredQualifications.length ? (
+                  <ul className="list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600">
+                    {preferredQualifications.map((item: string) => <li key={item}>{item}</li>)}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-slate-500">No preferred qualifications specified.</p>
+                )}
+              </div>
+
+              <div>
+                <h3 className="mb-2 text-sm font-semibold text-slate-900">Required skills</h3>
+                {requiredSkills.length ? (
+                  <div className="flex flex-wrap gap-2">
+                    {requiredSkills.map((item: string) => (
+                      <span key={item} className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700">{item}</span>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-slate-500">No skills specified.</p>
+                )}
+              </div>
+
+              <div>
+                <h3 className="mb-2 text-sm font-semibold text-slate-900">Benefits</h3>
+                {benefits.length ? (
+                  <ul className="list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600">
+                    {benefits.map((item: string) => <li key={item}>{item}</li>)}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-slate-500">No benefits specified.</p>
+                )}
+              </div>
             </div>
-            <Link href="/blog" className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">
-              View all articles
-            </Link>
+
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                <h3 className="text-sm font-semibold text-slate-900">About {companyName}</h3>
+                <p className="mt-2 text-sm leading-7 text-slate-600">{companyDescription}</p>
+                {companyWebsite ? (
+                  <a href={companyWebsite} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-sky-700">
+                    <Building2 className="h-4 w-4" /> Visit company website
+                  </a>
+                ) : null}
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                <h3 className="text-sm font-semibold text-slate-900">Job details</h3>
+                <div className="mt-3 space-y-3 text-sm text-slate-600">
+                  <div className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4" /> <span>{locationText || 'Location not specified'}</span></div>
+                  <div className="flex items-start gap-2"><Briefcase className="mt-0.5 h-4 w-4" /> <span>{employmentType} · {workMode}</span></div>
+                  <div className="flex items-start gap-2"><Calendar className="mt-0.5 h-4 w-4" /> <span>Experience: {experienceLevel}</span></div>
+                  <div className="flex items-start gap-2"><Globe className="mt-0.5 h-4 w-4" /> <span>Education: {educationLevel}</span></div>
+                  <div className="flex items-start gap-2"><Clock3 className="mt-0.5 h-4 w-4" /> <span>Vacancies: {job.vacancies ?? 1}</span></div>
+                  <div className="flex items-start gap-2"><Mail className="mt-0.5 h-4 w-4" /> <span>{job.applicationEmail || 'Email not provided'}</span></div>
+                  <div className="flex items-start gap-2"><ExternalLink className="mt-0.5 h-4 w-4" /> <span>{job.applicationUrl ? 'Application link available' : 'No external link'}</span></div>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                <h3 className="text-sm font-semibold text-slate-900">Similar jobs</h3>
+                <div className="mt-3 space-y-2">
+                  {similarJobs.length ? similarJobs.map((item: any) => (
+                    <Link key={item.slug} href={`/jobs/${item.slug}`} className="block rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-sky-700 hover:bg-slate-50">
+                      <div className="font-medium">{item.title}</div>
+                      <div className="text-xs text-slate-500">{item.companyName || item.companyId?.name || 'Company'}</div>
+                    </Link>
+                  )) : (
+                    <p className="text-sm text-slate-500">No similar jobs available right now.</p>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <Link href="/blog" className="group rounded-[1.5rem] border border-slate-200 bg-gradient-to-br from-blue-50 to-cyan-50 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-              <div className="rounded-2xl bg-blue-100 p-3 w-fit text-blue-600 text-lg">📚</div>
-              <h3 className="mt-4 text-lg font-semibold text-slate-900 group-hover:text-cyan-700">Getting Started in Your Career</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-600">Essential tips and strategies for launching your professional journey and making a strong first impression.</p>
-              <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan-600">
-                Read <ArrowRight className="h-4 w-4" />
-              </div>
-            </Link>
-
-            <Link href="/blog" className="group rounded-[1.5rem] border border-slate-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-              <div className="rounded-2xl bg-emerald-100 p-3 w-fit text-emerald-600 text-lg">💼</div>
-              <h3 className="mt-4 text-lg font-semibold text-slate-900 group-hover:text-emerald-700">Mastering Job Interviews</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-600">Proven techniques to ace interviews, ask smart questions, and demonstrate your value to employers.</p>
-              <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600">
-                Read <ArrowRight className="h-4 w-4" />
-              </div>
-            </Link>
-
-            <Link href="/blog" className="group rounded-[1.5rem] border border-slate-200 bg-gradient-to-br from-purple-50 to-pink-50 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-              <div className="rounded-2xl bg-purple-100 p-3 w-fit text-purple-600 text-lg">🚀</div>
-              <h3 className="mt-4 text-lg font-semibold text-slate-900 group-hover:text-purple-700">Career Growth Strategies</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-600">Learn how to advance your career, develop new skills, and build a professional network that opens doors.</p>
-              <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-purple-600">
-                Read <ArrowRight className="h-4 w-4" />
-              </div>
-            </Link>
+          <div className="mt-5 flex flex-col gap-3 border-t border-slate-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <Share2 className="h-4 w-4 text-slate-400" />
+              <Flag className="h-4 w-4 text-slate-400" />
+            </div>
+            <span className="text-sm text-slate-500">Reference #{job.slug || 'JOB-001'}</span>
           </div>
         </div>
       </div>

@@ -546,9 +546,9 @@ export default function GemsEducationCareersPage() {
               <p className="text-lg font-semibold text-slate-900">Teaching jobs in UAE</p>
               <p className="mt-2 text-sm leading-7 text-slate-600">Discover teaching and academic leadership roles across the region.</p>
             </Link>
-            <Link href="/salary-guide" className="rounded-[1.5rem] border border-slate-200 bg-white p-5 transition hover:border-[#FF6B35]">
-              <p className="text-lg font-semibold text-slate-900">UAE salary guide</p>
-              <p className="mt-2 text-sm leading-7 text-slate-600">Compare compensation expectations for education and corporate roles.</p>
+            <Link href="/career-insights" className="rounded-[1.5rem] border border-slate-200 bg-white p-5 transition hover:border-[#FF6B35]">
+              <p className="text-lg font-semibold text-slate-900">Career insights</p>
+              <p className="mt-2 text-sm leading-7 text-slate-600">Explore job search guides, salary advice, and career resources.</p>
             </Link>
             <Link href="/dhl-careers-uae-2026" className="rounded-[1.5rem] border border-slate-200 bg-white p-5 transition hover:border-[#FF6B35]">
               <p className="text-lg font-semibold text-slate-900">DHL careers UAE</p>

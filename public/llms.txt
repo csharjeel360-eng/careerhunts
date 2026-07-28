@@ -1,0 +1,34 @@
+# CareerHunt
+
+CareerHunt is a careers and jobs platform focused on helping job seekers discover opportunities in the UAE, the US, and other global markets.
+
+## Primary site sections
+- Home: /
+- Job listings: /jobs
+- Companies: /companies
+- Job categories: /categories
+- Countries and locations: /countries
+- Salary guide: /salary-guide
+- Career resources: /career-resources
+- Career insights: /career-insights
+- About: /about
+- Contact: /contact
+
+## Key content themes
+- UAE and international job opportunities
+- Employer and company profiles
+- Career guides, visa information, and salary resources
+- Recent job postings and category-based browsing
+
+## Recommended crawl priorities
+1. /jobs
+2. /categories
+3. /countries
+4. /salary-guide
+5. /career-resources
+6. /about
+7. /contact
+
+## Notes
+- The site is optimized for job discovery and career guidance.
+- Dynamic job pages are generated from the main jobs listing and company/category taxonomy.

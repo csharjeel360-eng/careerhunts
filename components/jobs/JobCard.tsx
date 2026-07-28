@@ -1,8 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { MapPin, Briefcase, DollarSign, Calendar } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import { Calendar } from 'lucide-react'
 import { formatLocation, formatSalary } from '@/lib/utils'
 
 interface JobCardProps {
@@ -30,6 +29,7 @@ interface JobCardProps {
     country: string
     city: string
     employmentType: string
+    workMode?: string
     salaryMin: number
     salaryMax: number
     salaryCurrency: string
@@ -37,6 +37,8 @@ interface JobCardProps {
     isUrgent: boolean
     postedDate: string
     createdAt?: string
+    relativePostedLabel?: string
+    actualPostedDate?: string
   }
   variant?: 'featured' | 'latest'
 }
@@ -56,82 +58,75 @@ const getRelativePostedLabel = (date: Date) => {
 }
 
 export function JobCard({ job, variant = 'latest' }: JobCardProps) {
-  const postedDateValue = job.postedDate || job.createdAt
-  const postedDate = postedDateValue ? new Date(postedDateValue) : null
-  const isValidPostedDate = postedDate && !Number.isNaN(postedDate.getTime())
-  const relativePostedLabel = isValidPostedDate ? getRelativePostedLabel(postedDate) : 'Recently posted'
-  const actualPostedDate = isValidPostedDate
-    ? postedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    : ''
+  // Prefer server-provided labels to keep SSR and hydration consistent.
+  const relativePostedLabel = job.relativePostedLabel || (() => {
+    const postedDateValue = job.postedDate || job.createdAt
+    const postedDate = postedDateValue ? new Date(postedDateValue) : null
+    const isValidPostedDate = postedDate && !Number.isNaN(postedDate.getTime())
+    return isValidPostedDate ? getRelativePostedLabel(postedDate) : 'Recently posted'
+  })()
+
+  const actualPostedDate = job.actualPostedDate || (() => {
+    const postedDateValue = job.postedDate || job.createdAt
+    const postedDate = postedDateValue ? new Date(postedDateValue) : null
+    const isValidPostedDate = postedDate && !Number.isNaN(postedDate.getTime())
+    return isValidPostedDate
+      ? postedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      : ''
+  })()
   const salaryText = formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)
   const locationText = formatLocation(job.city, job.country)
   const seoSummary = `${job.title}${locationText ? ` in ${locationText}` : ''}. ${job.employmentType} role in ${job.category} with ${salaryText} compensation.`
 
+  const companyName = job.companyName || job.companyId?.name || 'Company'
+  const initials = companyName
+    .split(' ')
+    .map((name: string) => name.charAt(0))
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
+
   return (
-    <Card className={`group mx-auto w-[90%] overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg sm:w-full ${variant === 'featured' ? 'ring-2 ring-cyan-100' : ''}`}>
-      <CardContent className="p-3 sm:p-4">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex-1" />
+    <div className={`group relative flex h-full flex-col gap-2.5 rounded-[12px] border-[0.5px] border-slate-200 bg-white p-[1.1rem] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md ${variant === 'featured' ? 'ring-2 ring-cyan-100' : ''}`}>
+      {job.isFeatured && (
+        <span className="absolute top-3 right-3 text-[11px] font-semibold text-slate-800 bg-slate-100 rounded-[8px] px-2.5 py-1">
+          Featured
+        </span>
+      )}
 
-          <div className="flex flex-wrap justify-end gap-2">
-            {job.isFeatured && (
-              <span className="rounded-full bg-cyan-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-700">
-                Featured
-              </span>
-            )}
-            {job.isUrgent && (
-              <span className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-700">
-                Urgent
-              </span>
-            )}
-          </div>
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 flex items-center justify-center rounded-[8px] bg-slate-100 text-[12px] font-semibold text-slate-700">
+          {initials}
         </div>
-
-        <Link href={`/jobs/${job.slug}`} className="mt-3 block" aria-label={`${job.title}${locationText ? ` in ${locationText}` : ''}`}>
-          <h2 className="text-base font-semibold text-slate-900 transition-colors line-clamp-2">
+        <div>
+          <Link href={`/jobs/${job.slug}`} className="block text-[15px] font-semibold leading-5 text-slate-900 transition-colors hover:text-cyan-700" aria-label={`${job.title}${locationText ? ` in ${locationText}` : ''}`}>
             {job.title}
-          </h2>
-        </Link>
-
-        <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-50 px-2.5 py-1.5 text-xs text-slate-600 ring-1 ring-slate-200">
-          <Calendar className="h-3.5 w-3.5 text-slate-500" />
-          <span>{relativePostedLabel}</span>
-          {actualPostedDate && (
-            <>
-              <span className="text-slate-400">•</span>
-              <span>{actualPostedDate}</span>
-            </>
-          )}
-        </div>
-
-        <div className="mt-2 flex flex-wrap gap-2 text-xs text-slate-600">
-          {locationText && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2.5 py-1.5 ring-1 ring-slate-200">
-              <MapPin className="h-3.5 w-3.5 text-slate-500" />
-              {locationText}
-            </span>
-          )}
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2.5 py-1.5 ring-1 ring-slate-200">
-            <Briefcase className="h-3.5 w-3.5 text-slate-500" />
-            {job.employmentType}
-          </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2.5 py-1.5 ring-1 ring-slate-200">
-            <DollarSign className="h-3.5 w-3.5 text-slate-500" />
-            {salaryText}
-          </span>
-        </div>
-
-        <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2.5">
-          <p className="text-xs text-slate-500">Ready to apply?</p>
-          <Link
-            href={`/jobs/${job.slug}`}
-            className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 transition hover:text-cyan-700"
-            aria-label={`View details for ${job.title}`}
-          >
-            View role <span aria-hidden="true">→</span>
           </Link>
+          <p className="mt-1 text-[12px] text-slate-500">{companyName}</p>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      <div className="flex flex-wrap gap-2 mt-2">
+        {locationText && (
+          <span className="text-[11px] bg-slate-100 rounded-[8px] px-2.5 py-1 text-slate-600">{locationText}</span>
+        )}
+        <span className="text-[11px] bg-slate-100 rounded-[8px] px-2.5 py-1 text-slate-600">{job.employmentType || 'Full-time'}</span>
+        <span className="text-[11px] bg-slate-100 rounded-[8px] px-2.5 py-1 text-slate-600">{job.workMode || 'Hybrid'}</span>
+      </div>
+
+      <p className={`text-[13px] font-semibold mt-2 ${salaryText.includes('Salary not') ? 'text-slate-500' : 'text-emerald-700'}`}>
+        {salaryText}
+      </p>
+
+      <div className="mt-auto flex items-center justify-between border-t border-slate-200 pt-2.5">
+        <span className="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <Calendar className="h-3.5 w-3.5" />
+          {relativePostedLabel}
+        </span>
+        <Link href={`/jobs/${job.slug}`} className="text-[12px] font-semibold text-cyan-700" aria-label={`View details for ${job.title}`}>
+          View role →
+        </Link>
+      </div>
+    </div>
   )
 }

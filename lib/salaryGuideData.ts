@@ -5,6 +5,8 @@ export type SalaryGuideItem = {
   excerpt: string
   category: string
   summary: string
+  publishedAt?: string
+  updatedAt?: string
   featuredStats: Array<{
     label: string
     value: string
@@ -29,6 +31,8 @@ export const salaryGuides: SalaryGuideItem[] = [
     category: 'Career Growth',
     summary:
       'Salary expectations are shifting as employers reward AI fluency, remote readiness, domain expertise, and measurable business impact. This guide explains the roles, ranges, and career moves that are creating the strongest earning potential this year, in clear and practical language.',
+    publishedAt: 'Jul 20, 2026',
+    updatedAt: 'Jul 28, 2026',
     featuredStats: [
       { label: 'Fast-growing roles', value: 'AI, Data, Product' },
       { label: 'Top salary trend', value: '+12% to +22%' },

@@ -37,6 +37,12 @@
     --remote-foreground: 142.1 76.2% 36.3%;
     --urgent: 0 93.3% 94.1%;
     --urgent-foreground: 0 72.2% 50.6%;
+    --category-career: 252 94% 88%;
+    --category-career-foreground: 252 59% 20%;
+    --category-salary: 142 70% 90%;
+    --category-salary-foreground: 146 60% 24%;
+    --category-visa: 212 100% 90%;
+    --category-visa-foreground: 214 89% 30%;
     --footer: 222.2 47.4% 11.2%;
     --footer-foreground: 212.7 26.8% 83.9%;
     --sidebar: 222.2 47.4% 11.2%;
@@ -64,6 +70,12 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
+    --category-career: 252 24% 18%;
+    --category-career-foreground: 252 64% 92%;
+    --category-salary: 142 44% 18%;
+    --category-salary-foreground: 146 63% 92%;
+    --category-visa: 212 44% 18%;
+    --category-visa-foreground: 214 70% 94%;
   }
 
   .hero-gradient {

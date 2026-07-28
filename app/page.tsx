@@ -1,19 +1,16 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { BannerAd300x250 } from '@/components/ads/BannerAd300x250'
-import { HeroSection } from '@/components/home/HeroSection'
-import { LatestJobs } from '@/components/home/LatestJobs'
-import { SalaryGuides } from '@/components/home/SalaryGuides'
-import { CareerResources } from '@/components/home/CareerResources'
+import Link from 'next/link'
+import { ArrowRight, Briefcase, Building2, Search, Sparkles, TrendingUp } from 'lucide-react'
+import { JobCard } from '@/components/jobs/JobCard'
 import { getLatestJobs, getCategories } from '@/lib/api'
 import { getLiveJobs } from '@/lib/live-jobs'
 import { careerResources as careerResourceData } from '@/lib/careerResourceData'
-import { salaryGuides as salaryGuideData } from '@/lib/salaryGuideData'
 
 export const metadata: Metadata = {
-  title: 'CareerHunt – Find Remote Jobs, Internships & Latest Job Openings',
+  title: 'UAE Jobs & Visa Guide 2026 | CareerHunt',
   description:
-    'Discover remote jobs, internships, and career opportunities on CareerHunt. Search thousands of jobs and apply online today.',
+    'Find UAE jobs with visa sponsorship info, salary guides, and hiring insights for Dubai, Abu Dhabi & Sharjah — all in one place. Updated daily.',
   keywords: [
     'jobs',
     'career opportunities',
@@ -26,22 +23,22 @@ export const metadata: Metadata = {
     canonical: 'https://careerhunt.online/'
   },
   openGraph: {
-    title: 'CareerHunt – Find Remote Jobs, Internships & Latest Job Openings',
+    title: 'UAE Jobs & Visa Guide 2026 | CareerHunt',
     description:
-      'Discover remote jobs, internships, and career opportunities on CareerHunt. Search thousands of jobs and apply online today.',
+      'Find UAE jobs with visa sponsorship info, salary guides, and hiring insights for Dubai, Abu Dhabi & Sharjah — all in one place. Updated daily.',
     url: 'https://careerhunt.online/',
     siteName: 'CareerHunt',
     type: 'website'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CareerHunt – Find Remote Jobs, Internships & Latest Job Openings',
+    title: 'UAE Jobs & Visa Guide 2026 | CareerHunt',
     description:
-      'Discover remote jobs, internships, and career opportunities on CareerHunt. Search thousands of jobs and apply online today.'
+      'Find UAE jobs with visa sponsorship info, salary guides, and hiring insights for Dubai, Abu Dhabi & Sharjah — all in one place. Updated daily.'
   }
 }
 
-export const revalidate = 60 // Revalidate every 60 seconds instead of forcing dynamic
+export const revalidate = 60
 
 export default async function HomePage() {
   const [latestJobs, categories, liveJobs] = await Promise.all([
@@ -60,20 +57,84 @@ export default async function HomePage() {
     ...job,
     sourceLabel: 'Server',
     sortDate: job.postedDate || job.createdAt || '',
+    relativePostedLabel: (() => {
+      const posted = job.postedDate || job.createdAt
+      if (!posted) return 'Recently posted'
+      const date = new Date(posted)
+      if (Number.isNaN(date.getTime())) return 'Recently posted'
+      const now = new Date()
+      const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      const startOfDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+      const diffDays = Math.round((startOfToday.getTime() - startOfDate.getTime()) / (1000 * 60 * 60 * 24))
+      if (diffDays <= 0) return 'Today'
+      if (diffDays === 1) return '1 day ago'
+      if (diffDays < 7) return `${diffDays} days ago`
+      if (diffDays < 30) return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) > 1 ? 's' : ''} ago`
+      if (diffDays < 365) return `${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) > 1 ? 's' : ''} ago`
+      return `${Math.floor(diffDays / 365)} year${Math.floor(diffDays / 365) > 1 ? 's' : ''} ago`
+    })(),
+    actualPostedDate: (() => {
+      const posted = job.postedDate || job.createdAt
+      if (!posted) return ''
+      const date = new Date(posted)
+      if (Number.isNaN(date.getTime())) return ''
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    })(),
   }))
+
   const liveExternalJobs = (liveJobs || []).map((job: any) => ({
     ...job,
     sourceLabel: 'External',
     sortDate: job.postedDate || '',
+    relativePostedLabel: (() => {
+      const posted = job.postedDate
+      if (!posted) return 'Recently posted'
+      const date = new Date(posted)
+      if (Number.isNaN(date.getTime())) return 'Recently posted'
+      const now = new Date()
+      const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      const startOfDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+      const diffDays = Math.round((startOfToday.getTime() - startOfDate.getTime()) / (1000 * 60 * 60 * 24))
+      if (diffDays <= 0) return 'Today'
+      if (diffDays === 1) return '1 day ago'
+      if (diffDays < 7) return `${diffDays} days ago`
+      if (diffDays < 30) return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) > 1 ? 's' : ''} ago`
+      if (diffDays < 365) return `${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) > 1 ? 's' : ''} ago`
+      return `${Math.floor(diffDays / 365)} year${Math.floor(diffDays / 365) > 1 ? 's' : ''} ago`
+    })(),
+    actualPostedDate: (() => {
+      const posted = job.postedDate
+      if (!posted) return ''
+      const date = new Date(posted)
+      if (Number.isNaN(date.getTime())) return ''
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    })(),
   }))
 
   const mixedJobs = [...serverJobs, ...liveExternalJobs]
     .sort((a, b) => getSortTimestamp(b.sortDate) - getSortTimestamp(a.sortDate))
-    .slice(0, 9)
+    .slice(0, 6)
 
-  const salaryGuides = salaryGuideData.slice(0, 3)
-
-  const careerResources = careerResourceData.slice(0, 3)
+  const emirates = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman']
+  const visaTags = [
+    { label: 'Employment Visa', href: '/visa/uae-employment-visa-guide' },
+    { label: 'Golden Visa', href: '/visa/uae-golden-visa-guide' },
+    { label: 'Family Sponsorship', href: '/visa/uae-family-sponsorship-guide' },
+    { label: 'Work Permit', href: '/visa/uae-work-permit-guide' },
+  ]
+  const salaryPreview = [
+    {
+      role: 'UAE salary guide 2026',
+      amount: 'Industry, emirate & pay ranges',
+      href: '/salary-guide/uae-salary-guide-2026',
+    },
+    {
+      role: 'Software engineer salaries in the UAE',
+      amount: 'Dubai vs. Abu Dhabi comparison',
+      href: '/salary-guide/software-engineer-dubai-abu-dhabi',
+    },
+  ]
+  const careerGuides = (careerResourceData || []).slice(0, 4)
 
   const homeSchema = [
     {
@@ -106,11 +167,110 @@ export default async function HomePage() {
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
       />
-      <HeroSection categories={categories} />
-      <LatestJobs jobs={latestJobs} mixedJobs={mixedJobs} />
-      <BannerAd300x250 className="my-10 mx-auto max-w-[320px]" />
-      <SalaryGuides guides={salaryGuides} />
-      <CareerResources items={careerResources} />
+
+      <section className="bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)] py-6 sm:py-10 lg:py-14">
+        <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+          <div className="space-y-4 rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:p-7">
+            <div className="rounded-[20px] bg-sky-50 p-6 text-center sm:p-8">
+              <p className="text-2xl font-semibold text-slate-900 sm:text-3xl">Find your next job in the UAE</p>
+              <p className="mx-auto mt-2 max-w-[420px] text-sm leading-7 text-slate-600">Dubai · Abu Dhabi · Sharjah — with visa and Golden Visa guidance built in</p>
+              <form action="/jobs" method="get" className="mx-auto mt-4 flex w-full max-w-[480px] flex-col gap-2 sm:flex-row">
+                <div className="flex flex-1 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-sm">
+                  <Search className="h-4 w-4 text-slate-400" />
+                  <input
+                    type="text"
+                    name="keyword"
+                    placeholder="Job title or keyword"
+                    className="w-full border-0 bg-transparent text-sm text-slate-700 outline-none"
+                  />
+                </div>
+                <button type="submit" className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white">
+                  Search
+                </button>
+              </form>
+            </div>
+
+            <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+              <div className="rounded-[20px] border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Browse by emirate</span>
+                <div className="mt-3 grid gap-2 sm:grid-cols-4">
+                  {emirates.map((item) => (
+                    <Link key={item} href={`/jobs?city=${encodeURIComponent(item)}`} className="rounded-[12px] border border-slate-200 bg-white px-3 py-3 text-center text-sm font-semibold text-slate-700 shadow-sm transition hover:border-sky-300 hover:text-sky-700">
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[20px] border border-slate-200 bg-sky-50 p-4 sm:p-5">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-sky-700">Visa and legal hub</span>
+                <p className="mt-2 text-sm font-semibold text-slate-900">Work visas, Golden Visa, sponsorship — explained</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {visaTags.map((item) => (
+                    <Link key={item.href} href={item.href} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-700 transition hover:border-sky-300 hover:text-sky-700">
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[20px] border border-slate-200 bg-white p-4 sm:p-5">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Latest jobs</span>
+                <Link href="/jobs" className="text-sm font-semibold text-sky-700">View all →</Link>
+              </div>
+              <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {mixedJobs.length > 0 ? mixedJobs.map((item: any) => (
+                  <div key={item._id || item.id || `${item.source}-${item.title}`} className="rounded-[16px] border border-slate-200 bg-slate-50 p-4">
+                    <JobCard job={item} variant="featured" />
+                  </div>
+                )) : (
+                  <div className="rounded-[16px] border border-dashed border-slate-300 bg-slate-50 p-6 text-sm text-slate-600 md:col-span-2 xl:col-span-3">
+                    No latest jobs available yet.
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-2">
+              <div className="rounded-[20px] border border-slate-200 bg-white p-4 sm:p-5">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Salary guide preview</span>
+                <div className="mt-3 space-y-2">
+                  {salaryPreview.map((item) => (
+                    <Link key={item.role} href={item.href} className="flex items-center justify-between rounded-[12px] border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 transition hover:border-sky-300 hover:bg-white">
+                      <span>{item.role}</span>
+                      <span className="font-semibold text-emerald-700">{item.amount}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[20px] border border-slate-200 bg-white p-4 sm:p-5">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Featured career guides</span>
+                <div className="mt-3 grid gap-3">
+                  {careerGuides.map((item: any) => (
+                    <Link key={item.slug || item.title} href={item.slug ? `/career-resources/${item.slug}` : '/career-resources'} className="rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 hover:border-sky-300 hover:bg-slate-100">
+                      {item.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[20px] border border-slate-200 bg-slate-50/70 p-4 text-center">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Employer and support</span>
+              <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-sm text-slate-600">
+                <Link href="/employer" className="font-semibold text-sky-700">Post a job</Link>
+                <Link href="/about" className="font-semibold text-sky-700">About</Link>
+                <Link href="/contact" className="font-semibold text-sky-700">Contact</Link>
+                <Link href="/privacy" className="font-semibold text-sky-700">Privacy</Link>
+                <Link href="/sitemap" className="font-semibold text-sky-700">Sitemap</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

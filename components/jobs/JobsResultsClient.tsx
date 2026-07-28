@@ -1,30 +1,64 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { JobCard } from '@/components/jobs/JobCard'
 
 interface JobsResultsClientProps {
   initialOpportunities: any[]
   initialPage: number
   totalCount: number
+  cacheKey?: string
 }
 
-const pageSize = 21
+const initialBatchSize = 10
+const batchSize = 10
 
-export default function JobsResultsClient({ initialOpportunities, initialPage, totalCount }: JobsResultsClientProps) {
-  const [currentPage, setCurrentPage] = useState(initialPage)
-  const totalPages = Math.max(1, Math.ceil(initialOpportunities.length / pageSize))
-  const safePage = Math.min(currentPage, totalPages)
-  const startIndex = (safePage - 1) * pageSize
+export default function JobsResultsClient({ initialOpportunities, initialPage, totalCount, cacheKey = 'careerhunt-jobs-cache-default' }: JobsResultsClientProps) {
+  const [opportunities, setOpportunities] = useState(initialOpportunities)
+  const [visibleCount, setVisibleCount] = useState(Math.min(initialBatchSize, initialOpportunities.length))
 
-  const paginatedOpportunities = useMemo(() => {
-    return initialOpportunities.slice(startIndex, startIndex + pageSize)
-  }, [initialOpportunities, startIndex])
+  useEffect(() => {
+    if (typeof window === 'undefined') return
 
-  const handlePageChange = (nextPage: number) => {
-    const normalizedPage = Math.min(Math.max(nextPage, 1), totalPages)
-    setCurrentPage(normalizedPage)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    try {
+      const cached = window.sessionStorage.getItem(cacheKey)
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        if (parsed && typeof parsed === 'object' && Array.isArray(parsed.opportunities)) {
+          setOpportunities(parsed.opportunities)
+          setVisibleCount(Math.min(parsed.visibleCount ?? initialBatchSize, parsed.opportunities.length))
+          return
+        }
+
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setOpportunities(parsed)
+          setVisibleCount(Math.min(initialBatchSize, parsed.length))
+          return
+        }
+      }
+    } catch {
+      // Ignore invalid cache data and fall back to the initial list.
+    }
+
+    window.sessionStorage.setItem(cacheKey, JSON.stringify({ opportunities: initialOpportunities, visibleCount: Math.min(initialBatchSize, initialOpportunities.length) }))
+    setOpportunities(initialOpportunities)
+    setVisibleCount(Math.min(initialBatchSize, initialOpportunities.length))
+  }, [initialOpportunities, initialPage, cacheKey])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem(cacheKey, JSON.stringify({ opportunities, visibleCount }))
+    }
+  }, [opportunities, visibleCount, cacheKey])
+
+  const displayedOpportunities = useMemo(() => {
+    return opportunities.slice(0, visibleCount)
+  }, [opportunities, visibleCount])
+
+  const hasMore = visibleCount < opportunities.length
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + batchSize, opportunities.length))
   }
 
   return (
@@ -38,8 +72,8 @@ export default function JobsResultsClient({ initialOpportunities, initialPage, t
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {paginatedOpportunities.length > 0 ? (
-            paginatedOpportunities.map((item: any) => {
+          {displayedOpportunities.length > 0 ? (
+            displayedOpportunities.map((item: any) => {
               if (item.type === 'live') {
                 return (
                   <div key={item.id || `${item.source}-${item.title}`} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 shadow-sm">
@@ -72,33 +106,20 @@ export default function JobsResultsClient({ initialOpportunities, initialPage, t
           )}
         </div>
 
-        {totalPages > 1 ? (
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6">
-            <div className="text-sm text-slate-500">
-              Page {safePage} of {totalPages}
-            </div>
-            <div className="flex items-center gap-2">
-              {safePage > 1 ? (
-                <button
-                  type="button"
-                  onClick={() => handlePageChange(safePage - 1)}
-                  className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                >
-                  Previous
-                </button>
-              ) : null}
-              {safePage < totalPages ? (
-                <button
-                  type="button"
-                  onClick={() => handlePageChange(safePage + 1)}
-                  className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                >
-                  Next
-                </button>
-              ) : null}
-            </div>
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6">
+          <div className="text-sm text-slate-500">
+            Showing {displayedOpportunities.length} of {opportunities.length} jobs
           </div>
-        ) : null}
+          {hasMore ? (
+            <button
+              type="button"
+              onClick={handleLoadMore}
+              className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+              See more jobs
+            </button>
+          ) : null}
+        </div>
       </div>
     </>
   )

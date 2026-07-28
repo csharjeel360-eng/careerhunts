@@ -233,8 +233,8 @@ export default function WarehouseJobsUaePage() {
               <Link href="/blog" className="inline-flex items-center justify-center rounded-full bg-[#0f766e] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#115e59] sm:py-3">
                 Browse Warehouse Jobs
               </Link>
-              <Link href="/salary-guide/next-gen-salary-guide-2026" className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-white/20 sm:py-3">
-                View Salary Guide
+              <Link href="/career-insights" className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-white/20 sm:py-3">
+                View Career Insights
               </Link>
             </div>
             <div className="flex flex-wrap gap-2 sm:gap-4 text-xs text-slate-200 sm:text-sm pt-2">

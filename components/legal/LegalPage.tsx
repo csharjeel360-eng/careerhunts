@@ -9,9 +9,10 @@ interface LegalPageProps {
   title: string
   intro: string
   sections: LegalSection[]
+  contactInfo?: string[]
 }
 
-export function LegalPage({ title, intro, sections }: LegalPageProps) {
+export function LegalPage({ title, intro, sections, contactInfo }: LegalPageProps) {
   return (
     <section className="relative overflow-hidden bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)]">
       <div className="absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top_left,_rgba(34,211,238,0.18),_transparent_45%)]" />
@@ -37,6 +38,17 @@ export function LegalPage({ title, intro, sections }: LegalPageProps) {
                 </div>
               </div>
             ))}
+
+            {contactInfo && contactInfo.length > 0 ? (
+              <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-6">
+                <h2 className="text-xl font-semibold text-slate-900">Contact</h2>
+                <div className="mt-4 space-y-2 text-sm leading-7 text-slate-700">
+                  {contactInfo.map((item) => (
+                    <p key={item}>{item}</p>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

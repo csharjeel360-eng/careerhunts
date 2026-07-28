@@ -26,7 +26,10 @@ export function Footer() {
               <Link href="/contact" className="hover:text-white">Contact</Link>
             </li>
             <li>
-              <Link href="/blog" className="hover:text-white">Career Insights</Link>
+              <Link href="/companies" className="hover:text-white">Companies</Link>
+            </li>
+            <li>
+              <Link href="/career-insights" className="hover:text-white">Career Insights</Link>
             </li>
           </ul>
         </div>
@@ -56,6 +59,17 @@ export function Footer() {
             </a>
             .
           </p>
+          <div className="mt-4 flex flex-wrap gap-3 text-sm">
+            <a href="https://web.facebook.com/profile.php?id=61591338161107" target="_blank" rel="noopener noreferrer" className="text-cyan-100 hover:text-white">
+              Facebook
+            </a>
+            <a href="https://www.instagram.com/careerhunt233/" target="_blank" rel="noopener noreferrer" className="text-cyan-100 hover:text-white">
+              Instagram
+            </a>
+            <a href="https://x.com/CareerHunty" target="_blank" rel="noopener noreferrer" className="text-cyan-100 hover:text-white">
+              X
+            </a>
+          </div>
         </div>
       </div>
       <div className="border-t border-slate-800/70 py-5 text-center text-sm text-slate-300">

@@ -12,14 +12,14 @@ import { getCanonicalUrl } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Find Jobs in Pakistan and Worldwide',
-  description: 'Browse live job opportunities, filter by category, location, and experience level, and discover your next career move with CareerHunt.',
+  title: 'UAE Job Listings 2026: Dubai, Abu Dhabi & Sharjah',
+  description: 'Browse current job openings across the UAE by emirate, sector, and visa type. Filter by salary, role, and employer — updated daily.',
   alternates: {
     canonical: getCanonicalUrl('/jobs')
   },
   openGraph: {
-    title: 'Find Jobs in Pakistan and Worldwide',
-    description: 'Browse live job opportunities, filter by category, location, and experience level, and discover your next career move with CareerHunt.',
+    title: 'UAE Job Listings 2026: Dubai, Abu Dhabi & Sharjah',
+    description: 'Browse current job openings across the UAE by emirate, sector, and visa type. Filter by salary, role, and employer — updated daily.',
     url: getCanonicalUrl('/jobs'),
     siteName: 'CareerHunt',
     type: 'website'
@@ -38,9 +38,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   const category = Array.isArray(resolvedSearchParams.category) ? resolvedSearchParams.category[0] : resolvedSearchParams.category || ''
   const country = Array.isArray(resolvedSearchParams.country) ? resolvedSearchParams.country[0] : resolvedSearchParams.country || ''
   const city = Array.isArray(resolvedSearchParams.city) ? resolvedSearchParams.city[0] : resolvedSearchParams.city || ''
+  const company = Array.isArray(resolvedSearchParams.company) ? resolvedSearchParams.company[0] : resolvedSearchParams.company || ''
   const pageParam = Array.isArray(resolvedSearchParams.page) ? resolvedSearchParams.page[0] : resolvedSearchParams.page || '1'
   const currentPage = Number.parseInt(pageParam, 10) || 1
-  const pageSize = 21
+  const pageSize = 1000
 
   const [categories, countries, cities] = await Promise.all([
     getCategories(),
@@ -49,12 +50,13 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   ])
 
   const response = await getJobs({
-    limit: 24,
+    limit: 200,
     sort: '-postedDate',
     ...(keyword ? { keyword } : {}),
     ...(category ? { category } : {}),
     ...(country ? { country } : {}),
     ...(city ? { city } : {}),
+    ...(company ? { company } : {}),
   })
 
   let liveJobs: Awaited<ReturnType<typeof getLiveJobs>> = []
@@ -96,6 +98,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     if (category) params.set('category', category)
     if (country) params.set('country', country)
     if (city) params.set('city', city)
+    if (company) params.set('company', company)
     params.set('page', String(page))
     return `/jobs?${params.toString()}`
   }
@@ -106,6 +109,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   const categoryOptions = categories.length ? categories.map((item: any) => item.name) : jobCategories
   const countryOptions = countries.length ? countries.map((item: any) => item.name) : jobCountries
   const cityOptions = cities.length ? cities.map((item: any) => item.name) : jobCities
+  const cacheKey = `careerhunt-jobs-cache:${[keyword, category, country, city, company].map((value) => (value || 'all').toLowerCase()).join('|')}`
 
   return (
     <section className="relative overflow-hidden">
@@ -226,6 +230,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           initialOpportunities={allOpportunities}
           initialPage={safePage}
           totalCount={allOpportunities.length}
+          cacheKey={cacheKey}
         />
 
         <div className="mt-8">

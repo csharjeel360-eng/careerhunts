@@ -74,9 +74,7 @@ const fetchGreenhouseJobs = async (_companyToken: string): Promise<LiveJob[]> =>
 }
 
 const fetchLeverJobs = async (companyToken: string): Promise<LiveJob[]> => {
-  const payload = await fetchJson<any>(`https://api.lever.co/v0/postings/${companyToken}?mode=json`, {
-    cache: 'no-store',
-  })
+  const payload = await fetchJson<any>(`https://api.lever.co/v0/postings/${companyToken}?mode=json`)
 
   if (!Array.isArray(payload)) {
     return []

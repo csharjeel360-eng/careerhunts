@@ -3,8 +3,8 @@ import React from 'react'
 import { getCanonicalUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: 'Contact CareerHunt | Support for Job Seekers and Employers',
-  description: 'Get in touch with CareerHunt for job support, employer inquiries, or general questions about our career platform.',
+  title: 'Contact CareerHunt | Support, Feedback & Employer Inquiries',
+  description: 'Get in touch with CareerHunt for job seeker support, employer inquiries, or feedback. Email, phone, and response time details.',
   alternates: {
     canonical: getCanonicalUrl('/contact')
   }
@@ -16,7 +16,7 @@ export default function ContactPage() {
       <div className="max-w-3xl text-center mx-auto mb-12">
         <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Contact</p>
         <h1 className="mt-4 text-4xl font-semibold text-slate-900 sm:text-5xl">Get in touch with the team</h1>
-        <p className="mt-4 text-base leading-7 text-slate-600">Have a question about hiring, job posting, or how the platform works? Reach out and we’ll respond quickly.</p>
+        <p className="mt-4 text-base leading-7 text-slate-600">Use the details below for support, feedback, or employer inquiries.</p>
       </div>
 
       <div className="grid gap-10 lg:grid-cols-[1.4fr_0.6fr]">
@@ -39,7 +39,7 @@ export default function ContactPage() {
             <div>
               <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Office</p>
               <p className="mt-2 text-base">Islamabad, Pakistan</p>
-              <p className="mt-1 text-sm text-slate-600">Serving Islamabad and nearby areas across the capital region.</p>
+              <p className="mt-1 text-sm text-slate-600">Serving job seekers and employers across the UAE, with our support team based in Islamabad.</p>
             </div>
             <div>
               <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Response time</p>
@@ -50,7 +50,7 @@ export default function ContactPage() {
 
         <div className="rounded-3xl border border-slate-200 bg-slate-50 p-10 shadow-sm">
           <h2 className="text-2xl font-semibold text-slate-900">Need help?</h2>
-          <p className="mt-4 text-slate-600">If you're an employer or candidate with an urgent need, please contact us directly and we’ll prioritize your request.</p>
+          <p className="mt-4 text-slate-600">If you’re an employer or candidate with an urgent need, please contact us directly and we’ll prioritize your request.</p>
           <div className="mt-8 space-y-4 rounded-3xl bg-white p-6 shadow-sm">
             <div>
               <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Support email</p>

@@ -2,9 +2,6 @@
 const nextConfig = {
   output: 'standalone',
   trailingSlash: false,
-  swcMinify: true, // Ensure SWC minification is enabled
-  compress: true, // Enable gzip compression
-  productionBrowserSourceMaps: false, // Reduce bundle size in production
   experimental: {
     optimizePackageImports: ['lodash-es'],
   },

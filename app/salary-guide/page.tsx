@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { ArrowRight, TrendingUp, Briefcase, Sparkles } from 'lucide-react'
+import { TrendingUp, Briefcase, Sparkles } from 'lucide-react'
 import { salaryGuides } from '@/lib/salaryGuideData'
 import { getCanonicalUrl } from '@/lib/seo'
+import ContentCard from '@/components/shared/ContentCard'
 
 export const metadata: Metadata = {
   title: 'Salary Guide 2026 | CareerHunt',
@@ -54,20 +54,20 @@ export default function SalaryGuidePage() {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-10 grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
           {salaryGuides.map((guide) => (
-            <Link
+            <ContentCard
               key={guide.slug}
               href={`/salary-guide/${guide.slug}`}
-              className="group rounded-[1.5rem] border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-            >
-                <div className="flex items-center justify-between gap-3">
-                <span className="rounded-full bg-cyan-50 px-3 py-1 text-sm font-medium text-cyan-700">{guide.category}</span>
-                <ArrowRight className="h-4 w-4 text-slate-400 transition" />
-              </div>
-              <h2 className="mt-5 text-xl font-semibold text-slate-900">{guide.title}</h2>
-              <p className="mt-3 text-sm leading-7 text-slate-600">{guide.excerpt}</p>
-            </Link>
+              title={guide.title}
+              description={guide.excerpt}
+              category={guide.category}
+              variant="salary"
+              readTime="6 min read"
+              publishedAt={guide.publishedAt}
+              updatedAt={guide.updatedAt}
+              rows={guide.salaryBands.slice(0, 3).map((band) => ({ label: band.role, value: band.range }))}
+            />
           ))}
         </div>
       </div>
