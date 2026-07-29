@@ -46,13 +46,14 @@ export function CookieConsentBanner() {
       <div className="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex-1">
           <p className="text-sm font-semibold">We use cookies to improve site experience and measurement.</p>
-          <p className="mt-1 text-sm text-slate-300">
+          <p className="mt-1 text-sm text-slate-300 hidden sm:block">
             Accept for analytics and essential site functionality, or reject non-essential tracking.{' '}
             <Link href="/cookies" aria-label="Cookie Policy — CareerHunt" className="font-medium text-cyan-300 underline-offset-2 hover:underline">
               Cookie Policy
             </Link>
             .
           </p>
+          <p className="mt-1 text-sm text-slate-300 sm:hidden">Accept or reject non-essential tracking. <Link href="/cookies" className="text-cyan-300 underline">Policy</Link></p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">

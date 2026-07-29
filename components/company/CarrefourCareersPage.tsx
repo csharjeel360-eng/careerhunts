@@ -630,13 +630,13 @@ export default function CarrefourCareersPage() {
           <p className={`${poppins.className} text-sm font-semibold uppercase tracking-[0.24em] text-[#ff6b2c]`}>Sidebar</p>
           <div className="mt-4 space-y-2">
             <a href="#categories" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Job Categories</a>
-            <Link href="/blog" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Latest Career Guides</Link>
+            <Link href="/career-insights" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Latest Career Guides</Link>
             <Link href="/companies" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Popular Companies</Link>
-            <a href="#categories" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Retail Jobs</a>
-            <a href="#categories" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Warehouse Jobs</a>
-            <a href="#salary" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">UAE Jobs</a>
-            <a href="#faq" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Remote Jobs</a>
-            <Link href="/blog" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Recent Posts</Link>
+            <Link href="/warehouse-jobs-uae-2026" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Retail Jobs</Link>
+            <Link href="/warehouse-jobs-uae-2026" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Warehouse Jobs</Link>
+            <Link href="/dhl-careers-uae-2026" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">UAE Jobs</Link>
+            <Link href="/amazon-careers-2026" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Remote Jobs</Link>
+            <Link href="/career-insights" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#fff7f2] hover:text-[#ff6b2c] dark:bg-slate-950/70 dark:text-slate-300">Recent Posts</Link>
           </div>
         </div>
       </aside>

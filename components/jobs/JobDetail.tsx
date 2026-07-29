@@ -70,6 +70,9 @@ export default function JobDetail({ job, similarJobs = [] }: JobDetailProps) {
                     Apply now
                   </a>
                 ) : null}
+                <p className="mt-2 max-w-xs text-xs leading-5 text-slate-500">
+                  This listing is sourced from a partner provider — you will be redirected to complete your application.
+                </p>
               </div>
             </div>
 

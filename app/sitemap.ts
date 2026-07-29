@@ -34,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     buildUrl('/visa', new Date(), 'weekly', 0.65),
     buildUrl('/salary-guide', new Date(), 'monthly', 0.8),
     buildUrl('/uae-work-visa-sponsorship-guide-2026', new Date(), 'monthly', 0.75),
+    buildUrl('/visa/uae-golden-visa-property-threshold-2026', new Date(), 'monthly', 0.75),
     buildUrl('/amazon-careers-2026', new Date(), 'weekly', 0.9),
     buildUrl('/fedex-careers-usa-2026', new Date(), 'weekly', 0.9),
     buildUrl('/noon-careers-uae-2026', new Date(), 'weekly', 0.9),

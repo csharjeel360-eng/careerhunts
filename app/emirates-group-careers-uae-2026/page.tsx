@@ -133,23 +133,23 @@ const benefits = [
 const relatedJobs = [
   {
     title: 'Qatar Airways Careers',
-    href: '/jobs/qatar-airways-careers',
+    href: '/qatar-airways-careers-2026',
     description: 'Explore airline jobs in Qatar with premium cabin crew, ground operations, and corporate roles.'
   },
   {
-    title: 'Etihad Airways Careers',
-    href: '/jobs/etihad-airways-careers',
-    description: 'Find the latest Etihad vacancies in Dubai and Abu Dhabi across customer service and technical teams.'
+    title: 'DHL Careers UAE 2026',
+    href: '/dhl-careers-uae-2026',
+    description: 'Find logistics, transport, and warehouse opportunities across the UAE with DHL.'
   },
   {
-    title: 'FlyDubai Careers',
-    href: '/jobs/flydubai-careers',
-    description: 'Browse FlyDubai openings for cabin crew, airport operations, and corporate support roles.'
+    title: 'DP World Careers 2026',
+    href: '/dp-world-careers-2026',
+    description: 'Browse port, logistics, and supply chain roles across DP World locations in the UAE and beyond.'
   },
   {
-    title: 'Dubai Airport Careers',
-    href: '/jobs/dubai-airport-careers',
-    description: 'Discover jobs at Dubai Airport in security, operations, retail, and passenger services.'
+    title: 'Noon Careers UAE 2026',
+    href: '/noon-careers-uae-2026',
+    description: 'Discover e-commerce, operations, and retail careers in the UAE through Noon.'
   }
 ]
 

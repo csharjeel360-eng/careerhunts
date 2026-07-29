@@ -14,30 +14,30 @@ const sections = [
   {
     heading: 'Information We Collect',
     body: [
-      'We collect information you provide directly when you contact us, submit a job application, sign up for job alerts, or post a job listing as an employer. This typically includes your name, email address, and any details relevant to that request.',
-      'We also collect information automatically when you visit the site, including your IP address, browser type, device type, pages visited, and referring URL. Like most websites, we use this to understand usage patterns and keep the site functioning properly.',
-      'We use cookies and similar technologies to remember your preferences, keep you signed in where applicable, and understand aggregate site usage through analytics tools.'
-    ]
-  },
-  {
-    heading: 'How Third-Party Advertising Works on This Site',
-    body: [
-      'CareerHunt displays advertisements served by Google AdSense and other third-party advertising vendors. These partners may use cookies — including the Google DoubleClick cookie — to serve ads based on your prior visits to this website and other websites across the internet.',
-      'Google’s use of advertising cookies allows it and its partners to serve ads to you based on your visit to this site and/or other sites on the internet. You can opt out of personalized advertising by visiting Google Ads Settings or About Ads.',
-      'We do not control the cookies placed by third-party advertising networks, and we encourage you to review the privacy policies of those parties directly.'
+      'We collect information you provide directly when you contact us, submit a job application, sign up for job alerts, or post a job listing as an employer. This may include your name, email address, phone number, CV or application details, and any information you include in your profile or inquiry.',
+      'We also collect information automatically when you visit the site, including your IP address, browser type, device type, pages visited, and referring URL. We use this to understand how the site is used and keep it functioning properly.',
+      'We use cookies and similar technologies to remember preferences, keep sessions working where needed, and understand aggregate site usage through analytics tools.'
     ]
   },
   {
     heading: 'How We Use Your Information',
     body: [
-      'We use the information we collect to operate and improve the CareerHunt website and job listing functionality, respond to inquiries and applications, send job alerts you have opted into, understand site usage through aggregated and anonymized analytics, and detect and prevent fraud, spam, or misuse of the platform.',
-      'We do not sell your personal information to third parties.'
+      'We use the information we collect to operate and improve CareerHunt, publish and manage job listings, help users discover opportunities, respond to inquiries and applications, send job alerts you have opted into, and understand site usage through aggregated and anonymized analytics.',
+      'CareerHunt is a job board that features opportunities in the UAE and across global and remote roles. We may also use content and information to support visa guidance and career resources that appear on the site.'
     ]
   },
   {
     heading: 'Data Sharing',
     body: [
-      'We may share limited information with employers when you apply to a job listing, with service providers who help us operate the site under confidentiality obligations, with advertising partners for the cookie-based interest advertising described above, and with legal authorities when required by law or to protect rights, safety, or property.'
+      'We may share limited information with employers when you apply to a job listing, with service providers who help us operate the site under confidentiality obligations, and with legal authorities when required by law or to protect rights, safety, or property.',
+      'We do not sell personal data to third parties for unrelated commercial purposes.'
+    ]
+  },
+  {
+    heading: 'Advertising and Analytics',
+    body: [
+      'CareerHunt may use third-party advertising and analytics tools to understand traffic and improve the site experience. These providers may use cookies or similar technologies in accordance with their own policies.',
+      'If you prefer, you can manage cookie choices through your browser settings and the consent controls offered on the site.'
     ]
   },
   {
@@ -49,8 +49,8 @@ const sections = [
   {
     heading: 'Your Choices',
     body: [
-      'You can disable cookies through your browser settings, though this may affect how parts of the site function. You can also opt out of personalized advertising using the links provided above.',
-      'You can request that we delete personal information you have submitted to us by emailing us at privacy@careerhunt.online.'
+      'You can disable cookies through your browser settings, though this may affect how parts of the site function. You can also manage your consent preferences using the cookie controls provided on the site.',
+      'You can request that we delete personal information you have submitted to us by emailing us at contact@careerhunt.online.'
     ]
   },
   {
@@ -62,13 +62,13 @@ const sections = [
   {
     heading: 'International Visitors',
     body: [
-      'CareerHunt is based in and focused on the UAE job market, but our site is accessible globally. If you are visiting from the European Economic Area, the United Kingdom, or elsewhere with specific data protection rights, you can exercise those rights by contacting us directly.'
+      'CareerHunt is available to users worldwide, including visitors from the UAE, Europe, and other regions. If you are located in a jurisdiction with specific data protection rights, you may contact us to exercise those rights.'
     ]
   },
   {
     heading: 'Changes to This Policy',
     body: [
-      'We may update this Privacy Policy from time to time to reflect changes in our practices or for legal and regulatory reasons. The last updated date at the top of this page will reflect the most recent version. We encourage you to review this page periodically.'
+      'We may update this Privacy Policy from time to time to reflect changes in our practices, services, or legal requirements. We encourage you to review this page periodically.'
     ]
   }
 ]
@@ -80,9 +80,9 @@ export default function PrivacyPolicyPage() {
       intro="This Privacy Policy explains how CareerHunt collects, uses, and protects your information when you visit our website. By using CareerHunt, you agree to the practices described below."
       sections={sections}
       contactInfo={[
-        'Email: privacy@careerhunt.online',
+        'Email: contact@careerhunt.online',
         'Website: careerhunt.online',
-        'Signed by: CareerHunt, founded by Sharjeel'
+        'Signed by: CareerHunt'
       ]}
     />
   )

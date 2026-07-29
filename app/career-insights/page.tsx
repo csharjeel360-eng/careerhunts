@@ -4,40 +4,15 @@ import Script from 'next/script'
 import ContentCard from '@/components/shared/ContentCard'
 import { BLOG_POSTS } from '@/lib/blogData'
 import { BLOG_PAGE_CARDS } from '@/lib/blogPageCards'
+import { getPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = getPageMetadata({
   title: 'UAE Career Guides: Visa, Salary & Hiring Tips 2026',
   description:
     'Practical guides on UAE work visas, salary benchmarks, and getting hired — written for job seekers navigating the UAE market.',
-  keywords: [
-    'UAE careers',
-    'visa guide',
-    'salary benchmarks',
-    'hiring tips',
-    'job search 2026'
-  ],
-  alternates: {
-    canonical: 'https://careerhunt.online/career-insights'
-  },
-  robots: {
-    index: true,
-    follow: true
-  },
-  openGraph: {
-    title: 'UAE Career Guides: Visa, Salary & Hiring Tips 2026',
-    description:
-      'Practical guides on UAE work visas, salary benchmarks, and getting hired — written for job seekers navigating the UAE market.',
-    url: 'https://careerhunt.online/career-insights',
-    siteName: 'CareerHunt',
-    type: 'website'
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'UAE Career Guides: Visa, Salary & Hiring Tips 2026',
-    description:
-      'Practical guides on UAE work visas, salary benchmarks, and getting hired — written for job seekers navigating the UAE market.'
-  }
-}
+  path: '/career-insights',
+  keywords: ['UAE careers', 'visa guide', 'salary benchmarks', 'hiring tips', 'job search 2026'],
+})
 
 export default function CareerInsightsPage() {
   const blogJsonLd = {
@@ -75,55 +50,6 @@ export default function CareerInsightsPage() {
         </div>
 
         <div className="mt-10 grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
-          <ContentCard
-            href="/guides"
-            title="Browse the guides hub"
-            description="See career advice, salary insights, and visa guidance in one place."
-            category="Career guide"
-            variant="guide"
-            authorName="CareerHunt"
-            authorInitials="CH"
-            readTime="4 min read"
-            publishedAt="Jul 24, 2026"
-            updatedAt="Jul 28, 2026"
-          />
-          <ContentCard
-            href="/salary-guide"
-            title="Explore salary benchmarks"
-            description="Compare market ranges, salary trends, and high-growth roles in 2026."
-            category="Salary guide"
-            variant="salary"
-            readTime="4 min read"
-            publishedAt="Jul 24, 2026"
-            updatedAt="Jul 28, 2026"
-            rows={[{ label: 'Software Engineer', value: 'AED 15k–40k' }, { label: 'Product Manager', value: 'AED 20k–45k' }, { label: 'Data Analyst', value: 'AED 12k–25k' }]}
-          />
-          <ContentCard
-            href="/salary-guide/uae-salary-guide-2026"
-            title="UAE salary guide 2026"
-            description="Compare software engineer salaries in Dubai and Abu Dhabi and see what changes the market in 2026."
-            category="Salary guide"
-            variant="salary"
-            authorName="CareerHunt"
-            authorInitials="CH"
-            readTime="4 min read"
-            publishedAt="Jul 24, 2026"
-            updatedAt="Jul 28, 2026"
-            rows={[{ label: 'Entry level', value: 'AED 8k–13k' }, { label: 'Mid level', value: 'AED 15k–25k' }, { label: 'Senior', value: 'AED 25k–40k' }]}
-          />
-          <ContentCard
-            href="/salary-guide/software-engineer-dubai-abu-dhabi"
-            title="Software engineer salaries in the UAE"
-            description="See how Dubai and Abu Dhabi differ for software engineers in 2026 and what drives the pay gap."
-            category="Salary guide"
-            variant="salary"
-            authorName="CareerHunt"
-            authorInitials="CH"
-            readTime="4 min read"
-            publishedAt="May 14, 2026"
-            updatedAt="Jul 28, 2026"
-            rows={[{ label: 'Entry level', value: 'AED 8k–13k' }, { label: 'Mid level', value: 'AED 15k–25k' }, { label: 'Senior', value: 'AED 25k–40k' }]}
-          />
           {BLOG_PAGE_CARDS.filter((card) =>
             [
               '/dhl-careers-uae-2026',
@@ -135,7 +61,24 @@ export default function CareerInsightsPage() {
               '/warehouse-jobs-uae-2026',
               '/qatar-airways-careers-2026',
               '/carrefour-hypermarket-careers-2026',
-              '/uae-work-visa-sponsorship-guide-2026'
+              '/uae-work-visa-sponsorship-guide-2026',
+              '/visa/uae-employment-visa-guide',
+              '/visa/uae-golden-visa-guide',
+              '/visa/uae-family-sponsorship-guide',
+              '/visa/uae-work-permit-guide',
+              '/visa/uae-golden-visa-property-threshold-2026',
+              '/visa/uae-overstay-fine-2026',
+              '/visa/uae-jobseeker-visa-2026',
+              '/visa/uae-freelance-permit-vs-employment-visa',
+              '/visa/uae-visa-cancellation-grace-period-2026',
+              '/salary-guide/software-engineer-dubai-abu-dhabi-2026',
+              '/salary-guide/nurse-salary-uae-dha-haad-moh-2026',
+              '/salary-guide/teacher-salary-dubai-curriculum-2026',
+              '/salary-guide/entry-level-salary-uae-fresh-graduates-2026',
+              '/salary-guide/g42-careers-uae-2026',
+              '/career-resources/uae-experience-certificate-guide',
+              '/career-resources/emiratisation-quota-2026-expat-jobseekers',
+              '/career-resources/negotiate-salary-uae-job-offer'
             ].includes(card.href)
           ).map((card) => {
             const category = card.category ?? 'Career guide'

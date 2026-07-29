@@ -41,7 +41,7 @@ export default function UAEFamilySponsorshipGuidePage() {
         <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-slate-600">
           <span className="inline-flex items-center gap-2"><BadgeCheck className="h-4 w-4 text-sky-600" /> By Layla Haddad</span>
           <span className="inline-flex items-center gap-2"><Clock3 className="h-4 w-4 text-sky-600" /> 7 min read</span>
-          <span className="inline-flex items-center gap-2"><FileText className="h-4 w-4 text-sky-600" /> Updated 2026-07-28</span>
+          <span className="inline-flex items-center gap-2"><FileText className="h-4 w-4 text-sky-600" /> Published Jul 7, 2026</span>
         </div>
 
         <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-700">

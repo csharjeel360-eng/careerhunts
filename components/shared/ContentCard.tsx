@@ -87,10 +87,10 @@ export default function ContentCard({
   rows
 }: ContentCardProps) {
   const styles = variantStyles[variant]
-  const footerLabel = updatedAt
-    ? `Last updated ${formatDate(updatedAt)}`
-    : publishedAt
-      ? `Published ${formatDate(publishedAt)}`
+  const footerLabel = publishedAt
+    ? `Published ${formatDate(publishedAt)}`
+    : updatedAt
+      ? `Last updated ${formatDate(updatedAt)}`
       : 'Published recently'
   const displayReadTime = getReadTime(description, readTime)
   const isAuthorRowVisible = variant === 'guide' || variant === 'visa'

@@ -35,7 +35,6 @@ export default function RootLayout({
       <head>
          <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="naver-site-verification" content="" />
-        <link rel="canonical" href={SITE_URL} />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
         <link rel="preload" href="/icon.svg" as="image" />

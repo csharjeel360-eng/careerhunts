@@ -194,29 +194,29 @@ const relatedJobs = [
     description: 'Explore airline jobs in Dubai with premium cabin crew, ground operations, and corporate roles.'
   },
   {
-    title: 'Etihad Airways Careers',
-    href: '/etihad-airways-careers-2026',
-    description: 'Find the latest Etihad vacancies in Abu Dhabi across customer service and technical teams.'
+    title: 'DHL Careers UAE 2026',
+    href: '/dhl-careers-uae-2026',
+    description: 'Discover logistics and supply chain vacancies across the UAE with DHL.'
   },
   {
-    title: 'FlyDubai Careers',
-    href: '/flydubai-careers-2026',
-    description: 'Browse FlyDubai openings for cabin crew, airport operations, and corporate support roles.'
+    title: 'DP World Careers 2026',
+    href: '/dp-world-careers-2026',
+    description: 'Browse port and logistics roles across DP World opportunities in the UAE and beyond.'
   },
   {
-    title: 'Air Arabia Careers',
-    href: '/air-arabia-careers-2026',
-    description: 'Discover Air Arabia jobs across UAE, Egypt, Morocco, and international destinations.'
+    title: 'Amazon Careers 2026',
+    href: '/amazon-careers-2026',
+    description: 'Explore Amazon UAE roles in operations, customer service, and logistics.'
   },
   {
-    title: 'Saudi Airlines Careers',
-    href: '/saudi-airlines-careers-2026',
-    description: 'Explore Saudia airline careers in Riyadh and across the Middle East region.'
+    title: 'Noon Careers UAE 2026',
+    href: '/noon-careers-uae-2026',
+    description: 'Find e-commerce and operational careers in the UAE through Noon.'
   },
   {
-    title: 'Oman Air Careers',
-    href: '/oman-air-careers-2026',
-    description: 'Find career opportunities with Oman Air in Muscat and international airports.'
+    title: 'Warehouse Jobs UAE 2026',
+    href: '/warehouse-jobs-uae-2026',
+    description: 'See warehouse, picker, and logistics job opportunities across the UAE.'
   }
 ]
 

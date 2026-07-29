@@ -230,7 +230,7 @@ export default function WarehouseJobsUaePage() {
               Explore the top companies hiring warehouse and logistics staff across Dubai, Abu Dhabi, and the UAE — with salaries, requirements, and direct application links.
             </p>
             <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center pt-2">
-              <Link href="/blog" className="inline-flex items-center justify-center rounded-full bg-[#0f766e] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#115e59] sm:py-3">
+              <Link href="/career-insights" className="inline-flex items-center justify-center rounded-full bg-[#0f766e] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#115e59] sm:py-3">
                 Browse Warehouse Jobs
               </Link>
               <Link href="/career-insights" className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-white/20 sm:py-3">

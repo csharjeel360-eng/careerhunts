@@ -14,8 +14,8 @@ const sections = [
   {
     heading: 'Use of the Platform',
     body: [
-      'You may use CareerHunt to browse jobs, apply for opportunities, and interact with employers in a lawful and respectful manner.',
-      'You agree not to misuse the platform, submit false information, or interfere with other users or system operations.'
+      'You may use CareerHunt to browse job opportunities, apply for roles, and access career resources in a lawful and respectful manner.',
+      'CareerHunt includes UAE listings, global opportunities, remote roles, and visa guidance content. You agree not to misuse the platform, submit false information, or interfere with other users or system operations.'
     ]
   },
   {
@@ -28,8 +28,15 @@ const sections = [
   {
     heading: 'Content and Listings',
     body: [
-      'Employers and users may submit job listings and profile information, and we may review content for compliance and quality.',
-      'We are not responsible for the accuracy of third-party submissions, but we aim to maintain a reliable and trustworthy experience.'
+      'Employers, publishers, and users may submit job listings, profile information, or other content, and we may review content for compliance and quality.',
+      'We are not responsible for the accuracy, completeness, or availability of third-party submissions or external application links, but we aim to maintain a reliable and useful experience.'
+    ]
+  },
+  {
+    heading: 'Applications and Third-Party Links',
+    body: [
+      'When you click through to apply for a role, you may be redirected to an external employer, recruiter, or third-party application site. CareerHunt is not responsible for the operations, policies, or outcomes of those external services.',
+      'If a listing is sourced from a third-party provider, the site will make that clear where possible so you can understand where the application will be completed.'
     ]
   },
   {

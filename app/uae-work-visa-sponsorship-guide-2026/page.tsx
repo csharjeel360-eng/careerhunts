@@ -113,7 +113,7 @@ export default function UAEWorkVisaSponsorshipGuidePage() {
     title: 'UAE Work Visa & Sponsorship Guide 2026',
     description: pageDescription,
     url: canonicalUrl,
-    datePublished: '2026-07-24',
+    datePublished: '2026-07-01',
     authorName: 'CareerHunt',
     keywords: [
       'UAE work visa',
@@ -170,7 +170,7 @@ export default function UAEWorkVisaSponsorshipGuidePage() {
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-slate-300">
               <span>Reading time: 9 minutes</span>
               <span>•</span>
-              <span>Updated: July 24, 2026</span>
+              <span>Published: July 1, 2026</span>
             </div>
           </div>
         </div>

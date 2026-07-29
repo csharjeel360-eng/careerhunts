@@ -3,16 +3,16 @@
 CareerHunt is a careers and jobs platform focused on helping job seekers discover opportunities in the UAE, the US, and other global markets.
 
 ## Primary site sections
-- Home: /
-- Job listings: /jobs
-- Companies: /companies
-- Job categories: /categories
-- Countries and locations: /countries
-- Salary guide: /salary-guide
-- Career resources: /career-resources
-- Career insights: /career-insights
-- About: /about
-- Contact: /contact
+- [Home](https://careerhunt.online/)
+- [Job listings](https://careerhunt.online/jobs)
+- [Companies](https://careerhunt.online/companies)
+- [Job categories](https://careerhunt.online/categories)
+- [Countries and locations](https://careerhunt.online/countries)
+- [Salary guide](https://careerhunt.online/salary-guide)
+- [Career resources](https://careerhunt.online/career-resources)
+- [Career insights](https://careerhunt.online/career-insights)
+- [About](https://careerhunt.online/about)
+- [Contact](https://careerhunt.online/contact)
 
 ## Key content themes
 - UAE and international job opportunities
@@ -21,13 +21,13 @@ CareerHunt is a careers and jobs platform focused on helping job seekers discove
 - Recent job postings and category-based browsing
 
 ## Recommended crawl priorities
-1. /jobs
-2. /categories
-3. /countries
-4. /salary-guide
-5. /career-resources
-6. /about
-7. /contact
+1. [Job listings](https://careerhunt.online/jobs)
+2. [Job categories](https://careerhunt.online/categories)
+3. [Countries and locations](https://careerhunt.online/countries)
+4. [Salary guide](https://careerhunt.online/salary-guide)
+5. [Career resources](https://careerhunt.online/career-resources)
+6. [About](https://careerhunt.online/about)
+7. [Contact](https://careerhunt.online/contact)
 
 ## Notes
 - The site is optimized for job discovery and career guidance.

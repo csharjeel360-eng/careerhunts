@@ -1,32 +1,32 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getAllArticles, getArticleBySlug, getArticlesByCategory, getArticleSlugs } from '@/lib/articleData'
+import { getArticleBySlug, getArticlesByCategory, getArticleSlugs, type ArticleContent } from '@/lib/articleData'
 import { getCanonicalUrl, getPageMetadata } from '@/lib/seo'
 import ArticleTemplate from '@/components/shared/ArticleTemplate'
 
-interface CareerResourceDetailPageProps {
+interface SalaryGuideArticlePageProps {
   params: Promise<{ slug: string }>
 }
 
 function normaliseSlug(slug: string) {
-  return slug.replace(/^\/+/, '').replace(/^career-resources\//, '')
+  return slug.replace(/^\/+/, '').replace(/^salary-guide\//, '')
 }
 
 export async function generateStaticParams() {
   return getArticleSlugs()
-    .filter((slug) => slug.startsWith('/career-resources/'))
+    .filter((slug) => slug.startsWith('/salary-guide/'))
     .map((slug) => ({ slug: normaliseSlug(slug) }))
 }
 
-export async function generateMetadata({ params }: CareerResourceDetailPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: SalaryGuideArticlePageProps): Promise<Metadata> {
   const { slug } = await params
-  const article = getArticleBySlug(`/career-resources/${normaliseSlug(slug)}`)
+  const article = getArticleBySlug(`/salary-guide/${normaliseSlug(slug)}`)
 
   if (!article) {
     return getPageMetadata({
-      title: 'Career Resources',
-      description: 'Explore practical career resources to improve your resume, interview confidence, and networking strategy.',
-      path: '/career-resources',
+      title: 'Salary Guide',
+      description: 'Explore salary guides for UAE jobs, roles, and employer types.',
+      path: '/salary-guide',
     })
   }
 
@@ -69,19 +69,20 @@ export async function generateMetadata({ params }: CareerResourceDetailPageProps
       }).twitter,
       card: 'summary_large_image',
       images: ['/og-image.jpg'],
-    }
+    },
   }
 }
 
-export default async function CareerResourceDetailPage({ params }: CareerResourceDetailPageProps) {
+export default async function SalaryGuideArticlePage({ params }: SalaryGuideArticlePageProps) {
   const { slug } = await params
-  const article = getArticleBySlug(`/career-resources/${normaliseSlug(slug)}`)
+  const resolvedSlug = `/salary-guide/${normaliseSlug(slug)}`
+  const article = getArticleBySlug(resolvedSlug)
 
   if (!article) {
     notFound()
   }
 
-  const relatedArticles = getArticlesByCategory('career-resources')
+  const relatedArticles = getArticlesByCategory('salary')
     .filter((item) => item.frontmatter.slug !== article.frontmatter.slug)
     .slice(0, 3)
 
