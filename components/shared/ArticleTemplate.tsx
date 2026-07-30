@@ -106,11 +106,30 @@ function renderMarkdownBody(content: string) {
 }
 
 function renderContent(content: string) {
+  function convertTablesToHtml(md: string) {
+    // Match consecutive lines that contain at least two pipe characters (table-like rows).
+    return md.replace(/(^\s*(?:\|?.*\|.*)(?:\r?\n\s*(?:\|?.*\|.*))+)/gm, (match) => {
+      const lines = match.trim().split(/\r?\n/).map((l) => l.trim())
+      const rows = lines.map((row) => row.split('|').filter(Boolean).map((c) => c.trim()))
+      const headers = rows[0] || []
+      const bodyRows = rows.slice(1).filter((r) => !r.every((c) => /^-+$/.test(c)))
+
+      const thead = `<thead class="bg-slate-50"><tr>${headers.map((h) => `<th class="border-b border-slate-200 px-4 py-3 font-semibold text-slate-900 whitespace-normal break-words">${renderInlineMarkdown(h)}</th>`).join('')}</tr></thead>`
+      const tbody = `<tbody>${bodyRows.map((r) => `<tr>${r.map((c) => `<td class="border-b border-slate-200 px-4 py-3 text-slate-700 whitespace-normal break-words">${renderInlineMarkdown(c)}</td>`).join('')}</tr>`).join('')}</tbody>`
+
+      return `\n\n<div class="overflow-x-auto rounded-2xl border border-slate-200">\n<table class="min-w-[560px] w-full table-auto border-collapse bg-white text-left text-sm sm:min-w-0">${thead}${tbody}</table>\n</div>\n\n`
+    })
+  }
+
+  content = convertTablesToHtml(content)
   const sections = content.split(/\n(?=## )/).filter(Boolean)
   return sections.map((section, index) => {
     const lines = section.trim().split('\n')
     const heading = lines[0].replace(/^##\s*/, '')
-    const body = lines.slice(1).join('\n').trim()
+    let body = lines.slice(1).join('\n').trim()
+    // Ensure raw markdown table blocks are isolated so they are treated as their own paragraphs
+    // Match consecutive lines that contain at least two '|' characters and add blank lines around them
+    body = body.replace(/(?:\r?\n)?(^|\n)(\s*(?:\|?.*\|.*)(?:\r?\n\s*(?:\|?.*\|.*))+)(?=\n|$)/gm, '\n\n$2\n\n')
 
     if (!body) {
       return null
@@ -136,17 +155,26 @@ function renderContent(content: string) {
     const paragraphs = body.split(/\n\n/).filter(Boolean)
 
     return (
-      <section key={`${heading}-${index}`} className="rounded-[1.35rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
-        <h2 className="text-2xl font-semibold text-slate-900">{heading}</h2>
+      <section key={`${heading}-${index}`} className="overflow-x-hidden rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+        <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">{heading}</h2>
         <div className="mt-4 space-y-4 text-base leading-8 text-slate-700">
           {paragraphs.map((paragraph, paragraphIndex) => {
-            if (paragraph.startsWith('|')) {
+            // If preprocessed HTML block (table container), render as raw HTML
+            if (paragraph.trimStart().startsWith('<div') || paragraph.trimStart().startsWith('<table')) {
+              return <div key={`${paragraphIndex}`} dangerouslySetInnerHTML={{ __html: paragraph }} />
+            }
+            const paraLines = paragraph.split('\n')
+            const looksLikeTable = paraLines.length > 1 && paraLines.slice(0, 3).some((l) => (l.match(/\|/g) || []).length >= 2)
+            const hasMultiplePipes = (paragraph.match(/\|/g) || []).length >= 2
+            if (paragraph.trimStart().startsWith('|') || hasMultiplePipes || looksLikeTable) {
               const rows = paragraph.split('\n').map((row) => row.split('|').filter(Boolean).map((cell) => cell.trim()))
               const headers = rows[0]
-              const bodyRows = rows.slice(1)
+              let bodyRows = rows.slice(1)
+              // remove separator rows like [ '---', '---' ]
+              bodyRows = bodyRows.filter((r) => !r.every((c) => /^-+$/.test(c)))
                 return (
                 <div key={`${paragraphIndex}`} className="overflow-x-auto rounded-2xl border border-slate-200">
-                  <table className="w-full table-auto border-collapse bg-white text-left text-sm">
+                  <table className="min-w-[560px] w-full table-auto border-collapse bg-white text-left text-sm sm:min-w-0">
                     <thead className="bg-slate-50">
                       <tr>
                         {headers.map((header, headerIndex) => (
@@ -242,7 +270,7 @@ function renderContent(content: string) {
               }
             }
 
-            if (paragraph.startsWith('1. ') || paragraph.startsWith('2. ')) {
+            if (paragraph.trimStart().startsWith('1. ') || paragraph.trimStart().startsWith('2. ')) {
               const listItems = paragraph.split('\n').filter(Boolean)
               return (
                 <ol className="list-decimal space-y-3 pl-6" key={`${paragraphIndex}`}>
@@ -253,7 +281,7 @@ function renderContent(content: string) {
               )
             }
 
-            if (paragraph.startsWith('- ')) {
+            if (paragraph.trimStart().startsWith('- ')) {
               const listItems = paragraph.split('\n').filter(Boolean)
               return (
                 <ul className="list-disc space-y-2 pl-6" key={`${paragraphIndex}`}>
@@ -264,7 +292,7 @@ function renderContent(content: string) {
               )
             }
 
-            return <p key={`${paragraphIndex}`} dangerouslySetInnerHTML={{ __html: renderInlineMarkdown(paragraph) }} />
+            return <p key={`${paragraphIndex}`} className="break-words" dangerouslySetInnerHTML={{ __html: renderInlineMarkdown(paragraph) }} />
           })}
         </div>
       </section>
@@ -298,9 +326,9 @@ export default function ArticleTemplate({ article, relatedArticles }: ArticleTem
       <Script id="article-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <Script id="faq-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Script id="breadcrumb-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <article className="bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)] py-14 text-slate-900">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.4fr_0.6fr] lg:px-8">
-          <div>
+      <article className="bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)] py-8 text-slate-900 sm:py-10 lg:py-14">
+        <div className="mx-auto grid max-w-7xl gap-6 px-3 sm:gap-8 sm:px-6 lg:grid-cols-[1.4fr_0.6fr] lg:px-8">
+          <div className="min-w-0">
             <nav aria-label="Breadcrumb" className="text-sm text-slate-600">
               <ol className="flex flex-wrap items-center gap-2">
                 {breadcrumbs.map((crumb, index) => (
@@ -318,12 +346,12 @@ export default function ArticleTemplate({ article, relatedArticles }: ArticleTem
               </ol>
             </nav>
 
-            <div className="mt-6 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm sm:p-10 lg:p-12">
+            <div className="mt-6 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-8 lg:p-12">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-sky-100 px-3 py-1 text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">{frontmatter.category || 'Career guide'}</span>
                 <span className="text-sm text-slate-500">Last verified {verifiedDate || 'Recently updated'}</span>
               </div>
-              <h1 className="mt-5 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">{frontmatter.title || 'Career article'}</h1>
+              <h1 className="mt-5 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">{frontmatter.title || 'Career article'}</h1>
               <p className="mt-5 text-lg leading-8 text-slate-600">{frontmatter.metaDescription || 'Helpful career guidance from CareerHunt.'}</p>
 
               <div className="mt-8 flex flex-wrap items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
@@ -335,7 +363,7 @@ export default function ArticleTemplate({ article, relatedArticles }: ArticleTem
                 <span>Published {publishedDate || 'recently'}</span>
               </div>
 
-              <div className="mt-8 rounded-[1.5rem] border border-slate-200 bg-slate-950 p-8 text-white">
+              <div className="mt-8 rounded-[1.5rem] border border-slate-200 bg-slate-950 p-5 text-white sm:p-7 lg:p-8">
                 <div className="flex items-center gap-2 text-sky-300">
                   <Sparkles className="h-5 w-5" />
                   <span className="text-sm font-semibold uppercase tracking-[0.24em]">Quick take</span>
@@ -347,13 +375,25 @@ export default function ArticleTemplate({ article, relatedArticles }: ArticleTem
                 {renderContent(content)}
               </div>
 
-              <section className="mt-10 rounded-[1.25rem] border border-slate-200 bg-slate-50 p-6 sm:p-7" aria-labelledby="faq-section">
-                <h2 id="faq-section" className="text-2xl font-semibold text-slate-900">Frequently asked questions</h2>
-                <div className="mt-6 space-y-3">
+              <section className="mt-10 rounded-[1.4rem] border border-slate-200 bg-white p-3 shadow-sm sm:p-7" aria-labelledby="faq-section">
+                <div className="flex flex-col gap-2 rounded-[1.1rem] bg-slate-50 p-3 sm:flex-row sm:items-end sm:justify-between sm:p-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-sky-700 sm:text-sm">FAQ</p>
+                    <h2 id="faq-section" className="mt-1 text-xl font-semibold text-slate-900 sm:text-2xl">Frequently asked questions</h2>
+                  </div>
+                  <p className="text-sm text-slate-500">Clear answers to the most common questions</p>
+                </div>
+                <div className="mt-4 space-y-3 sm:mt-6">
                   {(frontmatter.faqs || []).map((faq) => (
-                    <details key={faq.question} className="rounded-2xl border border-slate-200 bg-white p-4">
-                      <summary className="cursor-pointer font-semibold text-slate-900">{faq.question}</summary>
-                      <div className="mt-3 text-slate-600" dangerouslySetInnerHTML={{ __html: renderMarkdownHtml(faq.answer) }} />
+                    <details
+                      key={faq.question}
+                      className="group overflow-hidden rounded-[1rem] border border-slate-200 bg-white shadow-sm transition hover:border-sky-300 hover:shadow-md"
+                    >
+                      <summary className="flex cursor-pointer list-none items-start justify-between gap-3 px-4 py-4 font-semibold text-slate-900 sm:px-5">
+                        <span className="pr-2 text-sm leading-6 sm:text-base">{faq.question}</span>
+                        <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sky-50 text-lg text-sky-700 transition group-open:rotate-45">+</span>
+                      </summary>
+                      <div className="border-t border-slate-100 bg-slate-50 px-4 py-4 text-sm leading-7 text-slate-600 sm:px-5" dangerouslySetInnerHTML={{ __html: renderMarkdownHtml(faq.answer) }} />
                     </details>
                   ))}
                 </div>

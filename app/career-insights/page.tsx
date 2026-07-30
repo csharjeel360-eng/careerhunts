@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import React from 'react'
 import Script from 'next/script'
 import ContentCard from '@/components/shared/ContentCard'
@@ -46,6 +47,12 @@ export default function CareerInsightsPage() {
           </h1>
           <p className="mt-4 text-base leading-8 text-slate-600">
             Discover expert career advice, resume tips, interview strategies, salary negotiation guidance, remote work best practices, and insights into AI career trends to help you find the right job and grow your career in 2026.
+          </p>
+          <p className="mt-6 text-sm font-medium text-slate-700">
+            Featured guide:{' '}
+            <Link href="/career-resources/emiratisation-quota-2026-expat-jobseekers" className="text-blue-600 underline-offset-4 hover:underline">
+              Emiratisation Quota 2026 for Expat Job Seekers
+            </Link>
           </p>
         </div>
 

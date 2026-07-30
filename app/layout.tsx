@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
-import dynamic from 'next/dynamic'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Toaster } from '@/components/ui/toaster'
@@ -10,10 +9,7 @@ import { generateOrganizationSchema, generateWebsiteSchema, getDefaultMetadata, 
 import { CookieConsentBanner } from '@/components/layout/CookieConsentBanner'
 import { GtmScript } from '@/components/layout/GtmScript'
 
-const NavigationDebug = dynamic(() => import('@/components/dev/NavigationDebug'), {
-  ssr: false,
-  loading: () => null,
-})
+import NavigationDebugClient from '@/components/dev/NavigationDebugClient'
 
 const showNavigationDebug = process.env.NODE_ENV !== 'production'
 
@@ -50,7 +46,7 @@ export default function RootLayout({
         >
           <div className="min-h-screen flex flex-col">
             <Header />
-            {showNavigationDebug ? <NavigationDebug /> : null}
+            {showNavigationDebug ? <NavigationDebugClient /> : null}
             <main className="flex-1">{children}</main>
             <Footer />
           </div>

@@ -124,14 +124,19 @@ export default async function HomePage() {
   ]
   const salaryPreview = [
     {
-      role: 'UAE salary guide 2026',
-      amount: 'Industry, emirate & pay ranges',
-      href: '/salary-guide/uae-salary-guide-2026',
-    },
-    {
       role: 'Software engineer salaries in the UAE',
       amount: 'Dubai vs. Abu Dhabi comparison',
-      href: '/salary-guide/software-engineer-dubai-abu-dhabi',
+      href: '/salary-guide/software-engineer-dubai-abu-dhabi-2026',
+    },
+    {
+      role: 'Entry-level salary in the UAE',
+      amount: 'Fresh graduate pay expectations',
+      href: '/salary-guide/entry-level-salary-uae-fresh-graduates-2026',
+    },
+    {
+      role: 'Teacher salary in Dubai',
+      amount: 'Curriculum and school comparisons',
+      href: '/salary-guide/teacher-salary-dubai-curriculum-2026',
     },
   ]
   const careerGuides = (careerResourceData || []).slice(0, 4)
