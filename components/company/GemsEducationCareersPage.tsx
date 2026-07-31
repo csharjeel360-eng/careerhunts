@@ -3,9 +3,9 @@
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Inter, Poppins } from 'next/font/google'
 import { NativeAd } from '@/components/ads/NativeAd'
 import { CompanyDisclaimer } from '@/components/company/CompanyDisclaimer'
-import { Inter, Poppins } from 'next/font/google'
 import {
   ArrowRight,
   BadgeCheck,
@@ -33,7 +33,8 @@ import {
   getCanonicalUrl,
 } from '@/lib/seo'
 
-}
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
 
 const tocItems = [
   { id: 'about', label: 'About GEMS' },
@@ -146,6 +147,11 @@ const salaryCards = [
   { label: 'Teaching roles', value: 'AED 10,000–18,000+ monthly', note: 'Typical private school ranges vary by qualification, subject specialism, and school level.' },
   { label: 'Corporate roles', value: 'AED 12,000–25,000+ monthly', note: 'Corporate salaries vary by function, seniority, and experience in HR, IT, operations, and admissions.' },
 ]
+
+type FAQItem = {
+  question: string
+  answer: string
+}
 
 const faqItems: FAQItem[] = [
   {

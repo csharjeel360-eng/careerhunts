@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Inter, Poppins } from 'next/font/google'
 import { NativeAd } from '@/components/ads/NativeAd'
 import {
   ArrowRight,
@@ -28,6 +29,9 @@ import {
   generateOrganizationSchema,
   generateWebPageSchema,
 } from '@/lib/seo'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
 
 type FAQItem = {
   question: string

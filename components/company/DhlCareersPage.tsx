@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Inter, Poppins } from 'next/font/google'
 import { NativeAd } from '@/components/ads/NativeAd'
 import {
   ArrowRight,
@@ -39,7 +40,8 @@ import {
   getCanonicalUrl,
 } from '@/lib/seo'
 
-}
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
 
 const tocItems = [
   { id: 'about', label: 'About DHL' },
@@ -142,6 +144,11 @@ const whyChoose = [
   { title: 'Employee Recognition', description: 'Recognize achievements and be rewarded for strong performance.', icon: Star },
   { title: 'Sustainable Business Practices', description: 'Support responsible logistics and environmental initiatives.', icon: Leaf },
 ]
+
+type FAQItem = {
+  question: string
+  answer: string
+}
 
 const faqItems: FAQItem[] = [
   { question: 'How do I apply for DHL jobs in UAE?', answer: 'Visit the official DHL Careers portal, search for your preferred role, and submit your application with your updated CV and relevant documents.' },

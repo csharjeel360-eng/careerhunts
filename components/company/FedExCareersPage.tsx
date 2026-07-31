@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Inter, Poppins } from 'next/font/google'
 import type { LucideIcon } from 'lucide-react'
 import {
   ArrowRight,
@@ -45,7 +46,8 @@ import {
 } from '@/lib/seo'
 import { NativeAd } from '@/components/ads/NativeAd'
 
-}
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
 
 type SectionCardItem = {
   title: string
@@ -155,6 +157,11 @@ const timelineSteps: TimelineStep[] = [
 const employeeBenefits = [
   'Health Insurance', 'Dental Insurance', 'Vision Insurance', 'Life Insurance', 'Retirement Plans', 'Employee Discounts', 'Career Development', 'Paid Time Off', 'Paid Holidays', 'Tuition Assistance', 'Wellness Programs', 'Flexible Work Opportunities',
 ]
+
+type FAQItem = {
+  question: string
+  answer: string
+}
 
 const faqItems: FAQItem[] = [
   { question: 'Does FedEx hire without experience?', answer: 'Yes. Entry-level operations, warehouse, customer service, and support roles often accept candidates with little or no prior experience.' },

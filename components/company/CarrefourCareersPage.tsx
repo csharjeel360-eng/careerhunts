@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Inter, Poppins } from 'next/font/google'
 import { NativeAd } from '@/components/ads/NativeAd'
 import {
   ArrowRight,
@@ -32,7 +33,8 @@ import {
   generateWebPageSchema,
 } from '@/lib/seo'
 
-}
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
 
 const tocItems = [
   { id: 'intro', label: 'Introduction' },
@@ -143,6 +145,11 @@ const tips = [
   'Demonstrate customer service skills, reliability, and willingness to learn.',
   'Mention any retail experience, shift flexibility, or language abilities that add value.',
 ]
+
+type FAQItem = {
+  question: string
+  answer: string
+}
 
 const faqItems: FAQItem[] = [
   { question: 'How do I apply for Carrefour jobs?', answer: 'Visit the official Carrefour careers portal, search for the role you want, and submit your application online. This page is designed to help you prepare, but applications should be completed through the official careers website.' },
