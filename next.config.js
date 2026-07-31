@@ -1,12 +1,8 @@
-const path = require('path')
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
   trailingSlash: true,
   // `swcMinify` is invalid for this Next.js version; removed for compatibility.
-  // Turbopack root configuration removed — it caused Turbopack path errors.
-  // If you need to set `turbopack.root`, add an absolute path in a root-level config.
   experimental: {
     optimizePackageImports: ['lodash-es'],
   },

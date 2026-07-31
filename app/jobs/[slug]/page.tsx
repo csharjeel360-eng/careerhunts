@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
-import { getJobBySlug, getLatestJobs } from '@/lib/api'
+import { getJobBySlug } from '@/lib/api'
 import JobDetail from '@/components/jobs/JobDetail'
 import { generateJobSchema, generateBreadcrumbSchema, getCanonicalUrl } from '@/lib/seo'
 
@@ -19,16 +19,28 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
     }
   }
 
-  const companyName = job.companyId?.name || 'Company'
+  const companyName = job.companyName || job.companyId?.name || 'Company'
+  const canonicalUrl = getCanonicalUrl(`/jobs/${job.slug}`)
+  const isOriginalContent = job.isOriginalContent !== false
+  const city = (job.city || 'UAE').toString().trim()
+  const category = (job.category || 'jobs').toString().trim()
+  const keywordSet = [
+    `${job.title} ${city}`,
+    `${job.title} ${companyName}`,
+    `${category} jobs in ${city}`,
+    `${job.title} UAE`,
+    `${category} UAE`,
+    `${job.title} hiring ${city}`,
+  ].filter(Boolean)
 
   return {
-    title: `${job.title} at ${companyName}`,
-    description: job.summary || `Apply for ${job.title} position at ${companyName}. ${job.requirements?.join(' ')}`,
-    keywords: job.keywords?.join(', ') || `${job.title}, ${companyName}, ${job.category} job`,
+    title: `${job.title} in ${city} | ${companyName}`,
+    description: job.summary || `Apply for ${job.title} in ${city} with ${companyName}. ${job.requirements?.join(' ')}`,
+    keywords: job.keywords?.join(', ') || keywordSet.join(', '),
     openGraph: {
       title: `${job.title} at ${companyName}`,
       description: job.summary || `Apply for ${job.title} position at ${companyName}`,
-      url: getCanonicalUrl(`/jobs/${job.slug}`),
+      url: canonicalUrl,
       type: 'article',
       publishedTime: job.postedDate,
       modifiedTime: job.updatedAt,
@@ -41,7 +53,22 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
       description: job.summary || `Apply for ${job.title} position at ${companyName}`,
     },
     alternates: {
-      canonical: getCanonicalUrl(`/jobs/${job.slug}`),
+      canonical: canonicalUrl,
+    },
+    robots: isOriginalContent ? {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    } : {
+      index: false,
+      follow: false,
+      googleBot: {
+        index: false,
+        follow: false,
+      },
     },
   }
 }
@@ -49,21 +76,17 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
 export default async function JobPage({ params }: JobPageProps) {
   const { slug } = await params
 
-  const [job, latestJobs] = await Promise.all([
-    getJobBySlug(slug),
-    getLatestJobs(),
-  ])
+  const job = await getJobBySlug(slug)
 
   if (!job) {
     notFound()
   }
 
-  const similarJobs = (latestJobs || []).filter((item: any) => item.slug !== slug).slice(0, 3)
-  
   const jobSchema = generateJobSchema(job)
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', item: '/' },
     { name: 'Jobs', item: '/jobs' },
+    ...(job.city ? [{ name: job.city, item: `/jobs?city=${encodeURIComponent(job.city)}` }] : []),
     { name: job.title, item: `/jobs/${job.slug}` }
   ])
   
@@ -81,7 +104,7 @@ export default async function JobPage({ params }: JobPageProps) {
           __html: JSON.stringify(breadcrumbSchema)
         }}
       />
-      <JobDetail job={job} similarJobs={similarJobs} />
+      <JobDetail job={job} />
     </>
   )
 }

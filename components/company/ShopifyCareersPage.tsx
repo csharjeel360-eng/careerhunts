@@ -27,12 +27,6 @@ import {
   Workflow
 } from 'lucide-react'
 
-const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
-const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
-
-type FAQItem = {
-  question: string
-  answer: string
 }
 
 const tocItems = [

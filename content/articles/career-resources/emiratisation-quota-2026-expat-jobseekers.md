@@ -77,20 +77,6 @@ For job seekers, this usually translates into a few practical realities:
 - Some sectors have higher and more specific targets than the general 10% figure.
 - The policy is a compliance framework for employers, not a blanket ban on expat hiring.
 
-## FAQs
-
-### Does the Emiratisation quota mean expats cannot get skilled jobs in the UAE?
-No. The quota requires a percentage of skilled roles at qualifying mainland companies to be filled by Emirati nationals, but it does not block the remaining positions, which still represent a large share of hiring opportunities.
-
-### Are free zone jobs unaffected by Emiratisation requirements?
-Most free zone companies are currently exempt from the general MOHRE mainland quota, although some free zones and sectors use their own frameworks. That means free zones can still be a practical option for many job seekers, but it is worth checking the specific rules that apply to your target company.
-
-### Which sectors have the strictest Emiratisation requirements?
-Banking, insurance, and financial services are commonly cited as sectors with additional or stricter targets on top of the general rule. If you are targeting these industries, it is worth researching employer-specific and sector-specific guidance.
-
-### Does company size affect whether Emiratisation applies?
-Yes. The general MOHRE requirement focuses on companies with 50 or more employees. Smaller businesses may not be directly subject to the same general framework, though targeted or sector-based rules can still apply in some cases.
-
 ## Action Checklist
 
 - [ ] Research whether your target employer is mainland or free zone

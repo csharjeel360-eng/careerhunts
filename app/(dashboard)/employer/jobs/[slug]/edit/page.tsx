@@ -47,6 +47,7 @@ const jobSchema = z.object({
   tags: z.string().optional(),
   isFeatured: z.boolean().optional(),
   isUrgent: z.boolean().optional(),
+  isOriginalContent: z.boolean().optional(),
   postedDate: z.string().optional(),
   expiryDate: z.string().optional(),
 })
@@ -99,6 +100,7 @@ export default function EmployerEditJobPage() {
       tags: '',
       isFeatured: false,
       isUrgent: false,
+      isOriginalContent: true,
       postedDate: new Date().toISOString(),
       expiryDate: '',
     },
@@ -150,6 +152,7 @@ export default function EmployerEditJobPage() {
           tags: (job.tags || []).join(', '),
           isFeatured: job.isFeatured || false,
           isUrgent: job.isUrgent || false,
+          isOriginalContent: job.isOriginalContent !== false,
           postedDate: job.postedDate ? new Date(job.postedDate).toISOString() : new Date().toISOString(),
           expiryDate: job.expiryDate ? new Date(job.expiryDate).toISOString().slice(0, 10) : '',
         })
@@ -198,6 +201,7 @@ export default function EmployerEditJobPage() {
         tags: data.tags.split(',').map((item) => item.trim()).filter(Boolean),
         isFeatured: data.isFeatured,
         isUrgent: data.isUrgent,
+        isOriginalContent: data.isOriginalContent,
         postedDate: data.postedDate ? new Date(data.postedDate) : undefined,
         expiryDate: data.expiryDate ? new Date(data.expiryDate) : undefined,
       })
@@ -290,9 +294,7 @@ export default function EmployerEditJobPage() {
                 <Label htmlFor="country">Country</Label>
                 <Select id="country" {...register('country')}>
                   <option value="">Select country</option>
-                  {countries.map((country) => (
-                    <option key={country} value={country}>{country}</option>
-                  ))}
+                  <option value="United Arab Emirates">United Arab Emirates</option>
                 </Select>
                 {errors.country && <p className="text-sm text-destructive">{errors.country.message}</p>}
               </div>
@@ -359,6 +361,14 @@ export default function EmployerEditJobPage() {
             <div className="space-y-2">
               <Label htmlFor="benefits">Benefits</Label>
               <Textarea id="benefits" rows={3} placeholder="One item per line" {...register('benefits')} />
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <Label htmlFor="isOriginalContent" className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                <input id="isOriginalContent" type="checkbox" className="h-4 w-4 rounded border-slate-300" {...register('isOriginalContent')} />
+                Mark this listing as original content (allow indexing)
+              </Label>
+              <p className="mt-2 text-sm text-slate-500">Leave unchecked to render a noindex tag until the description is rewritten with original content.</p>
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">

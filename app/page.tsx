@@ -212,7 +212,7 @@ export default async function HomePage() {
                 <p className="mt-2 text-sm font-semibold text-slate-900">Work visas, Golden Visa, sponsorship — explained</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {visaTags.map((item) => (
-                    <Link key={item.href} href={item.href} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-700 transition hover:border-sky-300 hover:text-sky-700">
+                    <Link key={item.href} href={item.href} className="inline-flex items-center rounded-full border border-sky-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-sky-400 hover:bg-sky-50 hover:text-sky-800">
                       {item.label}
                     </Link>
                   ))}

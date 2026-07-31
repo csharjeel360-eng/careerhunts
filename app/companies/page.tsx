@@ -13,6 +13,14 @@ export const metadata: Metadata = getPageMetadata({
 
 export default async function CompaniesPage() {
   const companies = await getCompanies()
+  const uniqueCompanies = companies.reduce((acc: any[], company: any) => {
+    const name = (company?.name || '').trim().toLowerCase()
+    if (!name) return acc
+    if (!acc.some((item: any) => (item?.name || '').trim().toLowerCase() === name)) {
+      acc.push(company)
+    }
+    return acc
+  }, [])
 
   return (
     <section className="container mx-auto px-4 py-14">
@@ -23,14 +31,20 @@ export default async function CompaniesPage() {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {companies.map((company: any) => (
-          <Link key={company._id} href={`/jobs?company=${company._id}`} className="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-xl">
-            <h2 className="text-xl font-semibold text-slate-900">{company.name}</h2>
-            <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-900 transition">
-              View jobs
-            </div>
-          </Link>
-        ))}
+        {uniqueCompanies.map((company: any) => {
+          const companyName = company?.name || 'Company'
+          const companyId = company?._id || companyName
+          const href = `/jobs?company=${encodeURIComponent(companyId)}`
+
+          return (
+            <Link key={companyId} href={href} className="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-xl">
+              <h2 className="text-xl font-semibold text-slate-900">{companyName}</h2>
+              <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-900 transition">
+                View jobs
+              </div>
+            </Link>
+          )
+        })}
       </div>
     </section>
   )

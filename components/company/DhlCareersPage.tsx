@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { NativeAd } from '@/components/ads/NativeAd'
-import { Inter, Poppins } from 'next/font/google'
 import {
   ArrowRight,
   BadgeCheck,
@@ -40,12 +39,6 @@ import {
   getCanonicalUrl,
 } from '@/lib/seo'
 
-const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
-const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
-
-type FAQItem = {
-  question: string
-  answer: string
 }
 
 const tocItems = [

@@ -37,12 +37,6 @@ import {
 } from '@/lib/seo'
 import { NativeAd } from '@/components/ads/NativeAd'
 
-const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
-const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
-
-type FAQItem = {
-  question: string
-  answer: string
 }
 
 type JobCardItem = {

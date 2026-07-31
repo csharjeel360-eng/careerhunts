@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Header } from '@/components/layout/Header'
@@ -12,9 +11,6 @@ import { GtmScript } from '@/components/layout/GtmScript'
 import NavigationDebugClient from '@/components/dev/NavigationDebugClient'
 
 const showNavigationDebug = process.env.NODE_ENV !== 'production'
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
-const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'], variable: '--font-poppins', display: 'swap' })
 const interFontClass = 'font-sans'
 
 export const metadata: Metadata = {
@@ -27,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
+    <html lang="en" suppressHydrationWarning>
       <head>
          <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="naver-site-verification" content="" />
@@ -35,7 +31,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
         <link rel="preload" href="/icon.svg" as="image" />
       </head>
-      <body className={interFontClass} style={{ fontFamily: 'var(--font-inter)' }} suppressHydrationWarning>
+      <body className={interFontClass} style={{ fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }} suppressHydrationWarning>
         <GtmScript />
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDB5G9J8" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
         <ThemeProvider

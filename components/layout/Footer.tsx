@@ -12,8 +12,8 @@ export function Footer() {
             </div>
             <h2 className="text-lg font-semibold text-white">CareerHunt</h2>
           </div>
-          <p className="text-sm text-slate-300">
-            Discover modern career opportunities, skill-driven jobs, and practical growth resources.
+          <p className="text-sm leading-6 text-slate-300">
+            Discover career opportunities, skill-driven jobs, visa guidance, and practical growth resources for professionals across the UAE and beyond.
           </p>
         </div>
         <div>
