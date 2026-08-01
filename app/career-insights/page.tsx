@@ -39,16 +39,16 @@ export default function CareerInsightsPage() {
         {JSON.stringify(blogJsonLd)}
       </Script>
       <div className="absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top_left,_rgba(34,211,238,0.18),_transparent_45%)]" />
-      <div className="container relative mx-auto px-4 py-14 sm:py-16">
+      <div className="container relative mx-auto px-3 py-10 sm:px-4 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Insights</p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 sm:text-sm">Insights</p>
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:mt-4 sm:text-4xl lg:text-5xl">
             Career Insights & Job Search Guides 2026
           </h1>
-          <p className="mt-4 text-base leading-8 text-slate-600">
+          <p className="mt-3 text-sm leading-7 text-slate-600 sm:mt-4 sm:text-base sm:leading-8">
             Discover expert career advice, resume tips, interview strategies, salary negotiation guidance, remote work best practices, and insights into AI career trends to help you find the right job and grow your career in 2026.
           </p>
-          <p className="mt-6 text-sm font-medium text-slate-700">
+          <p className="mt-5 text-sm font-medium text-slate-700 sm:mt-6">
             Featured guide:{' '}
             <Link href="/career-resources/emiratisation-quota-2026-expat-jobseekers" className="text-blue-600 underline-offset-4 hover:underline">
               Emiratisation Quota 2026 for Expat Job Seekers
@@ -56,7 +56,7 @@ export default function CareerInsightsPage() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+        <div className="mt-8 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))] sm:mt-10 sm:gap-6">
           {BLOG_PAGE_CARDS.filter((card) =>
             [
               '/dhl-careers-uae-2026',
@@ -85,7 +85,8 @@ export default function CareerInsightsPage() {
               '/salary-guide/g42-careers-uae-2026',
               '/career-resources/uae-experience-certificate-guide',
               '/career-resources/emiratisation-quota-2026-expat-jobseekers',
-              '/career-resources/negotiate-salary-uae-job-offer'
+              '/career-resources/negotiate-salary-uae-job-offer',
+              '/career-insights/sharjah-aviation-services-careers'
             ].includes(card.href)
           ).map((card) => {
             const category = card.category ?? 'Career guide'

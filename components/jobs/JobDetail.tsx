@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { MapPin, Briefcase, Calendar, Globe, Mail, ExternalLink, Building2, Clock3, Share2, Flag, ArrowLeft } from 'lucide-react'
+import { MapPin, Briefcase, Calendar, Globe, Mail, ExternalLink, Building2, Clock3, Share2, Flag, ArrowLeft, MessageCircle, AlertCircle, X } from 'lucide-react'
 import { formatDate, formatLocation, formatSalary, normalizeWebsiteUrl } from '@/lib/utils'
 import JobDetailBreadcrumbs from '@/components/jobs/JobDetailBreadcrumbs'
 import JobDetailSeoLinks from '@/components/jobs/JobDetailSeoLinks'
@@ -15,6 +15,8 @@ interface JobDetailProps {
 export default function JobDetail({ job }: JobDetailProps) {
   const [shareMessage, setShareMessage] = useState('')
   const [showReportNotice, setShowReportNotice] = useState(false)
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false)
+  const [applyNotice, setApplyNotice] = useState('')
   const companyDescription = job.companyDescription || job.companyId?.description || 'Company description is not available.'
   const companyWebsite = normalizeWebsiteUrl(job.companyWebsite || job.companyId?.website || '')
   const companyName = job.companyName || job.companyId?.name || 'Company'
@@ -35,6 +37,9 @@ export default function JobDetail({ job }: JobDetailProps) {
   const benefits = Array.isArray(job.benefits) ? job.benefits : []
   const summary = job.summary || job.description || 'No summary provided yet.'
   const applicationUrl = job.applicationUrl ? normalizeWebsiteUrl(job.applicationUrl) : ''
+  const applicationEmail = job.applicationEmail || ''
+  const whatsappNumber = job.whatsappNumber || ''
+  const whatsappLink = whatsappNumber ? `https://wa.me/${whatsappNumber.replace(/[^\d+]/g, '')}` : ''
   const initials = companyName
     .split(' ')
     .map((name: string) => name.charAt(0))
@@ -64,6 +69,41 @@ export default function JobDetail({ job }: JobDetailProps) {
   const handleReport = () => {
     setShowReportNotice(true)
     setShareMessage('Thanks for flagging this listing. Our team will review it soon.')
+  }
+
+  const handleApplyAction = (type: 'url' | 'whatsapp' | 'email') => {
+    if (type === 'url') {
+      if (applicationUrl) {
+        window.open(applicationUrl, '_blank', 'noopener,noreferrer')
+        setIsApplyModalOpen(false)
+        setApplyNotice('')
+        return
+      }
+
+      setApplyNotice('No application URL is available for this opportunity at the moment. Please try another option or contact the employer directly.')
+      return
+    }
+
+    if (type === 'whatsapp') {
+      if (whatsappLink) {
+        window.open(whatsappLink, '_blank', 'noopener,noreferrer')
+        setIsApplyModalOpen(false)
+        setApplyNotice('')
+        return
+      }
+
+      setApplyNotice('No WhatsApp number is available for this role at the moment. Please use the application link or email option instead.')
+      return
+    }
+
+    if (applicationEmail) {
+      window.location.href = `mailto:${applicationEmail}`
+      setIsApplyModalOpen(false)
+      setApplyNotice('')
+      return
+    }
+
+    setApplyNotice('No email address is available for this opportunity at the moment. Please choose another application method.')
   }
 
   return (
@@ -97,17 +137,18 @@ export default function JobDetail({ job }: JobDetailProps) {
               </div>
 
               <div>
-                {job.applicationUrl ? (
-                  <a href={applicationUrl} target="_blank" rel="noreferrer" className="inline-flex items-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white">
-                    Apply now
-                  </a>
-                ) : job.applicationEmail ? (
-                  <a href={`mailto:${job.applicationEmail}`} className="inline-flex items-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white">
-                    Apply now
-                  </a>
-                ) : null}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setApplyNotice('')
+                    setIsApplyModalOpen(true)
+                  }}
+                  className="inline-flex items-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
+                >
+                  Apply now
+                </button>
                 <p className="mt-2 max-w-xs text-xs leading-5 text-slate-500">
-                  This listing is sourced from a partner provider — you will be redirected to complete your application.
+                  Choose the most convenient way to apply for this role.
                 </p>
                 <Link href="/visa/uae-employment-visa-guide" className="mt-3 inline-flex text-sm font-medium text-sky-700">
                   Visa & work permit info
@@ -226,6 +267,75 @@ export default function JobDetail({ job }: JobDetailProps) {
 
             </div>
           </div>
+
+          {isApplyModalOpen ? (
+            <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/70 px-3 py-6">
+              <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                <div className="flex items-start justify-between border-b border-slate-200 px-5 py-4">
+                  <div>
+                    <h3 className="text-lg font-semibold text-slate-900">Choose how to apply</h3>
+                    <p className="mt-1 text-sm text-slate-500">Select the option that works best for you.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsApplyModalOpen(false)
+                      setApplyNotice('')
+                    }}
+                    className="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
+                    aria-label="Close apply options"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+
+                <div className="space-y-3 p-5">
+                  {applyNotice ? (
+                    <div className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-3 text-sm text-amber-800">
+                      <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                      <span>{applyNotice}</span>
+                    </div>
+                  ) : null}
+
+                  <button
+                    type="button"
+                    onClick={() => handleApplyAction('url')}
+                    className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+                  >
+                    <span className="flex items-center gap-2">
+                      <ExternalLink className="h-4 w-4" />
+                      Apply via application URL
+                    </span>
+                    <span className="text-xs text-slate-500">{applicationUrl ? 'Open link' : 'Unavailable'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleApplyAction('whatsapp')}
+                    className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+                  >
+                    <span className="flex items-center gap-2">
+                      <MessageCircle className="h-4 w-4" />
+                      Apply via WhatsApp
+                    </span>
+                    <span className="text-xs text-slate-500">{whatsappLink ? 'Open chat' : 'Unavailable'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleApplyAction('email')}
+                    className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Mail className="h-4 w-4" />
+                      Apply via email
+                    </span>
+                    <span className="text-xs text-slate-500">{applicationEmail ? 'Send mail' : 'Unavailable'}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
 
           <div className="mt-5 flex flex-col gap-3 border-t border-slate-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">

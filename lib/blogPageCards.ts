@@ -286,6 +286,25 @@ export const BLOG_PAGE_CARDS: BlogPageCardData[] = [
     updatedAt: 'Jul 23, 2026'
   },
   {
+    href: '/career-insights/sharjah-aviation-services-careers',
+    title: 'Sharjah Aviation Services Careers',
+    description: 'Explore careers at Sharjah Aviation Services, including aviation operations, engineering, customer service, and support roles with salary expectations and application guidance.',
+    keywords: ['Sharjah Aviation Services', 'Aviation careers', 'UAE aviation jobs', 'airport jobs'],
+    backgroundImage: '/icon.svg',
+    borderClass: 'border-[#2563eb]',
+    shadowClass: 'shadow-[0_25px_70px_-24px_rgba(37,99,235,0.24)]',
+    labelText: 'New guide',
+    labelBgClass: 'bg-[#2563eb]',
+    labelTextClass: 'text-white',
+    actionText: 'Read article',
+    category: 'Career guide',
+    authorName: 'CareerHunt',
+    authorInitials: 'CH',
+    readTime: '6 min read',
+    publishedAt: 'Aug 1, 2026',
+    updatedAt: 'Aug 1, 2026'
+  },
+  {
     href: '/visa/uae-overstay-fine-2026',
     title: 'UAE Overstay Fine 2026',
     description: 'Understand the new AED 50 per day overstay rule, the removed grace period for tourist visas, and what to do if you are already overstaying.',

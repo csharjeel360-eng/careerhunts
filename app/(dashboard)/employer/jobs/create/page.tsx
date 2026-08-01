@@ -42,6 +42,7 @@ const jobSchema = z.object({
   educationLevel: z.enum(['high-school', 'bachelors', 'masters', 'phd']),
   vacancies: z.number().int().min(1),
   applicationEmail: z.string().email().or(z.literal('')).optional(),
+  whatsappNumber: z.string().min(4).or(z.literal('')).optional(),
   applicationUrl: z.string().url().or(z.literal('')).optional(),
   applicationDeadline: z.string().optional(),
   companyDescription: z.string().optional(),
@@ -91,6 +92,7 @@ export default function EmployerCreateJobPage() {
       educationLevel: 'bachelors',
       vacancies: 1,
       applicationEmail: '',
+      whatsappNumber: '',
       applicationUrl: '',
       applicationDeadline: '',
       companyDescription: '',
@@ -131,6 +133,7 @@ export default function EmployerCreateJobPage() {
         educationLevel: data.educationLevel,
         vacancies: data.vacancies,
         applicationEmail: data.applicationEmail,
+        whatsappNumber: data.whatsappNumber,
         applicationUrl: data.applicationUrl,
         applicationDeadline: data.applicationDeadline ? new Date(data.applicationDeadline) : undefined,
         companyDescription: data.companyDescription,
@@ -336,6 +339,14 @@ export default function EmployerCreateJobPage() {
                 <Input id="applicationEmail" type="email" {...register('applicationEmail')} />
                 {errors.applicationEmail && <p className="text-sm text-destructive">{errors.applicationEmail.message}</p>}
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="whatsappNumber">WhatsApp Number</Label>
+                <Input id="whatsappNumber" placeholder="+971501234567" {...register('whatsappNumber')} />
+                {errors.whatsappNumber && <p className="text-sm text-destructive">{errors.whatsappNumber.message}</p>}
+              </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-1">
               <div className="space-y-2">
                 <Label htmlFor="applicationUrl">Application URL</Label>
                 <Input id="applicationUrl" type="url" {...register('applicationUrl')} />
