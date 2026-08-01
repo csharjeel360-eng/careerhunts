@@ -46,6 +46,7 @@ const jobSchema = z.object({
   applicationUrl: z.string().url().or(z.literal('')).optional(),
   applicationDeadline: z.string().optional(),
   companyDescription: z.string().optional(),
+  marketContext: z.string().optional(),
   keywords: z.string().optional(),
   tags: z.string().optional(),
   isFeatured: z.boolean().optional(),
@@ -96,6 +97,7 @@ export default function EmployerCreateJobPage() {
       applicationUrl: '',
       applicationDeadline: '',
       companyDescription: '',
+      marketContext: '',
       keywords: '',
       tags: '',
       isFeatured: false,
@@ -137,6 +139,7 @@ export default function EmployerCreateJobPage() {
         applicationUrl: data.applicationUrl,
         applicationDeadline: data.applicationDeadline ? new Date(data.applicationDeadline) : undefined,
         companyDescription: data.companyDescription,
+        marketContext: data.marketContext,
         keywords: data.keywords.split(',').map((item) => item.trim()).filter(Boolean),
         tags: data.tags.split(',').map((item) => item.trim()).filter(Boolean),
         isFeatured: data.isFeatured,
@@ -295,6 +298,12 @@ export default function EmployerCreateJobPage() {
             <div className="space-y-2">
               <Label htmlFor="benefits">Benefits</Label>
               <Textarea id="benefits" rows={3} placeholder="One item per line" {...register('benefits')} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="marketContext">Market Context</Label>
+              <Textarea id="marketContext" rows={4} placeholder="Add market context such as salary trends, hiring demand, or visa sponsorship likelihood." {...register('marketContext')} />
+              <p className="text-sm text-slate-500">This will be displayed on the public job detail page to help candidates understand the opportunity context.</p>
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">

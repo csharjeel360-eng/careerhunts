@@ -24,7 +24,7 @@ export default function JobDetail({ job }: JobDetailProps) {
   const companySlug = (job.companySlug || job.companyId?.slug || '').toString().trim()
   const companyHref = companySlug ? `/companies/${companySlug}` : '/companies'
   const locationHref = job.city ? `/jobs?city=${encodeURIComponent(job.city)}` : '/jobs'
-  const marketContext = job.marketContext || null
+  const marketContext = typeof job.marketContext === 'string' ? job.marketContext : null
   const workMode = job.workMode || 'Flexible'
   const employmentType = job.employmentType || 'Full-time'
   const salaryLabel = formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)
@@ -261,7 +261,7 @@ export default function JobDetail({ job }: JobDetailProps) {
                   <div className="flex items-start gap-2"><Globe className="mt-0.5 h-4 w-4" /> <span>Education: {educationLevel}</span></div>
                   <div className="flex items-start gap-2"><Clock3 className="mt-0.5 h-4 w-4" /> <span>Vacancies: {job.vacancies ?? 1}</span></div>
                   <div className="flex items-start gap-2"><Mail className="mt-0.5 h-4 w-4" /> <span>{job.applicationEmail || 'Email not provided'}</span></div>
-                  <div className="flex items-start gap-2"><ExternalLink className="mt-0.5 h-4 w-4" /> <span>{job.applicationUrl ? 'Application link available' : 'No external link'}</span></div>
+                  <div className="flex items-start gap-2"><ExternalLink className="mt-0.5 h-4 w-4" /> <span>{job.applicationUrl ? 'External application link available' : 'No external link'}</span></div>
                 </div>
               </div>
 
