@@ -249,16 +249,53 @@ export default async function HomePage() {
                     </Link>
                   ))}
                 </div>
+
+                <div className="mt-4 border-t border-slate-200 pt-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Featured company pages</p>
+                  <div className="mt-3 grid gap-3">
+                    <Link href="/dhl-careers-uae-2026" className="rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 hover:border-sky-300 hover:bg-slate-100">
+                      <div className="font-semibold text-slate-900">DHL Careers UAE 2026</div>
+                      <div className="mt-1 text-xs leading-5 text-slate-600">Explore DHL jobs in Dubai, Abu Dhabi, and across the UAE.</div>
+                    </Link>
+                    <Link href="/noon-careers-uae-2026" className="rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 hover:border-sky-300 hover:bg-slate-100">
+                      <div className="font-semibold text-slate-900">Noon Careers UAE 2026</div>
+                      <div className="mt-1 text-xs leading-5 text-slate-600">Discover careers in e-commerce, operations, logistics, and technology at Noon.</div>
+                    </Link>
+                    <Link href="/emirates-group-careers-uae-2026" className="rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 hover:border-sky-300 hover:bg-slate-100">
+                      <div className="font-semibold text-slate-900">Emirates Group Careers UAE 2026</div>
+                      <div className="mt-1 text-xs leading-5 text-slate-600">Find Emirates Group opportunities, salary insights, and application guidance.</div>
+                    </Link>
+                  </div>
+                </div>
               </div>
 
               <div className="rounded-[20px] border border-slate-200 bg-white p-4 sm:p-5">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Featured career guides</span>
                 <div className="mt-3 grid gap-3">
-                  {careerGuides.map((item: any) => (
-                    <Link key={item.slug || item.title} href={item.slug ? `/career-resources/${item.slug}` : '/career-resources'} className="rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 hover:border-sky-300 hover:bg-slate-100">
-                      {item.title}
-                    </Link>
-                  ))}
+                  <Link
+                    href="/career-insights"
+                    className="inline-flex items-center justify-center rounded-full bg-sky-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700"
+                  >
+                    Go to Career Insights
+                  </Link>
+                  {careerGuides.map((item: any) => {
+                    const isCareerInsights = item.slug === 'career-insights'
+
+                    if (isCareerInsights) return null
+
+                    return (
+                      <Link
+                        key={item.slug || item.title}
+                        href={item.slug ? `/career-resources/${item.slug}` : '/career-resources'}
+                        className="rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 hover:border-sky-300 hover:bg-slate-100"
+                      >
+                        <div className="font-semibold text-slate-900">{item.title}</div>
+                        <div className="mt-1 text-xs leading-5 text-slate-600">
+                          {item.excerpt || item.description || 'Helpful guidance for your next career move.'}
+                        </div>
+                      </Link>
+                    )
+                  })}
                 </div>
               </div>
             </div>

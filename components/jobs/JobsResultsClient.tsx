@@ -8,12 +8,13 @@ interface JobsResultsClientProps {
   initialPage: number
   totalCount: number
   cacheKey?: string
+  hasActiveFilters?: boolean
 }
 
 const initialBatchSize = 10
 const batchSize = 10
 
-export default function JobsResultsClient({ initialOpportunities, initialPage, totalCount, cacheKey = 'careerhunt-jobs-cache-default' }: JobsResultsClientProps) {
+export default function JobsResultsClient({ initialOpportunities, initialPage, totalCount, cacheKey = 'careerhunt-jobs-cache-default', hasActiveFilters = false }: JobsResultsClientProps) {
   const [opportunities, setOpportunities] = useState(initialOpportunities)
   const [visibleCount, setVisibleCount] = useState(Math.min(initialBatchSize, initialOpportunities.length))
 
@@ -110,15 +111,25 @@ export default function JobsResultsClient({ initialOpportunities, initialPage, t
           <div className="text-sm text-slate-500">
             Showing {displayedOpportunities.length} of {opportunities.length} jobs
           </div>
-          {hasMore ? (
-            <button
-              type="button"
-              onClick={handleLoadMore}
-              className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-            >
-              See more jobs
-            </button>
-          ) : null}
+          <div className="flex flex-wrap items-center gap-2">
+            {hasActiveFilters ? (
+              <a
+                href="/jobs"
+                className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                View all jobs
+              </a>
+            ) : null}
+            {hasMore ? (
+              <button
+                type="button"
+                onClick={handleLoadMore}
+                className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                See more jobs
+              </button>
+            ) : null}
+          </div>
         </div>
       </div>
     </>

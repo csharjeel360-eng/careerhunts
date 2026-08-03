@@ -192,13 +192,6 @@ No — “References available upon request” or omitting the line entirely is 
 - LinkedIn Talent Insights — regional hiring trend data
 - Official job portal documentation from Bayt, GulfTalent, and Naukrigulf for application format requirements
 
-## Schema Recommendations
-
-- Article schema for the main content
-- FAQPage schema for the FAQ section
-- HowTo schema is optional if the checklist is reformatted as sequential steps
-- BreadcrumbList schema for site navigation context
-
 ## Author Notes
 
 This checklist reflects widely observed UAE recruitment practices as of 2026, including expectations shared by regional job portals and recruitment agencies. Specific requirements vary by industry, such as government versus private sector and free zone versus mainland companies, so candidates should still confirm expectations against individual postings.

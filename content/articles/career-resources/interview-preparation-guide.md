@@ -158,21 +158,9 @@ Ask for a written breakdown of the total package, including which elements are t
 - LinkedIn regional hiring insights
 - Official recruitment agency and job portal guidance from Bayt, GulfTalent, and other relevant platforms
 
-## Schema Recommendations
-
-- Article schema for the main content
-- FAQPage schema for the FAQ section
-- BreadcrumbList schema for site navigation context
-
 ## Author Notes
 
 This guide reflects general, widely observed UAE interview practices as of 2026. Specific processes vary by sector — government, free zone, and multinational private-sector employers each have their own norms — so candidates should still confirm specifics with their recruiter or HR contact where possible.
-
-## Future Update Suggestions
-
-- Update salary benchmark ranges annually as market conditions shift.
-- Add sector-specific interview breakdowns such as finance, tech, and hospitality as separate linked guides.
-- Incorporate updated MOHRE gratuity calculation rules if regulations change.
 
 ## Data Note
 

@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next'
 import { getJobs, getCategories, getCountries } from '@/lib/api'
 
+export const revalidate = 3600
+
 const getBaseUrl = () => {
   const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || 'https://careerhunt.online'
   return configuredUrl.replace(/\/+$/, '')
@@ -17,6 +19,38 @@ const buildUrl = (
   changeFrequency,
   priority,
 })
+
+const normalizeLastModified = (value?: string | Date | null) => {
+  if (!value) return new Date()
+
+  const parsed = new Date(value)
+  return Number.isNaN(parsed.getTime()) ? new Date() : parsed
+}
+
+const getAllPublishedJobs = async () => {
+  const allJobs: Array<{ slug: string; updatedAt?: string; postedDate?: string }> = []
+  let page = 1
+  const limit = 100
+
+  while (true) {
+    const jobsResponse = await getJobs({ page, limit }).catch(() => ({
+      data: [] as Array<{ slug: string; updatedAt?: string; postedDate?: string }>,
+      pagination: { pages: 0 },
+    }))
+
+    const pageJobs = jobsResponse.data || []
+    if (!pageJobs.length) break
+
+    allJobs.push(...pageJobs)
+
+    const totalPages = jobsResponse.pagination?.pages || 0
+    if (page >= totalPages || pageJobs.length < limit) break
+
+    page += 1
+  }
+
+  return allJobs
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticUrls = [
@@ -45,13 +79,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     buildUrl('/cookies', new Date(), 'monthly', 0.4),
   ]
 
-  const jobsResponse = await getJobs({ limit: 1000 }).catch(() => ({ data: [] as Array<{ slug: string; updatedAt?: string; postedDate?: string }> }))
+  const allJobs = await getAllPublishedJobs()
   const categoriesResponse = await getCategories().catch(() => [] as Array<{ slug: string }>)
   const countriesResponse = await getCountries().catch(() => [] as Array<{ slug: string }>)
 
-  const jobUrls = (jobsResponse.data || []).map((job) => ({
+  const jobUrls = allJobs.map((job) => ({
     url: `${getBaseUrl()}/jobs/${job.slug}`,
-    lastModified: job.updatedAt || job.postedDate || new Date(),
+    lastModified: normalizeLastModified(job.updatedAt || job.postedDate),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }))

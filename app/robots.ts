@@ -40,6 +40,5 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: 'https://careerhunt.online/sitemap.xml',
-    host: 'https://careerhunt.online',
   }
 }

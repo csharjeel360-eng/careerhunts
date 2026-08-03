@@ -55,19 +55,12 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
     alternates: {
       canonical: canonicalUrl,
     },
-    robots: isOriginalContent ? {
+    robots: {
       index: true,
       follow: true,
       googleBot: {
         index: true,
         follow: true,
-      },
-    } : {
-      index: false,
-      follow: false,
-      googleBot: {
-        index: false,
-        follow: false,
       },
     },
   }

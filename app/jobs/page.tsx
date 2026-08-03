@@ -204,6 +204,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           initialPage={safePage}
           totalCount={allOpportunities.length}
           cacheKey={cacheKey}
+          hasActiveFilters={Boolean(keyword || category || country || city || company || skill)}
         />
 
         <div className="mt-8">
