@@ -37,8 +37,6 @@ relatedLinks:
     href: /jobs?city=Sharjah
   - title: UAE Employment Visa guide
     href: /visa/uae-employment-visa-guide
-  - title: UAE salary guide 2026
-    href: /salary-guide
 ctaLink: /jobs?city=Sharjah
 ctaText: Explore Sharjah jobs
 pillars:
@@ -114,5 +112,4 @@ These terms see meaningfully less competition than the generic "Sharjah Airport 
 
 - [Sharjah jobs](/jobs?city=Sharjah)
 - [UAE Employment Visa guide](/visa/uae-employment-visa-guide)
-- [UAE salary guide 2026](/salary-guide)
 - [Career resources for expat job seekers](/career-resources/emiratisation-quota-2026-expat-jobseekers)

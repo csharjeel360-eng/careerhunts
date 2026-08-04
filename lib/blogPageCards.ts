@@ -20,6 +20,25 @@ export interface BlogPageCardData {
 
 export const BLOG_PAGE_CARDS: BlogPageCardData[] = [
   {
+    href: '/career-resources/payroll-job-description-salary-uae',
+    title: 'Payroll Job Description & Salary in UAE 2026',
+    description: 'Learn what payroll professionals do in the UAE, the common job titles, required skills, and realistic salary ranges for payroll clerks, officers, specialists, and managers.',
+    keywords: ['Payroll job description', 'Payroll salary UAE', 'Payroll officer', 'Payroll manager'],
+    backgroundImage: '/career-insights-payroll.png',
+    borderClass: 'border-[#2563eb]',
+    shadowClass: 'shadow-[0_25px_70px_-24px_rgba(37,99,235,0.22)]',
+    labelText: 'New',
+    labelBgClass: 'bg-[#2563eb]',
+    labelTextClass: 'text-white',
+    actionText: 'Read article',
+    category: 'Career guide',
+    authorName: 'CareerHunt',
+    authorInitials: 'CH',
+    readTime: '8 min read',
+    publishedAt: 'Aug 4, 2026',
+    updatedAt: 'Aug 4, 2026'
+  },
+  {
     href: '/dhl-careers-uae-2026',
     title: 'DHL Careers UAE 2026',
     description: 'Explore DHL jobs in Dubai, Abu Dhabi, and across the UAE with salary insights, warehouse and logistics roles, benefits, hiring requirements, and direct application links.',

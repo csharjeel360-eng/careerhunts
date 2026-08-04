@@ -54,6 +54,12 @@ export default function CareerInsightsPage() {
               Emiratisation Quota 2026 for Expat Job Seekers
             </Link>
           </p>
+          <p className="mt-2 text-sm font-medium text-slate-700">
+            Also read:{' '}
+            <Link href="/career-resources/payroll-job-description-salary-uae" className="text-blue-600 underline-offset-4 hover:underline">
+              Payroll Job Description & Salary in UAE 2026
+            </Link>
+          </p>
         </div>
 
         <div className="mt-8 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))] sm:mt-10 sm:gap-6">
@@ -85,6 +91,7 @@ export default function CareerInsightsPage() {
               '/salary-guide/g42-careers-uae-2026',
               '/career-resources/uae-experience-certificate-guide',
               '/career-resources/emiratisation-quota-2026-expat-jobseekers',
+              '/career-resources/payroll-job-description-salary-uae',
               '/career-resources/negotiate-salary-uae-job-offer',
               '/career-insights/sharjah-aviation-services-careers'
             ].includes(card.href)

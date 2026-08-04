@@ -63,6 +63,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     buildUrl('/countries', new Date(), 'weekly', 0.75),
     buildUrl('/blog', new Date(), 'weekly', 0.7),
     buildUrl('/career-resources', new Date(), 'weekly', 0.7),
+    buildUrl('/career-resources/payroll-job-description-salary-uae', new Date(), 'weekly', 0.72),
     buildUrl('/career-insights', new Date(), 'weekly', 0.7),
     buildUrl('/guides', new Date(), 'weekly', 0.65),
     buildUrl('/visa', new Date(), 'weekly', 0.65),
