@@ -21,29 +21,46 @@ export default function JobsResultsClient({ initialOpportunities, initialPage, t
   useEffect(() => {
     if (typeof window === 'undefined') return
 
+    const applyInitialState = () => {
+      setOpportunities(initialOpportunities)
+      setVisibleCount(Math.min(initialBatchSize, initialOpportunities.length))
+    }
+
+    const saveInitialState = () => {
+      window.sessionStorage.setItem(
+        cacheKey,
+        JSON.stringify({
+          opportunities: initialOpportunities,
+          visibleCount: Math.min(initialBatchSize, initialOpportunities.length),
+        })
+      )
+    }
+
     try {
       const cached = window.sessionStorage.getItem(cacheKey)
       if (cached) {
         const parsed = JSON.parse(cached)
-        if (parsed && typeof parsed === 'object' && Array.isArray(parsed.opportunities)) {
-          setOpportunities(parsed.opportunities)
-          setVisibleCount(Math.min(parsed.visibleCount ?? initialBatchSize, parsed.opportunities.length))
-          return
-        }
+        const cachedOpportunities = parsed && typeof parsed === 'object' && Array.isArray(parsed.opportunities)
+          ? parsed.opportunities
+          : Array.isArray(parsed)
+            ? parsed
+            : null
 
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setOpportunities(parsed)
-          setVisibleCount(Math.min(initialBatchSize, parsed.length))
-          return
+        if (cachedOpportunities) {
+          const hasFreshData = JSON.stringify(cachedOpportunities) !== JSON.stringify(initialOpportunities)
+          if (!hasFreshData) {
+            setOpportunities(cachedOpportunities)
+            setVisibleCount(Math.min(parsed?.visibleCount ?? initialBatchSize, cachedOpportunities.length))
+            return
+          }
         }
       }
     } catch {
       // Ignore invalid cache data and fall back to the initial list.
     }
 
-    window.sessionStorage.setItem(cacheKey, JSON.stringify({ opportunities: initialOpportunities, visibleCount: Math.min(initialBatchSize, initialOpportunities.length) }))
-    setOpportunities(initialOpportunities)
-    setVisibleCount(Math.min(initialBatchSize, initialOpportunities.length))
+    applyInitialState()
+    saveInitialState()
   }, [initialOpportunities, initialPage, cacheKey])
 
   useEffect(() => {

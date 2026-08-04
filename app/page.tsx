@@ -309,6 +309,15 @@ export default async function HomePage() {
                 <Link href="/privacy" className="font-semibold text-sky-700">Privacy</Link>
                 <Link href="/sitemap" className="font-semibold text-sky-700">Sitemap</Link>
               </div>
+              <div className="mt-4 flex justify-center">
+                <a href="https://sellwithboost.com" target="_blank" rel="noopener noreferrer">
+                  <img
+                    src="https://sellwithboost.com/badge/listing.svg"
+                    alt="Listed on Sell With boost"
+                    style={{ height: '40px', width: 'auto' }}
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>
