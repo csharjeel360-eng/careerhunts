@@ -6,7 +6,7 @@ import { getArticleBySlug, getArticleSlugs } from '@/lib/articleData'
 function renderInlineText(text: string) {
   const textClassName = 'break-words [overflow-wrap:anywhere]'
   const nodes: React.ReactNode[] = []
-  const regex = /(\*\*[^*]+\*\*|\*[^*]+\*|\[([^\]]+)\]\(([^)]+)\))/g
+  const regex = /(\!\[([^\]]*)\]\(([^)]+)\)|\*\*[^*]+\*\*|\*[^*]+\*|\[([^\]]+)\]\(([^)]+)\))/g
   let lastIndex = 0
   let match: RegExpExecArray | null
 
@@ -21,7 +21,13 @@ function renderInlineText(text: string) {
 
     const [fullMatch] = match
 
-    if (fullMatch.startsWith('**') && fullMatch.endsWith('**')) {
+    if (fullMatch.startsWith('![') && fullMatch.includes('](')) {
+      const altText = match[2] || ''
+      const imageSrc = match[3] || ''
+      nodes.push(
+        <img key={`image-${match.index}`} src={imageSrc} alt={altText} className="mt-4 h-auto w-full rounded-2xl border border-slate-200 object-cover shadow-sm" />
+      )
+    } else if (fullMatch.startsWith('**') && fullMatch.endsWith('**')) {
       nodes.push(
         <strong key={`strong-${match.index}`} className={textClassName}>
           {fullMatch.slice(2, -2)}
@@ -34,8 +40,8 @@ function renderInlineText(text: string) {
         </em>
       )
     } else {
-      const linkText = match[2]
-      const linkHref = match[3]
+      const linkText = match[4] || match[2]
+      const linkHref = match[5] || match[3]
       const isExternal = /^https?:\/\//i.test(linkHref) || /^mailto:/i.test(linkHref)
 
       nodes.push(

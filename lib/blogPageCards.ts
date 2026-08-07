@@ -20,6 +20,25 @@ export interface BlogPageCardData {
 
 export const BLOG_PAGE_CARDS: BlogPageCardData[] = [
   {
+    href: '/career-insights/adnoc-careers-uae-2026',
+    title: 'ADNOC Careers UAE 2026: Apply, Salary & Which Companies Hire',
+    description: 'A practical guide to ADNOC jobs in the UAE, including how to apply on jobs.adnoc.ae, expected salary ranges, group companies, and the Technical Academy pathway for UAE Nationals.',
+    keywords: ['ADNOC careers', 'ADNOC jobs UAE', 'ADNOC salary', 'ADNOC vacancies'],
+    backgroundImage: '/ADNOC%20oil%20and%20gas%20industrial.png',
+    borderClass: 'border-[#0f766e]',
+    shadowClass: 'shadow-[0_25px_70px_-24px_rgba(15,118,110,0.24)]',
+    labelText: 'New',
+    labelBgClass: 'bg-[#0f766e]',
+    labelTextClass: 'text-white',
+    actionText: 'Read article',
+    category: 'Career guide',
+    authorName: 'CareerHunt',
+    authorInitials: 'CH',
+    readTime: '11 min read',
+    publishedAt: 'Aug 7, 2026',
+    updatedAt: 'Aug 7, 2026'
+  },
+  {
     href: '/career-resources/payroll-job-description-salary-uae',
     title: 'Payroll Job Description & Salary in UAE 2026',
     description: 'Learn what payroll professionals do in the UAE, the common job titles, required skills, and realistic salary ranges for payroll clerks, officers, specialists, and managers.',

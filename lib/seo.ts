@@ -193,55 +193,155 @@ export function generateWebsiteSchema() {
   }
 }
 
+function normalizeEmploymentType(value?: string) {
+  const normalized = (value || '').toString().trim().toLowerCase()
+
+  switch (normalized) {
+    case 'full-time':
+    case 'full_time':
+      return 'FULL_TIME'
+    case 'part-time':
+    case 'part_time':
+      return 'PART_TIME'
+    case 'contract':
+    case 'contractor':
+      return 'CONTRACTOR'
+    case 'internship':
+      return 'INTERN'
+    case 'freelance':
+    case 'self-employed':
+      return 'SELF_EMPLOYED'
+    default:
+      return normalized.toUpperCase() || 'FULL_TIME'
+  }
+}
+
+function normalizeDate(value?: string | Date) {
+  if (!value) return undefined
+
+  const date = value instanceof Date ? value : new Date(value)
+  if (Number.isNaN(date.getTime())) return undefined
+
+  return date.toISOString()
+}
+
+function normalizeDateOnly(value?: string | Date) {
+  const iso = normalizeDate(value)
+  return iso ? iso.split('T')[0] : undefined
+}
+
+function stripHtml(value?: string) {
+  if (!value) return ''
+  return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+function mapExperienceRequirements(value?: string) {
+  const normalized = (value || '').toString().trim().toLowerCase()
+
+  switch (normalized) {
+    case 'entry':
+      return 'Entry level'
+    case 'junior':
+      return 'Junior level'
+    case 'mid':
+      return 'Mid level'
+    case 'senior':
+      return 'Senior level'
+    case 'lead':
+      return 'Lead level'
+    case 'executive':
+      return 'Executive level'
+    default:
+      return value || 'Not specified'
+  }
+}
+
+function mapEducationRequirements(value?: string) {
+  const normalized = (value || '').toString().trim().toLowerCase()
+
+  switch (normalized) {
+    case 'high-school':
+      return 'High school diploma'
+    case 'bachelors':
+      return "Bachelor's degree"
+    case 'masters':
+      return "Master's degree"
+    case 'phd':
+      return 'PhD or doctoral degree'
+    default:
+      return value || 'Not specified'
+  }
+}
+
 export function generateJobSchema(job: any) {
-  return {
+  const companyName = job.companyId?.name || job.companyName || 'Company'
+  const companyWebsite = job.companyWebsite || job.companyId?.website || ''
+  const companyLogo = job.companyLogo || job.companyId?.logo || ''
+  const description = stripHtml(job.summary || job.description || '')
+  const postedDate = normalizeDateOnly(job.postedDate || job.createdAt)
+  const validThrough = normalizeDate(job.expiryDate || job.applicationDeadline) || normalizeDate(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000))
+  const salaryCurrency = job.salaryCurrency || 'USD'
+  const salaryPeriod = job.salaryPeriod || 'YEAR'
+  const salaryMin = job.salaryMin ?? job.salary?.min
+  const salaryMax = job.salaryMax ?? job.salary?.max
+  const baseSalary = salaryMin || salaryMax ? {
+    '@type': 'MonetaryAmount',
+    currency: salaryCurrency,
+    value: {
+      '@type': 'QuantitativeValue',
+      ...(salaryMin !== undefined && salaryMin !== null ? { minValue: salaryMin } : {}),
+      ...(salaryMax !== undefined && salaryMax !== null ? { maxValue: salaryMax } : {}),
+      ...(salaryMin !== undefined && salaryMin !== null && salaryMax === undefined ? { value: salaryMin } : {}),
+      unitText: salaryPeriod,
+    },
+  } : undefined
+
+  const address = {
+    '@type': 'PostalAddress',
+    ...(job.streetAddress ? { streetAddress: job.streetAddress } : { streetAddress: 'Not specified' }),
+    ...(job.city ? { addressLocality: job.city } : { addressLocality: 'UAE' }),
+    ...(job.state || job.region ? { addressRegion: job.state || job.region } : { addressRegion: 'Not specified' }),
+    ...(job.postalCode ? { postalCode: job.postalCode } : { postalCode: 'Not specified' }),
+    ...(job.country ? { addressCountry: job.country } : { addressCountry: 'AE' }),
+  }
+
+  const schema: Record<string, any> = {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
-    title: job.title,
-    description: job.summary || job.description,
-    datePosted: job.postedDate,
-    validThrough: job.expiryDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-    employmentType: job.employmentType,
+    title: job.title || '',
+    description,
+    ...(postedDate ? { datePosted: postedDate } : {}),
+    ...(validThrough ? { validThrough } : {}),
+    employmentType: normalizeEmploymentType(job.employmentType),
     hiringOrganization: {
       '@type': 'Organization',
-      name: job.companyId.name,
-      sameAs: job.companyId.website,
-      logo: job.companyId.logo
+      name: companyName,
+      ...(companyWebsite ? { sameAs: companyWebsite } : {}),
+      ...(companyLogo ? { logo: companyLogo } : {}),
     },
     jobLocation: {
       '@type': 'Place',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: job.city,
-        addressCountry: job.country
-      }
+      ...(Object.keys(address).length > 1 ? { address } : {}),
     },
-    baseSalary: {
-      '@type': 'MonetaryAmount',
-      currency: job.salaryCurrency || 'USD',
-      value: {
-        '@type': 'QuantitativeValue',
-        minValue: job.salaryMin,
-        maxValue: job.salaryMax,
-        unitText: 'YEAR'
-      }
-    },
-    skills: job.requiredSkills,
-    qualifications: job.requirements,
-    responsibilities: job.responsibilities,
-    benefits: job.benefits,
-    educationRequirements: job.educationLevel,
-    experienceRequirements: job.experienceLevel,
-    occupationalCategory: job.category,
-    jobBenefits: job.benefits,
-    workHours: 'Full-time',
+    ...(baseSalary ? { baseSalary } : {}),
+    ...(job.requiredSkills?.length ? { skills: job.requiredSkills } : {}),
+    ...(job.requirements?.length ? { qualifications: job.requirements } : {}),
+    ...(job.responsibilities?.length ? { responsibilities: job.responsibilities } : {}),
+    ...(job.benefits?.length ? { benefits: job.benefits } : {}),
+    ...(job.educationLevel ? { educationRequirements: mapEducationRequirements(job.educationLevel) } : {}),
+    ...(job.experienceLevel ? { experienceRequirements: mapExperienceRequirements(job.experienceLevel) } : {}),
+    ...(job.category ? { occupationalCategory: job.category } : {}),
+    ...(job.benefits?.length ? { jobBenefits: job.benefits } : {}),
+    workHours: job.workMode || 'Full-time',
     url: `${SITE_URL}/jobs/${job.slug}`,
     identifier: {
       '@type': 'PropertyValue',
-      name: job.companyId.name,
-      value: job._id
-    }
+      name: companyName,
+      value: job._id || job.slug || job.title,
+    },
   }
+
+  return schema
 }
 
 export function generateBreadcrumbSchema(items: { name: string, item: string }[]) {

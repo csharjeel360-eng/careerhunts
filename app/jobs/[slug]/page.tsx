@@ -21,7 +21,6 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
 
   const companyName = job.companyName || job.companyId?.name || 'Company'
   const canonicalUrl = getCanonicalUrl(`/jobs/${job.slug}`)
-  const isOriginalContent = job.isOriginalContent !== false
   const city = (job.city || 'UAE').toString().trim()
   const category = (job.category || 'jobs').toString().trim()
   const keywordSet = [

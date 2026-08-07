@@ -65,6 +65,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     buildUrl('/career-resources', new Date(), 'weekly', 0.7),
     buildUrl('/career-resources/payroll-job-description-salary-uae', new Date(), 'weekly', 0.72),
     buildUrl('/career-insights', new Date(), 'weekly', 0.7),
+    buildUrl('/career-insights/adnoc-careers-uae-2026', new Date(), 'weekly', 0.74),
+    buildUrl('/career-insights/sharjah-aviation-services-careers', new Date(), 'weekly', 0.72),
     buildUrl('/guides', new Date(), 'weekly', 0.65),
     buildUrl('/visa', new Date(), 'weekly', 0.65),
     buildUrl('/salary-guide', new Date(), 'monthly', 0.8),
