@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getArticleBySlug, getArticleSlugs } from '@/lib/articleData'
+import { getCanonicalUrl } from '@/lib/seo'
 
 function renderInlineText(text: string) {
   const textClassName = 'break-words [overflow-wrap:anywhere]'
@@ -196,26 +197,47 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     }
   }
 
+  const canonicalUrl = getCanonicalUrl(article.frontmatter.slug)
+
   return {
     title: article.frontmatter.metaTitle,
     description: article.frontmatter.metaDescription,
     alternates: {
-      canonical: `https://careerhunt.online${article.frontmatter.slug}`
+      canonical: canonicalUrl,
     },
-    other: {
-      canonical: `https://careerhunt.online${article.frontmatter.slug}`
-    }
+    openGraph: {
+      title: article.frontmatter.metaTitle,
+      description: article.frontmatter.metaDescription,
+      url: canonicalUrl,
+      type: 'article',
+      siteName: 'CareerHunt',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.frontmatter.metaTitle,
+      description: article.frontmatter.metaDescription,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
   }
 }
 
 export function generateStaticParams() {
   return getArticleSlugs()
-    .filter((slug) => slug.startsWith('/career-insights/'))
-    .map((slug) => ({ slug: slug.replace('/career-insights/', '') }))
+    .filter((slug) => typeof slug === 'string' && slug.startsWith('/career-insights/'))
+    .map((slug) => ({ slug: slug.replace('/career-insights/', '').trim() }))
+    .filter((entry) => Boolean(entry.slug))
 }
 
 export default function CareerInsightsSlugPage({ params }: ArticlePageProps) {
-  const article = getArticleBySlug(`/career-insights/${params.slug}`)
+  const resolvedSlug = params?.slug ? String(params.slug).trim() : ''
+  const article = getArticleBySlug(`/career-insights/${resolvedSlug}`)
 
   if (!article) {
     notFound()

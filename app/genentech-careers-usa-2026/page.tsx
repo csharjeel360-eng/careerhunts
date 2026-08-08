@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/genentech-careers-usa-2026',
+    url: getCanonicalUrl('/genentech-careers-usa-2026'),
     siteName: 'CareerHunt',
     type: 'article'
   },
@@ -339,7 +339,7 @@ export default function GenentechCareersPage() {
   const articleSchema = generateArticleSchema({
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/genentech-careers-usa-2026',
+    url: getCanonicalUrl('/genentech-careers-usa-2026'),
     datePublished: '2026-07-08',
     authorName: 'CareerHunt Editorial Team',
     keywords: [
@@ -709,9 +709,9 @@ export default function GenentechCareersPage() {
             <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.2)]">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#00A99D]">Share this page</p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://careerhunt.online/genentech-careers-usa-2026" className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100">LinkedIn</a>
-                <a href="https://twitter.com/intent/tweet?text=Genentech%20Careers%20USA%202026%20%7C%20CareerHunt&url=https://careerhunt.online/genentech-careers-usa-2026" className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100">X</a>
-                <a href="https://wa.me/?text=Explore%20Genentech%20Careers%20USA%202026%20at%20https://careerhunt.online/genentech-careers-usa-2026" className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100">WhatsApp</a>
+                <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(getCanonicalUrl('/genentech-careers-usa-2026'))}`} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100">LinkedIn</a>
+                <a href={`https://twitter.com/intent/tweet?text=Genentech%20Careers%20USA%202026%20%7C%20CareerHunt&url=${encodeURIComponent(getCanonicalUrl('/genentech-careers-usa-2026'))}`} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100">X</a>
+                <a href={`https://wa.me/?text=Explore%20Genentech%20Careers%20USA%202026%20at%20${encodeURIComponent(getCanonicalUrl('/genentech-careers-usa-2026'))}`} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100">WhatsApp</a>
               </div>
             </div>
 

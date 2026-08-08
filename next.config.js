@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  trailingSlash: true,
+  trailingSlash: false,
+  skipTrailingSlashRedirect: true,
   // `swcMinify` is invalid for this Next.js version; removed for compatibility.
   experimental: {
     optimizePackageImports: ['lodash-es'],

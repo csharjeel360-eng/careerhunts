@@ -6,11 +6,13 @@ import { JobCard } from '@/components/jobs/JobCard'
 import { getLatestJobs, getCategories } from '@/lib/api'
 import { getLiveJobs } from '@/lib/live-jobs'
 import { careerResources as careerResourceData } from '@/lib/careerResourceData'
+import { getPageMetadata, getCanonicalUrl, SITE_URL } from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = getPageMetadata({
   title: 'UAE Jobs & Visa Guide 2026 | CareerHunt',
   description:
     'Find UAE jobs with visa sponsorship info, salary guides, and hiring insights for Dubai, Abu Dhabi & Sharjah — all in one place. Updated daily.',
+  path: '/',
   keywords: [
     'jobs',
     'career opportunities',
@@ -18,25 +20,8 @@ export const metadata: Metadata = {
     'job search',
     'remote jobs',
     'professional growth'
-  ],
-  alternates: {
-    canonical: 'https://careerhunt.online/'
-  },
-  openGraph: {
-    title: 'UAE Jobs & Visa Guide 2026 | CareerHunt',
-    description:
-      'Find UAE jobs with visa sponsorship info, salary guides, and hiring insights for Dubai, Abu Dhabi & Sharjah — all in one place. Updated daily.',
-    url: 'https://careerhunt.online/',
-    siteName: 'CareerHunt',
-    type: 'website'
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'UAE Jobs & Visa Guide 2026 | CareerHunt',
-    description:
-      'Find UAE jobs with visa sponsorship info, salary guides, and hiring insights for Dubai, Abu Dhabi & Sharjah — all in one place. Updated daily.'
-  }
-}
+  ]
+})
 
 export const revalidate = 60
 
@@ -146,12 +131,12 @@ export default async function HomePage() {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'CareerHunt',
-      url: 'https://careerhunt.online/',
+      url: getCanonicalUrl('/'),
       description:
         'CareerHunt helps professionals discover job opportunities, salary insights, and career resources in one trusted platform.',
       potentialAction: {
         '@type': 'SearchAction',
-        target: 'https://careerhunt.online/jobs?keyword={search_term_string}',
+        target: new URL('/jobs?keyword={search_term_string}', SITE_URL).toString(),
         'query-input': 'required name=search_term_string'
       }
     },
@@ -159,7 +144,7 @@ export default async function HomePage() {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'CareerHunt',
-      url: 'https://careerhunt.online/',
+      url: getCanonicalUrl('/'),
       sameAs: ['https://www.linkedin.com/']
     }
   ]

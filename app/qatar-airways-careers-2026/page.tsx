@@ -17,12 +17,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/qatar-airways-careers-2026',
+    url: getCanonicalUrl('/qatar-airways-careers-2026'),
     type: 'article',
     siteName: 'CareerHunt',
     images: [
       {
-        url: 'https://careerhunt.online/Qatar Airways Careers.png',
+        url: getCanonicalUrl('/Qatar Airways Careers.png'),
         width: 1200,
         height: 630,
         alt: 'Qatar Airways Careers'
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: pageTitle,
     description: pageDescription,
-    images: ['https://careerhunt.online/Qatar Airways Careers.png']
+    images: [getCanonicalUrl('/Qatar Airways Careers.png')]
   }
 }
 
@@ -230,7 +230,7 @@ export default function QatarAirwaysCareersPage() {
   const articleSchema = generateArticleSchema({
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/qatar-airways-careers-2026',
+    url: getCanonicalUrl('/qatar-airways-careers-2026'),
     datePublished: '2026-07-05',
     authorName: 'CareerHunt Editorial Team',
     keywords: ['Qatar Airways Careers', 'Qatar Airways Jobs', 'Qatar Jobs', 'Doha Jobs', 'Cabin Crew Jobs', 'Pilot Jobs', 'Engineering Jobs Qatar', 'Airport Jobs Qatar', 'Aviation Jobs 2026']

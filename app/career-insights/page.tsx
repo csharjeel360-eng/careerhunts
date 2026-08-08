@@ -5,7 +5,7 @@ import Script from 'next/script'
 import ContentCard from '@/components/shared/ContentCard'
 import { BLOG_POSTS } from '@/lib/blogData'
 import { BLOG_PAGE_CARDS } from '@/lib/blogPageCards'
-import { getPageMetadata } from '@/lib/seo'
+import { getPageMetadata, SITE_URL } from '@/lib/seo'
 
 export const metadata: Metadata = getPageMetadata({
   title: 'UAE Career Guides: Visa, Salary & Hiring Tips 2026',
@@ -21,13 +21,13 @@ export default function CareerInsightsPage() {
     '@type': 'CollectionPage',
     name: 'Career Insights & Job Search Guides 2026 | Resume, Interviews & AI Careers',
     description: 'Discover expert career advice, job search guides, resume tips, interview strategies, salary negotiation insights, remote work advice, AI career trends, and the latest job opportunities for 2026.',
-    url: 'https://careerhunt.online/career-insights',
+    url: `${SITE_URL}/career-insights`,
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: BLOG_POSTS.map((p, i) => ({
         '@type': 'ListItem',
         position: i + 1,
-        url: `https://careerhunt.online/career-insights/${p.slug}`,
+        url: `${SITE_URL}/career-insights/${p.slug}`,
         name: p.title
       }))
     }

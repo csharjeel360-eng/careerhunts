@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { NativeAd } from '@/components/ads/NativeAd'
-import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema } from '@/lib/seo'
+import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, getCanonicalUrl } from '@/lib/seo'
 
 const pageTitle = 'Warehouse Jobs in UAE 2026 | Top Companies Hiring & Salaries | CareerHunt'
 const pageDescription = 'Discover warehouse jobs in UAE 2026. Explore vacancies at DP World, Aramex, DHL, Agility and more with salaries and application tips.'
@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   title: pageTitle,
   description: pageDescription,
   alternates: {
-    canonical: 'https://careerhunt.online/warehouse-jobs-uae-2026'
+    canonical: getCanonicalUrl('/warehouse-jobs-uae-2026')
   },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/warehouse-jobs-uae-2026',
+    url: getCanonicalUrl('/warehouse-jobs-uae-2026'),
     siteName: 'CareerHunt',
     type: 'article'
   },
@@ -191,7 +191,7 @@ export default function WarehouseJobsUaePage() {
   const articleSchema = generateArticleSchema({
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/warehouse-jobs-uae-2026',
+    url: getCanonicalUrl('/warehouse-jobs-uae-2026'),
     datePublished: '2026-07-20',
     authorName: 'CareerHunt Editorial Team',
     keywords: ['warehouse jobs UAE', 'warehouse jobs 2026', 'logistics jobs UAE', 'DP World careers', 'DHL UAE careers']
@@ -469,7 +469,7 @@ export default function WarehouseJobsUaePage() {
         <section className="mt-8 sm:mt-10 lg:mt-12 rounded-xl sm:rounded-2xl lg:rounded-[2rem] border border-slate-200 bg-[#f0fdfa] p-6 sm:p-8 lg:p-10 text-center shadow-sm">
           <p className="text-xs sm:text-sm uppercase tracking-[0.28em] text-[#0f766e] font-medium">Ready to Start Your Warehouse Career?</p>
           <h2 className="mt-3 sm:mt-4 text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 leading-tight">Find the right warehouse role in the UAE and apply with confidence.</h2>
-          <Link href="/blog" className="mt-6 sm:mt-8 inline-flex items-center justify-center rounded-full bg-[#0f766e] px-6 sm:px-8 py-2.5 sm:py-4 text-sm font-semibold text-white transition hover:bg-[#115e59]">
+          <Link href="/jobs" className="mt-6 sm:mt-8 inline-flex items-center justify-center rounded-full bg-[#0f766e] px-6 sm:px-8 py-2.5 sm:py-4 text-sm font-semibold text-white transition hover:bg-[#115e59]">
             Browse Warehouse Jobs
           </Link>
         </section>

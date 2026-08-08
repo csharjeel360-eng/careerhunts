@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { NativeAd } from '@/components/ads/NativeAd'
-import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema } from '@/lib/seo'
+import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, getCanonicalUrl } from '@/lib/seo'
 
 const pageTitle = 'Emirates Group Careers in UAE 2026 | Latest Job Vacancies & Apply Online'
 const pageDescription = 'Discover the latest Emirates Group Careers in UAE. Explore vacancies, requirements, salary information, benefits, and apply online for Cabin Crew, Engineering, IT, Customer Service, Pilots, and Corporate jobs.'
@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   title: pageTitle,
   description: pageDescription,
   alternates: {
-    canonical: 'https://careerhunt.online/emirates-group-careers-uae-2026'
+    canonical: getCanonicalUrl('/emirates-group-careers-uae-2026')
   },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/emirates-group-careers-uae-2026',
+    url: getCanonicalUrl('/emirates-group-careers-uae-2026'),
     siteName: 'CareerHunt',
     type: 'article'
   },
@@ -163,7 +163,7 @@ export default function EmiratesGroupCareersPage() {
   const articleSchema = generateArticleSchema({
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/emirates-group-careers-uae-2026',
+    url: getCanonicalUrl('/emirates-group-careers-uae-2026'),
     datePublished: '2026-07-05',
     authorName: 'CareerHunt Editorial Team',
     keywords: ['Emirates Careers', 'Emirates Jobs UAE', 'Dubai Jobs', 'Cabin Crew Jobs', 'Emirates Group Careers 2026', 'UAE Jobs']

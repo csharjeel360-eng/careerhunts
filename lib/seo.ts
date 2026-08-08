@@ -5,8 +5,9 @@ export const SITE_HOSTNAME = 'careerhunt.online'
 const SITE_NAME = 'CareerHunt'
 
 export function getCanonicalUrl(path: string) {
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`
-  const canonicalPath = normalizedPath === '/' ? '/' : normalizedPath.replace(/\/+$/, '')
+  const normalizedPath = typeof path === 'string' ? path.trim() : ''
+  const safePath = normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`
+  const canonicalPath = safePath === '/' ? '/' : safePath.replace(/\/+$/, '')
   return new URL(canonicalPath, SITE_URL).toString()
 }
 

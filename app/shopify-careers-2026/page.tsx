@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { NativeAd } from '@/components/ads/NativeAd'
 import ShopifyCareersPage from '@/components/company/ShopifyCareersPage'
-import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, generateWebPageSchema } from '@/lib/seo'
+import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, generateWebPageSchema, getCanonicalUrl } from '@/lib/seo'
 
 const pageTitle = 'Shopify Careers 2026 | Remote Jobs, Internships & Latest Vacancies'
 const pageDescription =
@@ -23,17 +23,17 @@ export const metadata: Metadata = {
     'Ecommerce Jobs'
   ],
   alternates: {
-    canonical: 'https://careerhunt.online/shopify-careers-2026'
+    canonical: getCanonicalUrl('/shopify-careers-2026')
   },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/shopify-careers-2026',
+    url: getCanonicalUrl('/shopify-careers-2026'),
     siteName: 'CareerHunt',
     type: 'article',
     images: [
       {
-        url: 'https://careerhunt.online/Shopify Careers.png',
+        url: getCanonicalUrl('/Shopify Careers.png'),
         width: 1200,
         height: 630,
         alt: 'Shopify Careers 2026'
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: pageTitle,
     description: pageDescription,
-    images: ['https://careerhunt.online/Shopify Careers.png']
+    images: [getCanonicalUrl('/Shopify Careers.png')]
   }
 }
 
@@ -58,7 +58,7 @@ export default function ShopifyCareersRoutePage() {
   const articleSchema = generateArticleSchema({
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/shopify-careers-2026',
+    url: getCanonicalUrl('/shopify-careers-2026'),
     datePublished: '2026-07-09',
     authorName: 'CareerHunt Editorial Team',
     keywords: [
@@ -93,7 +93,7 @@ export default function ShopifyCareersRoutePage() {
   const webPageSchema = generateWebPageSchema({
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/shopify-careers-2026',
+    url: getCanonicalUrl('/shopify-careers-2026'),
     breadcrumbItems: [
       { name: 'Home', item: '/' },
       { name: 'Career Insights', item: '/blog' },

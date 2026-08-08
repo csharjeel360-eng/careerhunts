@@ -20,7 +20,8 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
   }
 
   const companyName = job.companyName || job.companyId?.name || 'Company'
-  const canonicalUrl = getCanonicalUrl(`/jobs/${job.slug}`)
+  const canonicalSlug = typeof job.slug === 'string' && job.slug.trim() ? job.slug.trim() : slug
+  const canonicalUrl = getCanonicalUrl(`/jobs/${canonicalSlug}`)
   const city = (job.city || 'UAE').toString().trim()
   const category = (job.category || 'jobs').toString().trim()
   const keywordSet = [
@@ -75,11 +76,12 @@ export default async function JobPage({ params }: JobPageProps) {
   }
 
   const jobSchema = generateJobSchema(job)
+  const canonicalSlug = typeof job.slug === 'string' && job.slug.trim() ? job.slug.trim() : slug
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', item: '/' },
     { name: 'Jobs', item: '/jobs' },
     ...(job.city ? [{ name: job.city, item: `/jobs?city=${encodeURIComponent(job.city)}` }] : []),
-    { name: job.title, item: `/jobs/${job.slug}` }
+    { name: job.title, item: `/jobs/${canonicalSlug}` }
   ])
   
   return (

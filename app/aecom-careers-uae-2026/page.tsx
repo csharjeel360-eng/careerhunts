@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { NativeAd } from '@/components/ads/NativeAd'
 import AECOMCareersPage from '@/components/company/AECOMCareersPage'
-import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, generateWebPageSchema } from '@/lib/seo'
+import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, generateWebPageSchema, getCanonicalUrl } from '@/lib/seo'
 
 const pageTitle = 'AECOM Careers in UAE 2026 | Latest Engineering & Infrastructure Jobs in Dubai'
 const pageDescription = 'Explore the latest AECOM Careers in UAE 2026. Find engineering, architecture, project management, BIM, HSE, surveying, and corporate jobs in Dubai, Abu Dhabi, and the UAE. Learn about salaries, benefits, hiring process, and apply online.'
@@ -26,17 +26,17 @@ export const metadata: Metadata = {
     'Abu Dhabi Engineering Jobs',
   ],
   alternates: {
-    canonical: 'https://careerhunt.online/aecom-careers-uae-2026',
+    canonical: getCanonicalUrl('/aecom-careers-uae-2026'),
   },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/aecom-careers-uae-2026',
+    url: getCanonicalUrl('/aecom-careers-uae-2026'),
     siteName: 'CareerHunt',
     type: 'article',
     images: [
       {
-        url: 'https://careerhunt.online/aecom-careers-uae-2026.png',
+        url: getCanonicalUrl('/aecom-careers-uae-2026.png'),
         width: 1200,
         height: 630,
         alt: 'AECOM Careers in UAE 2026',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: pageTitle,
     description: pageDescription,
-    images: ['https://careerhunt.online/aecom-careers-uae-2026.png'],
+    images: [getCanonicalUrl('/aecom-careers-uae-2026.png')],
   },
 }
 
@@ -61,7 +61,7 @@ export default function AECOMCareersRoutePage() {
   const articleSchema = generateArticleSchema({
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/aecom-careers-uae-2026',
+    url: getCanonicalUrl('/aecom-careers-uae-2026'),
     datePublished: '2026-07-15',
     authorName: 'CareerHunt Editorial Team',
     keywords: [
@@ -98,7 +98,7 @@ export default function AECOMCareersRoutePage() {
   const webPageSchema = generateWebPageSchema({
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/aecom-careers-uae-2026',
+    url: getCanonicalUrl('/aecom-careers-uae-2026'),
     breadcrumbItems: [
       { name: 'Home', item: '/' },
       { name: 'Career Insights', item: '/blog' },

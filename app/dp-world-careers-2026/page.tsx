@@ -27,12 +27,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/dp-world-careers-2026',
+    url: getCanonicalUrl('/dp-world-careers-2026'),
     siteName: 'CareerHunt',
     type: 'article',
     images: [
       {
-        url: 'https://careerhunt.online/DP World Careers.png',
+        url: getCanonicalUrl('/DP World Careers.png'),
         width: 1200,
         height: 630,
         alt: 'DP World Careers 2026',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: pageTitle,
     description: pageDescription,
-    images: ['https://careerhunt.online/DP World Careers.png'],
+    images: [getCanonicalUrl('/DP World Careers.png')],
   },
 }
 
@@ -57,7 +57,7 @@ export default function DPWorldCareersRoutePage() {
   const articleSchema = generateArticleSchema({
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/dp-world-careers-2026',
+    url: getCanonicalUrl('/dp-world-careers-2026'),
     datePublished: '2026-07-11',
     authorName: 'CareerHunt Editorial Team',
     keywords: [
@@ -90,7 +90,7 @@ export default function DPWorldCareersRoutePage() {
   const webPageSchema = generateWebPageSchema({
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/dp-world-careers-2026',
+    url: getCanonicalUrl('/dp-world-careers-2026'),
     breadcrumbItems: [
       { name: 'Home', item: '/' },
       { name: 'Jobs', item: '/jobs' },

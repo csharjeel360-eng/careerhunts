@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { NativeAd } from '@/components/ads/NativeAd'
 import NoonCareersPage from '@/components/company/NoonCareersPage'
+import { getCanonicalUrl } from '@/lib/seo'
 
 const pageTitle = 'Noon Careers UAE 2026 | Latest Noon Jobs in Dubai, Abu Dhabi & Across UAE – Apply Online'
 const pageDescription = 'Explore the latest Noon Careers UAE 2026. Find jobs in Dubai, Abu Dhabi, Sharjah, and across the UAE including warehouse, delivery, software engineering, customer service, HR, marketing, logistics, and corporate roles. Apply online today.'
@@ -25,17 +26,17 @@ export const metadata: Metadata = {
     'Career Hunt',
   ],
   alternates: {
-    canonical: 'https://careerhunt.online/noon-careers-uae-2026',
+    canonical: getCanonicalUrl('/noon-careers-uae-2026'),
   },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: 'https://careerhunt.online/noon-careers-uae-2026',
+    url: getCanonicalUrl('/noon-careers-uae-2026'),
     siteName: 'CareerHunt',
     type: 'article',
     images: [
       {
-        url: 'https://careerhunt.online/Noon%20Careers%20UAE.png',
+        url: getCanonicalUrl('/Noon Careers UAE.png'),
         width: 1200,
         height: 630,
         alt: 'Noon Careers UAE 2026',
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: pageTitle,
     description: pageDescription,
-    images: ['https://careerhunt.online/Noon%20Careers%20UAE.png'],
+    images: [getCanonicalUrl('/Noon Careers UAE.png')],
   },
 }
 

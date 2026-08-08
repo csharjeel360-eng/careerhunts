@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
-import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, getCanonicalUrl } from '@/lib/seo'
+import { generateArticleSchema, generateBreadcrumbSchema, generateFAQSchema, generateOrganizationSchema, getCanonicalUrl, SITE_URL } from '@/lib/seo'
 
 const pageTitle = 'UAE Work Visa 2026: Sponsorship, Costs & Application Guide'
 const pageDescription = 'Everything you need to know about UAE work visas in 2026 — employment visa sponsorship, Golden Visa salary thresholds, costs, timelines, and how to apply.'
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: 'UAE Work Visa Guide 2026: What You Actually Need to Know',
     description: 'Employment visa, Golden Visa, Green Visa, costs, timelines — the full 2026 breakdown for anyone planning to work in the UAE.',
   },
-  metadataBase: new URL('https://careerhunt.online'),
+  metadataBase: new URL(SITE_URL),
   keywords: [
     'UAE work visa',
     'UAE employment visa',
