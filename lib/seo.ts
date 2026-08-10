@@ -113,10 +113,6 @@ export function getDefaultMetadata(): Metadata {
       width: 'device-width',
       initialScale: 1,
     },
-    viewport: {
-      width: 'device-width',
-      initialScale: 1,
-    },
     formatDetection: {
       email: false,
       address: false,
