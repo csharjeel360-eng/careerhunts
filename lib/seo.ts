@@ -109,6 +109,14 @@ export function getDefaultMetadata(): Metadata {
     authors: [{ name: 'CareerHunt' }],
     creator: 'CareerHunt',
     publisher: 'CareerHunt',
+    viewport: {
+      width: 'device-width',
+      initialScale: 1,
+    },
+    viewport: {
+      width: 'device-width',
+      initialScale: 1,
+    },
     formatDetection: {
       email: false,
       address: false,

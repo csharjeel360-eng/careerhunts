@@ -59,17 +59,9 @@ export default function JobDetailSeoLinks({ city, companyName, companySlug, skil
       <Link href={getSalaryGuideHref(category)} className="font-medium text-sky-700 transition hover:text-sky-800">
         Related salary guide
       </Link>
-      <Link href="/visa/uae-employment-visa-guide" className="font-medium text-sky-700 transition hover:text-sky-800">
+          <Link href="/visa/uae-employment-visa-guide" className="font-medium text-sky-700 transition hover:text-sky-800">
         Visa & work permit info
       </Link>
-      {skills.length ? (
-        <span className="text-slate-500">Skills:</span>
-      ) : null}
-      {skills.map((skill) => (
-        <Link key={skill} href={`/jobs?skill=${encodeURIComponent(skill)}`} className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:bg-slate-200">
-          {skill}
-        </Link>
-      ))}
       {jobSlug ? (
         <span className="text-xs text-slate-400">{jobSlug}</span>
       ) : null}

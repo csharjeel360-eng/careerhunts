@@ -93,6 +93,7 @@ export default function CareerInsightsPage() {
               '/career-resources/emiratisation-quota-2026-expat-jobseekers',
               '/career-resources/payroll-job-description-salary-uae',
               '/career-resources/negotiate-salary-uae-job-offer',
+              '/lulu-hypermarket-careers-uae',
               '/career-insights/adnoc-careers-uae-2026',
               '/career-insights/sharjah-aviation-services-careers'
             ].includes(card.href)

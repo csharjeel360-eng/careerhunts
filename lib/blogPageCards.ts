@@ -20,6 +20,25 @@ export interface BlogPageCardData {
 
 export const BLOG_PAGE_CARDS: BlogPageCardData[] = [
   {
+    href: '/lulu-hypermarket-careers-uae',
+    title: 'LuLu Hypermarket Careers in UAE 2026',
+    description: 'Complete guide to LuLu Hypermarket jobs, salaries, requirements, and the right way to apply across Dubai, Abu Dhabi, and Sharjah.',
+    keywords: ['lulu hypermarket careers', 'lulu jobs dubai', 'lulu uae job vacancies', 'lulu recruitment'],
+    backgroundImage: '/lulu-hypermarket-careers-uae.png',
+    borderClass: 'border-[#0ea5e9]',
+    shadowClass: 'shadow-[0_25px_70px_-24px_rgba(14,165,233,0.18)]',
+    labelText: 'Featured',
+    labelBgClass: 'bg-[#0ea5e9]',
+    labelTextClass: 'text-white',
+    actionText: 'Read article',
+    category: 'Career guide',
+    authorName: 'CareerHunt',
+    authorInitials: 'CH',
+    readTime: '8 min read',
+    publishedAt: 'Aug 10, 2026',
+    updatedAt: 'Aug 10, 2026'
+  },
+  {
     href: '/career-insights/adnoc-careers-uae-2026',
     title: 'ADNOC Careers UAE 2026: Apply, Salary & Which Companies Hire',
     description: 'A practical guide to ADNOC jobs in the UAE, including how to apply on jobs.adnoc.ae, expected salary ranges, group companies, and the Technical Academy pathway for UAE Nationals.',
