@@ -1,111 +1,155 @@
 import { MetadataRoute } from 'next'
-import { getJobs, getCategories, getCountries } from '@/lib/api'
+import { getJobs, getCategories } from '@/lib/api'
+import { getArticleSlugs } from '@/lib/articleData'
+import { SITE_URL } from '@/lib/seo'
 
 export const revalidate = 3600
 
-const getBaseUrl = () => {
-  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || 'https://careerhunt.online'
-  return configuredUrl.replace(/\/+$/, '')
-}
-
-const buildUrl = (
-  path: string,
-  lastModified: Date | string = new Date(),
-  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] = 'weekly',
-  priority = 0.6,
-) => ({
-  url: `${getBaseUrl()}${path.startsWith('/') ? path : `/${path}`}`,
-  lastModified,
-  changeFrequency,
-  priority,
-})
-
-const normalizeLastModified = (value?: string | Date | null) => {
+const normalizeLastModified = (value?: string | Date | null): Date => {
   if (!value) return new Date()
-
   const parsed = new Date(value)
   return Number.isNaN(parsed.getTime()) ? new Date() : parsed
 }
 
-const getAllPublishedJobs = async () => {
-  const allJobs: Array<{ slug: string; updatedAt?: string; postedDate?: string }> = []
-  let page = 1
-  const limit = 100
+const getAllActiveJobs = async () => {
+  try {
+    const allJobs: Array<{ slug: string; updatedAt?: string; postedDate?: string; status?: string }> = []
+    let page = 1
+    const limit = 100
 
-  while (true) {
-    const jobsResponse = await getJobs({ page, limit }).catch(() => ({
-      data: [] as Array<{ slug: string; updatedAt?: string; postedDate?: string }>,
-      pagination: { pages: 0 },
-    }))
+    while (true) {
+      const jobsResponse = await getJobs({ 
+        page, 
+        limit,
+        status: 'active' // Only fetch active jobs
+      }).catch(() => ({
+        data: [] as Array<{ slug: string; updatedAt?: string; postedDate?: string; status?: string }>,
+        pagination: { pages: 0 },
+      }))
 
-    const pageJobs = jobsResponse.data || []
-    if (!pageJobs.length) break
+      const pageJobs = jobsResponse.data || []
+      if (!pageJobs.length) break
 
-    allJobs.push(...pageJobs)
+      // Filter only active status jobs
+      const activeJobs = pageJobs.filter(job => job.status === 'active' || !job.status)
+      allJobs.push(...activeJobs)
 
-    const totalPages = jobsResponse.pagination?.pages || 0
-    if (page >= totalPages || pageJobs.length < limit) break
+      const totalPages = jobsResponse.pagination?.pages || 0
+      if (page >= totalPages || pageJobs.length < limit) break
 
-    page += 1
+      page += 1
+    }
+
+    return allJobs
+  } catch (error) {
+    console.error('Error fetching jobs for sitemap:', error)
+    return []
   }
-
-  return allJobs
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticUrls = [
-    buildUrl('/', new Date(), 'daily', 1),
-    buildUrl('/jobs', new Date(), 'daily', 0.95),
-    buildUrl('/about', new Date(), 'monthly', 0.7),
-    buildUrl('/contact', new Date(), 'monthly', 0.6),
-    buildUrl('/companies', new Date(), 'weekly', 0.8),
-    buildUrl('/categories', new Date(), 'weekly', 0.75),
-    buildUrl('/countries', new Date(), 'weekly', 0.75),
-    buildUrl('/blog', new Date(), 'weekly', 0.7),
-    buildUrl('/career-resources', new Date(), 'weekly', 0.7),
-    buildUrl('/career-resources/payroll-job-description-salary-uae', new Date(), 'weekly', 0.72),
-    buildUrl('/career-insights', new Date(), 'weekly', 0.7),
-    buildUrl('/career-insights/adnoc-careers-uae-2026', new Date(), 'weekly', 0.74),
-    buildUrl('/career-insights/sharjah-aviation-services-careers', new Date(), 'weekly', 0.72),
-    buildUrl('/guides', new Date(), 'weekly', 0.65),
-    buildUrl('/visa', new Date(), 'weekly', 0.65),
-    buildUrl('/salary-guide', new Date(), 'monthly', 0.8),
-    buildUrl('/uae-work-visa-sponsorship-guide-2026', new Date(), 'monthly', 0.75),
-    buildUrl('/visa/uae-golden-visa-property-threshold-2026', new Date(), 'monthly', 0.75),
-    buildUrl('/amazon-careers-2026', new Date(), 'weekly', 0.9),
-    buildUrl('/fedex-careers-usa-2026', new Date(), 'weekly', 0.9),
-    buildUrl('/noon-careers-uae-2026', new Date(), 'weekly', 0.9),
-    buildUrl('/markq-trading-llc-storekeeper-dubai', new Date(), 'monthly', 0.7),
-    buildUrl('/privacy', new Date(), 'monthly', 0.4),
-    buildUrl('/terms', new Date(), 'monthly', 0.4),
-    buildUrl('/disclaimer', new Date(), 'monthly', 0.4),
-    buildUrl('/cookies', new Date(), 'monthly', 0.4),
+  const sitemapEntries: MetadataRoute.Sitemap = []
+
+  // 1. Homepage - highest priority, daily updates
+  sitemapEntries.push({
+    url: SITE_URL,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 1.0,
+  })
+
+  // 2. Main navigation pages
+  const staticPages = [
+    { path: '/jobs', frequency: 'daily' as const, priority: 0.95 },
+    { path: '/companies', frequency: 'weekly' as const, priority: 0.8 },
+    { path: '/career-insights', frequency: 'weekly' as const, priority: 0.8 },
+    { path: '/salary-guide', frequency: 'weekly' as const, priority: 0.8 },
+    { path: '/career-resources', frequency: 'weekly' as const, priority: 0.7 },
+    { path: '/visa', frequency: 'weekly' as const, priority: 0.75 },
+    // Trust & legal pages
+    { path: '/about', frequency: 'monthly' as const, priority: 0.7 },
+    { path: '/contact', frequency: 'monthly' as const, priority: 0.6 },
+    { path: '/privacy', frequency: 'yearly' as const, priority: 0.5 },
+    { path: '/terms', frequency: 'yearly' as const, priority: 0.5 },
+    { path: '/cookies', frequency: 'yearly' as const, priority: 0.5 },
+    { path: '/disclaimer', frequency: 'yearly' as const, priority: 0.5 },
   ]
 
-  const allJobs = await getAllPublishedJobs()
-  const categoriesResponse = await getCategories().catch(() => [] as Array<{ slug: string }>)
-  const countriesResponse = await getCountries().catch(() => [] as Array<{ slug: string }>)
+  staticPages.forEach(page => {
+    sitemapEntries.push({
+      url: `${SITE_URL}${page.path}`,
+      lastModified: new Date(),
+      changeFrequency: page.frequency,
+      priority: page.priority,
+    })
+  })
 
-  const jobUrls = allJobs.map((job) => ({
-    url: `${getBaseUrl()}/jobs/${job.slug}`,
-    lastModified: normalizeLastModified(job.updatedAt || job.postedDate),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+  // 3. Active job pages only
+  try {
+    const activeJobs = await getAllActiveJobs()
+    
+    activeJobs.forEach(job => {
+      if (job.slug && job.slug.trim()) {
+        sitemapEntries.push({
+          url: `${SITE_URL}/jobs/${job.slug}`,
+          lastModified: normalizeLastModified(job.updatedAt || job.postedDate),
+          changeFrequency: 'weekly',
+          priority: 0.8,
+        })
+      }
+    })
+  } catch (error) {
+    console.warn('Failed to fetch active jobs for sitemap')
+  }
 
-  const categoryUrls = (categoriesResponse || []).map((category) => ({
-    url: `${getBaseUrl()}/categories/${category.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }))
+  // 4. Article pages - dynamically loaded from content directory
+  try {
+    const articleSlugs = getArticleSlugs()
+    
+    articleSlugs.forEach(slug => {
+      sitemapEntries.push({
+        url: `${SITE_URL}${slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      })
+    })
+  } catch (error) {
+    console.warn('Failed to fetch articles for sitemap:', error)
+  }
 
-  const countryUrls = (countriesResponse || []).map((country) => ({
-    url: `${getBaseUrl()}/countries/${country.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }))
+  // 5. Category pages (if they exist)
+  try {
+    const categoriesResponse = await getCategories().catch(() => ({
+      data: [] as Array<{ slug: string }>
+    }))
+    
+    const categories = categoriesResponse?.data || []
 
-  return [...staticUrls, ...jobUrls, ...categoryUrls, ...countryUrls]
+    categories.forEach(category => {
+      if (category.slug) {
+        sitemapEntries.push({
+          url: `${SITE_URL}/categories/${category.slug}`,
+          lastModified: new Date(),
+          changeFrequency: 'weekly',
+          priority: 0.7,
+        })
+      }
+    })
+  } catch (error) {
+    console.warn('Failed to fetch categories for sitemap')
+  }
+
+  // 6. Remove duplicate URLs
+  const uniqueUrls = new Set<string>()
+  const uniqueEntries: MetadataRoute.Sitemap = []
+
+  sitemapEntries.forEach(entry => {
+    if (!uniqueUrls.has(entry.url)) {
+      uniqueUrls.add(entry.url)
+      uniqueEntries.push(entry)
+    }
+  })
+
+  return uniqueEntries
 }

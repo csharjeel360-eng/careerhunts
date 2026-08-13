@@ -11,6 +11,109 @@ export function getCanonicalUrl(path: string) {
   return new URL(canonicalPath, SITE_URL).toString()
 }
 
+/**
+ * Normalize canonical URL by removing tracking parameters and cleaning up the path
+ * Removes: utm_source, utm_medium, utm_campaign, utm_content, gclid, fbclid, and other tracking params
+ * Normalizes: spaces, duplicate slashes, trailing slashes (except root)
+ */
+export function normalizeCanonicalUrl(urlString: string, baseUrl: string = SITE_URL): string {
+  try {
+    const url = new URL(urlString, baseUrl)
+    
+    // Remove tracking parameters
+    const trackingParams = [
+      'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+      'gclid', 'fbclid', 'msclkid', 'mc_cid', 'mc_eid', '_ga', '_gac', 'ref',
+    ]
+    
+    trackingParams.forEach(param => url.searchParams.delete(param))
+    
+    // Normalize pathname: trim, remove duplicate slashes
+    let pathname = url.pathname.replace(/\/+/g, '/').trim()
+    if (pathname !== '/' && pathname.endsWith('/')) {
+      pathname = pathname.slice(0, -1)
+    }
+    
+    // Normalize search params values: trim whitespace
+    const normalizedParams = new URLSearchParams()
+    url.searchParams.forEach((value, key) => {
+      normalizedParams.set(key, value.trim())
+    })
+    
+    // Rebuild URL
+    const canonical = `${url.protocol}//${url.hostname}${pathname}`
+    const searchString = normalizedParams.toString()
+    return searchString ? `${canonical}?${searchString}` : canonical
+  } catch {
+    // Fallback to simple normalization if URL parsing fails
+    return getCanonicalUrl(urlString.split('?')[0])
+  }
+}
+
+/**
+ * Determine if a URL with query parameters should be indexed
+ * Returns true for intentional landing pages, false for temporary search/filter results
+ */
+export function shouldIndexFilterUrl(pathname: string, searchParams: Record<string, string | string[]>): boolean {
+  // Only index base routes without filters
+  if (pathname === '/jobs' && Object.keys(searchParams).length === 0) {
+    return true
+  }
+  
+  if (pathname === '/career-insights' && Object.keys(searchParams).length === 0) {
+    return true
+  }
+  
+  if (pathname === '/salary-guide' && Object.keys(searchParams).length === 0) {
+    return true
+  }
+  
+  // Index intentional category/city landing pages (these would be created separately, not through filters)
+  // For now, noindex all filter combinations
+  if (Object.keys(searchParams).length > 0) {
+    return false
+  }
+  
+  return true
+}
+
+/**
+ * Get noindex metadata for filter/search result pages
+ */
+export function getFilterPageMetadata({
+  title,
+  description,
+  path,
+  keywords,
+}: {
+  title: string
+  description: string
+  path: string
+  keywords?: string[]
+}): Metadata {
+  const metadata = getPageMetadata({ title, description, path, keywords })
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: {
+        index: false,
+        follow: true,
+      },
+    },
+  }
+}
+
+/**
+ * Trim and normalize location/taxonomy values
+ * Used for city names, country names, categories, etc.
+ */
+export function normalizeLocationValue(value: string | undefined | null): string {
+  if (!value) return ''
+  return String(value).trim().replace(/\s+/g, ' ')
+}
+
 export function getPageMetadata({
   title,
   description,
@@ -171,14 +274,19 @@ export function generateOrganizationSchema() {
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/icon.svg`,
-    sameAs: ['https://www.linkedin.com/'],
+    sameAs: ['https://www.linkedin.com/company/careerhunt'],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer support',
       email: 'contact@careerhunt.online',
-      telephone: '+923259579107',
-      areaServed: 'PK',
-      availableLanguage: ['English']
+      telephone: '+971-50-XXX-XXXX',
+      areaServed: 'AE',
+      availableLanguage: ['English', 'Arabic']
+    },
+    areaServed: 'AE',
+    serviceArea: {
+      '@type': 'Place',
+      name: 'United Arab Emirates'
     }
   }
 }
@@ -279,17 +387,49 @@ function mapEducationRequirements(value?: string) {
 }
 
 export function generateJobSchema(job: any) {
+  // CRITICAL: Only generate JobPosting schema for active jobs
+  // Return empty schema for expired or inactive jobs
+  if (job.status && job.status !== 'active') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'JobPosting',
+      title: job.title || '',
+      description: 'This job posting is no longer available.',
+      url: `${SITE_URL}/jobs/${job.slug}`,
+      // Do NOT include datePosted, validThrough, or hiring details for expired jobs
+    }
+  }
+
   const companyName = job.companyId?.name || job.companyName || 'Company'
   const companyWebsite = job.companyWebsite || job.companyId?.website || ''
   const companyLogo = job.companyLogo || job.companyId?.logo || ''
   const description = stripHtml(job.summary || job.description || '')
   const postedDate = normalizeDateOnly(job.postedDate || job.createdAt)
-  const validThrough = normalizeDate(job.expiryDate || job.applicationDeadline) || normalizeDate(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000))
+  
+  // Only use expiryDate or applicationDeadline if they're in the future
+  let validThrough: string | undefined
+  if (job.expiryDate) {
+    const expiryTime = new Date(job.expiryDate).getTime()
+    const now = Date.now()
+    if (expiryTime > now) {
+      validThrough = normalizeDate(job.expiryDate)
+    }
+  } else if (job.applicationDeadline) {
+    const deadlineTime = new Date(job.applicationDeadline).getTime()
+    const now = Date.now()
+    if (deadlineTime > now) {
+      validThrough = normalizeDate(job.applicationDeadline)
+    }
+  }
+  // Do NOT generate a fake future date if validThrough is not provided
+  
   const salaryCurrency = job.salaryCurrency || 'USD'
   const salaryPeriod = job.salaryPeriod || 'YEAR'
   const salaryMin = job.salaryMin ?? job.salary?.min
   const salaryMax = job.salaryMax ?? job.salary?.max
-  const baseSalary = salaryMin || salaryMax ? {
+  
+  // Only include baseSalary if actual salary values exist
+  const baseSalary = (salaryMin !== undefined && salaryMin !== null) || (salaryMax !== undefined && salaryMax !== null) ? {
     '@type': 'MonetaryAmount',
     currency: salaryCurrency,
     value: {
@@ -303,10 +443,10 @@ export function generateJobSchema(job: any) {
 
   const address = {
     '@type': 'PostalAddress',
-    ...(job.streetAddress ? { streetAddress: job.streetAddress } : { streetAddress: 'Not specified' }),
-    ...(job.city ? { addressLocality: job.city } : { addressLocality: 'UAE' }),
-    ...(job.state || job.region ? { addressRegion: job.state || job.region } : { addressRegion: 'Not specified' }),
-    ...(job.postalCode ? { postalCode: job.postalCode } : { postalCode: 'Not specified' }),
+    ...(job.streetAddress ? { streetAddress: job.streetAddress } : {}),
+    ...(job.city ? { addressLocality: normalizeLocationValue(job.city) } : {}),
+    ...(job.state || job.region ? { addressRegion: job.state || job.region } : {}),
+    ...(job.postalCode ? { postalCode: job.postalCode } : {}),
     ...(job.country ? { addressCountry: job.country } : { addressCountry: 'AE' }),
   }
 
@@ -332,18 +472,18 @@ export function generateJobSchema(job: any) {
     ...(job.requiredSkills?.length ? { skills: job.requiredSkills } : {}),
     ...(job.requirements?.length ? { qualifications: job.requirements } : {}),
     ...(job.responsibilities?.length ? { responsibilities: job.responsibilities } : {}),
-    ...(job.benefits?.length ? { benefits: job.benefits } : {}),
+    ...(job.benefits?.length ? { jobBenefits: job.benefits } : {}),
     ...(job.educationLevel ? { educationRequirements: mapEducationRequirements(job.educationLevel) } : {}),
     ...(job.experienceLevel ? { experienceRequirements: mapExperienceRequirements(job.experienceLevel) } : {}),
     ...(job.category ? { occupationalCategory: job.category } : {}),
-    ...(job.benefits?.length ? { jobBenefits: job.benefits } : {}),
-    workHours: job.workMode || 'Full-time',
     url: `${SITE_URL}/jobs/${job.slug}`,
     identifier: {
       '@type': 'PropertyValue',
       name: companyName,
       value: job._id || job.slug || job.title,
     },
+    // Only add directApply if the job has an application URL
+    ...(job.applicationUrl ? { directApply: true } : { directApply: false }),
   }
 
   return schema

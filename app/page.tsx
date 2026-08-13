@@ -162,7 +162,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
           <div className="space-y-4 rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:p-7">
             <div className="rounded-[20px] bg-sky-50 p-6 text-center sm:p-8">
-              <p className="text-2xl font-semibold text-slate-900 sm:text-3xl">Find your next job in the UAE</p>
+              <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">Find your next job in the UAE</h1>
               <p className="mx-auto mt-2 max-w-[420px] text-sm leading-7 text-slate-600">Dubai · Abu Dhabi · Sharjah — with visa and Golden Visa guidance built in</p>
               <form action="/jobs" method="get" className="mx-auto mt-4 flex w-full max-w-[480px] flex-col gap-2 sm:flex-row">
                 <div className="flex flex-1 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-sm">

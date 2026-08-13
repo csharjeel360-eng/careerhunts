@@ -1,0 +1,19 @@
+# CareerHunt robots.txt
+# Generated for https://careerhunt.online
+
+User-agent: *
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /employer/
+Disallow: /_next/
+Disallow: /_vercel/
+Disallow: /.well-known/
+Allow: /
+
+# Crawl delay (in seconds) - allows server to handle bots responsibly
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://careerhunt.online/sitemap.xml

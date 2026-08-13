@@ -6,29 +6,58 @@ import { NativeAd } from '@/components/ads/NativeAd'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { getCategories, getCountries, getCities, getJobs } from '@/lib/api'
-import { getCanonicalUrl } from '@/lib/seo'
+import { getCanonicalUrl, getPageMetadata, getFilterPageMetadata } from '@/lib/seo'
 
 export const revalidate = 60
-
-export const metadata: Metadata = {
-  title: 'UAE Job Listings 2026: Dubai, Abu Dhabi & Sharjah',
-  description: 'Browse current job openings across the UAE by emirate, sector, and visa type. Filter by salary, role, and employer — updated daily.',
-  alternates: {
-    canonical: getCanonicalUrl('/jobs')
-  },
-  openGraph: {
-    title: 'UAE Job Listings 2026: Dubai, Abu Dhabi & Sharjah',
-    description: 'Browse current job openings across the UAE by emirate, sector, and visa type. Filter by salary, role, and employer — updated daily.',
-    url: getCanonicalUrl('/jobs'),
-    siteName: 'CareerHunt',
-    type: 'website'
-  }
-}
 
 type JobsPageProps = {
   searchParams?: Promise<{
     [key: string]: string | string[] | undefined
   }>
+}
+
+// Generate dynamic metadata based on search parameters
+export async function generateMetadata({ searchParams }: JobsPageProps): Promise<Metadata> {
+  const resolvedSearchParams = searchParams ? await searchParams : {}
+  const keyword = Array.isArray(resolvedSearchParams.keyword) ? resolvedSearchParams.keyword[0] : resolvedSearchParams.keyword || ''
+  const category = Array.isArray(resolvedSearchParams.category) ? resolvedSearchParams.category[0] : resolvedSearchParams.category || ''
+  const country = Array.isArray(resolvedSearchParams.country) ? resolvedSearchParams.country[0] : resolvedSearchParams.country || ''
+  const city = Array.isArray(resolvedSearchParams.city) ? resolvedSearchParams.city[0] : resolvedSearchParams.city || ''
+  
+  // Check if this is a filtered search (has query parameters)
+  const hasSearchParams = keyword || category || country || city
+
+  const baseMetadata = getPageMetadata({
+    title: 'UAE Job Listings 2026: Dubai, Abu Dhabi & Sharjah',
+    description: 'Browse current job openings across the UAE by emirate, sector, and visa type. Filter by salary, role, and employer — updated daily.',
+    path: '/jobs',
+  })
+
+  // If there are search parameters, add noindex to prevent indexing filter result pages
+  if (hasSearchParams) {
+    return {
+      ...baseMetadata,
+      robots: {
+        index: false,
+        follow: true,
+        googleBot: {
+          index: false,
+          follow: true,
+        },
+      },
+    }
+  }
+
+  return {
+    ...baseMetadata,
+    openGraph: {
+      title: 'UAE Job Listings 2026: Dubai, Abu Dhabi & Sharjah',
+      description: 'Browse current job openings across the UAE by emirate, sector, and visa type. Filter by salary, role, and employer — updated daily.',
+      url: getCanonicalUrl('/jobs'),
+      siteName: 'CareerHunt',
+      type: 'website'
+    }
+  }
 }
 
 export default async function JobsPage({ searchParams }: JobsPageProps) {
