@@ -28,6 +28,7 @@ export default function RootLayout({
       <head>
          <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="naver-site-verification" content="" />
+        <meta name="google-adsense-account" content="ca-pub-4145901573793792" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
         <link rel="preload" href="/icon.svg" as="image" />

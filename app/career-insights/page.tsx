@@ -65,6 +65,7 @@ export default function CareerInsightsPage() {
         <div className="mt-8 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))] sm:mt-10 sm:gap-6">
           {BLOG_PAGE_CARDS.filter((card) =>
             [
+              '/al-futtaim-careers-uae',
               '/dhl-careers-uae-2026',
               '/markq-trading-llc-storekeeper-dubai',
               '/noon-careers-uae-2026',

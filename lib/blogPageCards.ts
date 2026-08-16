@@ -20,6 +20,25 @@ export interface BlogPageCardData {
 
 export const BLOG_PAGE_CARDS: BlogPageCardData[] = [
   {
+    href: '/al-futtaim-careers-uae',
+    title: 'Al Futtaim Careers UAE 2026: Jobs, Salary & How to Apply',
+    description: 'Complete guide to Al Futtaim careers in the UAE, covering automotive, retail, and corporate jobs, salary ranges, hiring requirements, and how to apply through A Future With Us.',
+    keywords: ['al futtaim careers', 'al futtaim jobs dubai', 'al futtaim group careers', 'a future with us careers'],
+    backgroundImage: '/Al Futtaim Careers UAE 2026.webp',
+    borderClass: 'border-[#f97316]',
+    shadowClass: 'shadow-[0_25px_70px_-24px_rgba(249,115,22,0.22)]',
+    labelText: 'Featured',
+    labelBgClass: 'bg-[#f97316]',
+    labelTextClass: 'text-white',
+    actionText: 'Read article',
+    category: 'Career guide',
+    authorName: 'CareerHunt',
+    authorInitials: 'CH',
+    readTime: '8 min read',
+    publishedAt: 'Aug 16, 2026',
+    updatedAt: 'Aug 16, 2026'
+  },
+  {
     href: '/lulu-hypermarket-careers-uae',
     title: 'LuLu Hypermarket Careers in UAE 2026',
     description: 'Complete guide to LuLu Hypermarket jobs, salaries, requirements, and the right way to apply across Dubai, Abu Dhabi, and Sharjah.',
