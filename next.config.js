@@ -4,8 +4,10 @@ const nextConfig = {
   trailingSlash: false,
   skipTrailingSlashRedirect: true,
   // `swcMinify` is invalid for this Next.js version; removed for compatibility.
+  // Disable package import optimization in this OneDrive-backed workspace because it
+  // triggers Windows cloud-provider read errors for packages like lucide-react.
   experimental: {
-    optimizePackageImports: ['lodash-es'],
+    optimizePackageImports: [],
   },
   images: {
     unoptimized: true,

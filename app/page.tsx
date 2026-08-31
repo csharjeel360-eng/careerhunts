@@ -1,7 +1,20 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import Link from 'next/link'
-import { ArrowRight, Briefcase, Building2, Search, Sparkles, TrendingUp } from 'lucide-react'
+import {
+  ArrowRight,
+  Bell,
+  BookOpenText,
+  Briefcase,
+  Building2,
+  FileText,
+  Headphones,
+  MapPin,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  TrendingUp
+} from 'lucide-react'
 import { JobCard } from '@/components/jobs/JobCard'
 import { getLatestJobs, getCategories } from '@/lib/api'
 import { getLiveJobs } from '@/lib/live-jobs'
@@ -126,6 +139,27 @@ export default async function HomePage() {
   ]
   const careerGuides = (careerResourceData || []).slice(0, 4)
 
+  const featuredCompanies = [
+    {
+      title: 'DHL Careers UAE 2026',
+      desc: 'Explore DHL jobs in Dubai, Abu Dhabi, and across the UAE.',
+      href: '/dhl-careers-uae-2026',
+      logo: '/DHLlogo.webp'
+    },
+    {
+      title: 'Noon Careers UAE 2026',
+      desc: 'Discover careers in e-commerce, operations, logistics, and technology at Noon.',
+      href: '/noon-careers-uae-2026',
+      logo: '/noonlogo.webp'
+    },
+    {
+      title: 'Emirates Group Careers UAE 2026',
+      desc: 'Find Emirates Group opportunities, salary insights, and application guidance.',
+      href: '/emirates-group-careers-uae-2026',
+      logo: '/emirateslogo.webp'
+    }
+  ]
+
   const homeSchema = [
     {
       '@context': 'https://schema.org',
@@ -158,151 +192,357 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
       />
 
-      <section className="bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)] py-6 sm:py-10 lg:py-14">
-        <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-          <div className="space-y-4 rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:p-7">
-            <div className="rounded-[20px] bg-sky-50 p-6 text-center sm:p-8">
-              <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">Find your next job in the UAE</h1>
-              <p className="mx-auto mt-2 max-w-[420px] text-sm leading-7 text-slate-600">Dubai · Abu Dhabi · Sharjah — with visa and Golden Visa guidance built in</p>
-              <form action="/jobs" method="get" className="mx-auto mt-4 flex w-full max-w-[480px] flex-col gap-2 sm:flex-row">
-                <div className="flex flex-1 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-sm">
-                  <Search className="h-4 w-4 text-slate-400" />
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-sky-50 to-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">{/* Hero Section with Full Background Image */}
+          <div className="relative rounded-[24px] border border-slate-200 overflow-hidden h-96 sm:h-[450px] lg:h-[520px]">
+            {/* Background Image */}
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{
+                backgroundImage: "url('/hero%20(3).webp')",
+                backgroundPosition: 'center right',
+              }}
+            />
+            
+            {/* Dark Overlay for Text Readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-900/50 to-transparent" />
+            
+            {/* Content */}
+            <div className="relative z-10 flex flex-col justify-center h-full p-6 sm:p-8 lg:p-12 max-w-2xl">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                Find your next job<br />
+                in the <span className="text-sky-300 font-semibold">UAE</span>
+              </h1>
+              <p className="text-base sm:text-lg text-slate-100 mb-8 leading-relaxed max-w-lg">
+                Dubai · Abu Dhabi · Sharjah — with visa and Golden Visa guidance built in
+              </p>
+              
+              {/* Search Bar */}
+              <form action="/jobs" method="get" className="flex flex-col sm:flex-row gap-3 w-full sm:w-fit">
+                <div className="flex flex-1 items-center gap-2 rounded-full border-2 border-slate-200 bg-white px-4 py-3 shadow-md focus-within:border-sky-500 hover:shadow-lg transition">
+                  <Search className="h-5 w-5 text-slate-400" />
                   <input
                     type="text"
                     name="keyword"
                     placeholder="Job title or keyword"
-                    className="w-full border-0 bg-transparent text-sm text-slate-700 outline-none"
+                    className="w-full border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
                   />
                 </div>
-                <button type="submit" className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white">
+                <button type="submit" className="rounded-full bg-sky-600 px-8 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-sky-700 active:scale-95 whitespace-nowrap">
                   Search
                 </button>
               </form>
             </div>
 
-            <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
-              <div className="rounded-[20px] border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Browse by emirate</span>
-                <div className="mt-3 grid gap-2 sm:grid-cols-4">
-                  {emirates.map((item) => (
-                    <Link key={item} href={`/jobs?city=${encodeURIComponent(item)}`} className="rounded-[12px] border border-slate-200 bg-white px-3 py-3 text-center text-sm font-semibold text-slate-700 shadow-sm transition hover:border-sky-300 hover:text-sky-700">
-                      {item}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-[20px] border border-slate-200 bg-sky-50 p-4 sm:p-5">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-sky-700">Visa and legal hub</span>
-                <p className="mt-2 text-sm font-semibold text-slate-900">Work visas, Golden Visa, sponsorship — explained</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {visaTags.map((item) => (
-                    <Link key={item.href} href={item.href} className="inline-flex items-center rounded-full border border-sky-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-sky-400 hover:bg-sky-50 hover:text-sky-800">
-                      {item.label}
-                    </Link>
-                  ))}
+            {/* Stats Badge */}
+            <div className="absolute top-6 right-6 z-20 bg-white rounded-2xl p-5 shadow-lg hover:shadow-xl transition">
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-bold text-sky-600">10,000+</div>
+                <div className="text-xs sm:text-sm text-slate-600 font-medium leading-5">
+                  <span>Active Jobs</span>
+                  <br />
+                  <span>in UAE</span>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="rounded-[20px] border border-slate-200 bg-white p-4 sm:p-5">
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Latest jobs</span>
-                <Link href="/jobs" className="text-sm font-semibold text-sky-700">View all →</Link>
-              </div>
-              <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {mixedJobs.length > 0 ? mixedJobs.map((item: any) => (
-                  <div key={item._id || item.id || `${item.source}-${item.title}`} className="rounded-[16px] border border-slate-200 bg-slate-50 p-4">
-                    <JobCard job={item} variant="featured" />
-                  </div>
-                )) : (
-                  <div className="rounded-[16px] border border-dashed border-slate-300 bg-slate-50 p-6 text-sm text-slate-600 md:col-span-2 xl:col-span-3">
-                    No latest jobs available yet.
-                  </div>
-                )}
-              </div>
-            </div>
 
-            <div className="grid gap-4 lg:grid-cols-2">
-              <div className="rounded-[20px] border border-slate-200 bg-white p-4 sm:p-5">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Salary guide preview</span>
-                <div className="mt-3 space-y-2">
-                  {salaryPreview.map((item) => (
-                    <Link key={item.role} href={item.href} className="flex items-center justify-between rounded-[12px] border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 transition hover:border-sky-300 hover:bg-white">
-                      <span>{item.role}</span>
-                      <span className="font-semibold text-emerald-700">{item.amount}</span>
-                    </Link>
-                  ))}
-                </div>
 
-                <div className="mt-4 border-t border-slate-200 pt-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Featured company pages</p>
-                  <div className="mt-3 grid gap-3">
-                    <Link href="/dhl-careers-uae-2026" className="rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 hover:border-sky-300 hover:bg-slate-100">
-                      <div className="font-semibold text-slate-900">DHL Careers UAE 2026</div>
-                      <div className="mt-1 text-xs leading-5 text-slate-600">Explore DHL jobs in Dubai, Abu Dhabi, and across the UAE.</div>
-                    </Link>
-                    <Link href="/noon-careers-uae-2026" className="rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 hover:border-sky-300 hover:bg-slate-100">
-                      <div className="font-semibold text-slate-900">Noon Careers UAE 2026</div>
-                      <div className="mt-1 text-xs leading-5 text-slate-600">Discover careers in e-commerce, operations, logistics, and technology at Noon.</div>
-                    </Link>
-                    <Link href="/emirates-group-careers-uae-2026" className="rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 hover:border-sky-300 hover:bg-slate-100">
-                      <div className="font-semibold text-slate-900">Emirates Group Careers UAE 2026</div>
-                      <div className="mt-1 text-xs leading-5 text-slate-600">Find Emirates Group opportunities, salary insights, and application guidance.</div>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-[20px] border border-slate-200 bg-white p-4 sm:p-5">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Featured career guides</span>
-                <div className="mt-3 grid gap-3">
+          {/* Emirate and Visa Section - 2 Column Layout */}
+          <div className="mt-10 grid gap-8 lg:grid-cols-2">
+            {/* Left: Browse by Emirate */}
+            <div className="rounded-[24px] border border-slate-200 bg-white p-7 sm:p-8">
+              <span className="text-xs font-semibold uppercase tracking-widest text-slate-600 block mb-6">Browse by emirate</span>
+              <div className="grid gap-4 grid-cols-2">
+                {[
+                  { name: 'Dubai', image: '/dubai.webp' },
+                  { name: 'Abu Dhabi', image: '/abudabhi.webp' },
+                  { name: 'Sharjah', image: '/sharjah.webp' },
+                  { name: 'Ajman', image: '/Ajman.webp' },
+                ].map((item) => (
                   <Link
-                    href="/career-insights"
-                    className="inline-flex items-center justify-center rounded-full bg-sky-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700"
+                    key={item.name}
+                    href={`/jobs?city=${encodeURIComponent(item.name)}`}
+                    className="group relative rounded-[16px] overflow-hidden transition-all duration-300 h-24 sm:h-32"
                   >
-                    Go to Career Insights
+                    <div
+                      className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+                      style={{
+                        backgroundImage: `url('${item.image}')`,
+                        backgroundPosition: 'center',
+                      }}
+                    />
+                    {/* Text overlay at bottom - much lighter for clearer images */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 via-slate-900/5 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
+                      <p className="text-center text-xs sm:text-sm font-bold text-white drop-shadow-lg">{item.name}</p>
+                    </div>
                   </Link>
-                  {careerGuides.map((item: any) => {
-                    const isCareerInsights = item.slug === 'career-insights'
+                ))}
+              </div>
+              <div className="mt-6 flex items-center justify-center gap-2">
+                <span className="text-slate-400">📍</span>
+                <Link href="/jobs" className="text-xs sm:text-sm font-semibold text-sky-700 hover:text-sky-800 transition">
+                  More opportunities across the UAE
+                </Link>
+              </div>
+            </div>
 
-                    if (isCareerInsights) return null
-
-                    return (
+            {/* Right: Visa and Legal Hub */}
+            <div className="rounded-[24px] border border-slate-200 overflow-hidden transition-all duration-300 relative min-h-[380px] sm:min-h-[420px]" style={{
+              backgroundImage: "url('/visa%20and%20guides.webp')",
+              backgroundPosition: 'center right',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+            }}>
+              {/* Subtle overlay for content readability */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/60 to-transparent" />
+              
+              {/* Content Section */}
+              <div className="relative z-10 p-8 sm:p-10 h-full flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-widest text-sky-700 block mb-3">Visa and legal hub</span>
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-8 leading-tight">Work visas, Golden Visa, sponsorship — explained</h3>
+                  
+                  <div className="grid gap-3 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+                    {[
+                      { label: 'Employment Visa', icon: '📋', href: '/visa/uae-employment-visa-guide' },
+                      { label: 'Golden Visa', icon: '👑', href: '/visa/uae-golden-visa-guide' },
+                      { label: 'Family Sponsorship', icon: '👥', href: '/visa/uae-family-sponsorship-guide' },
+                      { label: 'Work Permit', icon: '📄', href: '/visa/uae-work-permit-guide' },
+                    ].map((item) => (
                       <Link
-                        key={item.slug || item.title}
-                        href={item.slug ? `/career-resources/${item.slug}` : '/career-resources'}
-                        className="rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 hover:border-sky-300 hover:bg-slate-100"
+                        key={item.label}
+                        href={item.href}
+                        className="rounded-[12px] border border-sky-300 bg-sky-100 px-3 py-3 text-center shadow-md transition-all duration-300 hover:bg-sky-200 hover:border-sky-500 hover:shadow-lg hover:scale-105 active:scale-95"
                       >
+                        <span className="block text-2xl sm:text-3xl mb-1">{item.icon}</span>
+                        <span className="text-xs sm:text-sm leading-tight font-semibold text-slate-800 block">{item.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Latest Jobs Section */}
+          <div className="mt-12 rounded-[24px] border border-slate-200 bg-white p-7 sm:p-8">
+            <div className="flex items-center justify-between gap-2 mb-7">
+              <span className="text-xs font-semibold uppercase tracking-widest text-slate-600">Latest jobs</span>
+              <Link href="/jobs" className="text-sm font-semibold text-sky-700 hover:text-sky-800 transition">View all →</Link>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {mixedJobs.length > 0 ? mixedJobs.map((item: any) => (
+                <div key={item._id || item.id || `${item.source}-${item.title}`} className="rounded-[16px] border border-slate-200 bg-slate-50 p-4">
+                  <JobCard job={item} variant="featured" />
+                </div>
+              )) : (
+                <div className="rounded-[16px] border border-dashed border-slate-300 bg-slate-50 p-6 text-sm text-slate-600 md:col-span-2 xl:col-span-3">
+                  No latest jobs available yet.
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Features Section */}
+          <div className="mt-10 rounded-[24px] border border-slate-200 bg-white p-2 shadow-sm sm:p-3">
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+              {[
+                {
+                  icon: Bell,
+                  title: 'Latest Job Alerts',
+                  description: 'Get notified about new jobs that match you'
+                },
+                {
+                  icon: MapPin,
+                  title: 'Top UAE Locations',
+                  description: 'Find jobs in Dubai, Abu Dhabi, Sharjah & more'
+                },
+                {
+                  icon: ShieldCheck,
+                  title: 'Trusted Employers',
+                  description: 'Connect with verified companies across the UAE'
+                },
+                {
+                  icon: FileText,
+                  title: 'Visa Guidance',
+                  description: 'All the info you need for work visas and Golden Visa'
+                },
+                {
+                  icon: Headphones,
+                  title: 'Career Support',
+                  description: 'Resources and tips to help you grow your career'
+                }
+              ].map((feature, index) => {
+                const Icon = feature.icon
+
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 rounded-[16px] border border-slate-200 bg-white px-4 py-4 transition-all duration-300 hover:border-sky-200 hover:shadow-sm"
+                  >
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sky-100 text-sky-700">
+                      <Icon className="h-5 w-5" />
+                    </div>
+
+                    <div className="min-w-0">
+                      <h3 className="text-[15px] font-bold leading-tight text-slate-900">{feature.title}</h3>
+                      <p className="mt-1 text-xs leading-5 text-slate-600">{feature.description}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="mt-8 rounded-[24px] border border-sky-200 bg-gradient-to-r from-sky-50 via-sky-50 to-slate-50 p-5 sm:p-6">
+            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-600 text-white shadow-sm">
+                  <Briefcase className="h-6 w-6" />
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-bold leading-tight text-slate-900">
+                    Your next opportunity is just a search away
+                  </h3>
+                  <p className="mt-1 text-base text-slate-600">
+                    Explore thousands of job openings across the UAE and take the next step in your career.
+                  </p>
+                </div>
+              </div>
+
+              <Link
+                href="/jobs"
+                className="inline-flex items-center justify-center gap-2 rounded-[14px] bg-sky-600 px-6 py-4 text-base font-semibold text-white shadow-md transition hover:bg-sky-700"
+              >
+                Browse Jobs Now
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Salary Guide and Career Resources Section */}
+          <div className="mt-12 grid gap-8 lg:grid-cols-2">
+            <div className="rounded-[24px] border border-slate-200 bg-white p-6 sm:p-7">
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700">
+                  <TrendingUp className="h-5 w-5" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-[0.18em] text-sky-700">Salary guide preview</span>
+              </div>
+
+              <div className="space-y-3">
+                {salaryPreview.map((item) => (
+                  <Link
+                    key={item.role}
+                    href={item.href}
+                    className="flex items-center justify-between gap-3 rounded-[14px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 transition-all duration-300 hover:border-sky-300 hover:bg-white hover:shadow-sm"
+                  >
+                    <span className="font-medium text-slate-700">{item.role}</span>
+                    <span className="whitespace-nowrap font-semibold text-emerald-600">{item.amount}</span>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-8 border-t border-slate-200 pt-7">
+                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-slate-600">Featured company pages</p>
+                <div className="space-y-3">
+                  {featuredCompanies.map((company) => (
+                    <Link
+                      key={company.href}
+                      href={company.href}
+                      className="flex items-center justify-between gap-3 rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 transition-all duration-300 hover:border-sky-300 hover:bg-white hover:shadow-sm"
+                    >
+                      <div className="flex min-w-0 items-center gap-3">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+                          <img
+                            src={company.logo}
+                            alt={company.title}
+                            className="h-full w-full object-contain p-1"
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="truncate font-semibold text-slate-900">{company.title}</div>
+                          <div className="mt-1 text-xs leading-5 text-slate-600">{company.desc}</div>
+                        </div>
+                      </div>
+
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-200 text-base font-bold text-slate-500">
+                        ›
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[24px] border border-slate-200 bg-white p-6 sm:p-7">
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700">
+                  <BookOpenText className="h-5 w-5" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-[0.18em] text-sky-700">Featured career guides</span>
+              </div>
+
+              <div className="space-y-4">
+                <Link
+                  href="/career-insights"
+                  className="inline-flex w-full items-center justify-center rounded-[14px] bg-sky-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:bg-sky-700 active:scale-[0.99]"
+                >
+                  Go to Career Insights
+                </Link>
+
+                {careerGuides.map((item: any) => {
+                  const isCareerInsights = item.slug === 'career-insights'
+                  if (isCareerInsights) return null
+                  return (
+                    <Link
+                      key={item.slug || item.title}
+                      href={item.slug ? `/career-resources/${item.slug}` : '/career-resources'}
+                      className="flex items-start gap-3 rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 transition-all duration-300 hover:border-sky-300 hover:bg-white hover:shadow-sm"
+                    >
+                      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-100 text-sky-700">
+                        <FileText className="h-4 w-4" />
+                      </div>
+
+                      <div className="min-w-0">
                         <div className="font-semibold text-slate-900">{item.title}</div>
                         <div className="mt-1 text-xs leading-5 text-slate-600">
                           {item.excerpt || item.description || 'Helpful guidance for your next career move.'}
                         </div>
-                      </Link>
-                    )
-                  })}
-                </div>
+                      </div>
+                    </Link>
+                  )
+                })}
               </div>
             </div>
+          </div>
 
-            <div className="rounded-[20px] border border-slate-200 bg-slate-50/70 p-4 text-center">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Employer and support</span>
-              <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-sm text-slate-600">
-                <Link href="/employer" className="font-semibold text-sky-700">Post a job</Link>
-                <Link href="/about" className="font-semibold text-sky-700">About</Link>
-                <Link href="/contact" className="font-semibold text-sky-700">Contact</Link>
-                <Link href="/privacy" className="font-semibold text-sky-700">Privacy</Link>
-                <Link href="/sitemap" className="font-semibold text-sky-700">Sitemap</Link>
-              </div>
-              <div className="mt-4 flex justify-center">
-                <a href="https://sellwithboost.com" target="_blank" rel="noopener noreferrer">
-                  <img
-                    src="https://sellwithboost.com/badge/listing.svg"
-                    alt="Listed on Sell With boost"
-                    style={{ height: '40px', width: 'auto' }}
-                  />
-                </a>
-              </div>
+          {/* Footer Support Section */}
+          <div className="mt-12 rounded-[24px] border border-slate-200 bg-gradient-to-r from-slate-50 to-sky-50/50 p-8 text-center shadow-sm">
+            <span className="text-xs font-semibold uppercase tracking-widest text-slate-600">Employer and support</span>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-4 text-sm text-slate-600">
+              <Link href="/employer" className="font-semibold text-sky-700 hover:text-sky-800 transition">Post a job</Link>
+              <span className="text-slate-300">•</span>
+              <Link href="/about" className="font-semibold text-sky-700 hover:text-sky-800 transition">About</Link>
+              <span className="text-slate-300">•</span>
+              <Link href="/contact" className="font-semibold text-sky-700 hover:text-sky-800 transition">Contact</Link>
+              <span className="text-slate-300">•</span>
+              <Link href="/privacy" className="font-semibold text-sky-700 hover:text-sky-800 transition">Privacy</Link>
+              <span className="text-slate-300">•</span>
+              <Link href="/sitemap" className="font-semibold text-sky-700 hover:text-sky-800 transition">Sitemap</Link>
+            </div>
+            <div className="mt-5 flex justify-center">
+              <a href="https://sellwithboost.com" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="https://sellwithboost.com/badge/listing.svg"
+                  alt="Listed on Sell With boost"
+                  style={{ height: '40px', width: 'auto' }}
+                />
+              </a>
             </div>
           </div>
         </div>

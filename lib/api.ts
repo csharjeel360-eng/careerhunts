@@ -100,7 +100,13 @@ export const getLatestJobs = cache(async () => {
 export const getJobBySlug = cache(async (slug: string) => {
   try {
     const response = await api.get(`/jobs/${slug}`)
-    return response.data.data
+    const job = response.data.data || null
+    if (!job) return null
+
+    return {
+      ...job,
+      relatedJobs: response.data.relatedJobs || response.data.similarJobs || [],
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('getJobBySlug error:', error)

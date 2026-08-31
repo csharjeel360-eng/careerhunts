@@ -1,7 +1,5 @@
 'use client'
 
-import type { Metadata } from 'next'
-import { getNoIndexMetadata } from '@/lib/seo'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -19,44 +17,67 @@ import { countries } from '@/lib/constants/countries'
 import { jobCategories } from '@/lib/constants/categories'
 import { Loader2 } from 'lucide-react'
 
+const googleEmploymentTypes = ['FULL_TIME', 'PART_TIME', 'CONTRACTOR', 'TEMPORARY', 'INTERN', 'VOLUNTEER', 'PER_DIEM', 'OTHER'] as const
+const googleSalaryPeriods = ['HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR'] as const
+const googleExperienceLevels = ['Entry Level', 'Junior', 'Mid Level', 'Senior', 'Manager', 'Director', 'Not specified'] as const
+const googleEducationLevelOptions = ['High School', 'Diploma', 'Associate Degree', "Bachelor's Degree", "Master's Degree", 'Doctorate', 'Professional Certification', 'Not specified'] as const
+const googleApplicationMethods = ['company-website', 'email', 'careerhunt-application'] as const
+
+const emptyString = z.string().optional().or(z.literal(''))
+
 const jobSchema = z.object({
-  title: z.string().min(5),
-  companyName: z.string().min(2).optional(),
-  companyWebsite: z.string().url().or(z.literal('')).optional(),
-  category: z.string().min(1),
-  employmentType: z.enum(['full-time', 'part-time', 'contract', 'internship', 'freelance']),
-  workMode: z.enum(['remote', 'onsite', 'hybrid']),
-  country: z.string().min(1),
-  city: z.string().optional(),
-  location: z.string().min(2),
-  salaryMin: z.number().int().min(0),
-  salaryMax: z.number().int().min(0),
-  salaryCurrency: z.string().min(1),
-  summary: z.string().min(10),
-  responsibilities: z.string().min(10),
-  requirements: z.string().min(10),
-  preferredQualifications: z.string().optional(),
-  requiredSkills: z.string().min(2),
-  benefits: z.string().optional(),
-  experienceLevel: z.enum(['entry', 'junior', 'mid', 'senior', 'lead', 'executive']),
-  educationLevel: z.enum(['high-school', 'bachelors', 'masters', 'phd']),
-  vacancies: z.number().int().min(1),
-  applicationEmail: z.string().email().or(z.literal('')).optional(),
-  whatsappNumber: z.string().min(4).or(z.literal('')).optional(),
-  applicationUrl: z.string().url().or(z.literal('')).optional(),
-  applicationDeadline: z.string().optional(),
-  companyDescription: z.string().optional(),
-  marketContext: z.string().optional(),
-  keywords: z.string().optional(),
-  tags: z.string().optional(),
+  title: z.string().min(2, 'Job title is required.'),
+  companyName: z.string().min(2, 'Company name is required.'),
+  companyWebsite: emptyString,
+  companyLogo: emptyString,
+  category: z.string().min(1, 'Category is required.'),
+  country: z.string().min(1, 'Country is required.'),
+  state: emptyString,
+  city: z.string().min(1, 'City is required unless the job is remote worldwide.'),
+  address: emptyString,
+  postalCode: emptyString,
+  employmentType: z.enum(googleEmploymentTypes),
+  workMode: z.enum(['onsite', 'hybrid', 'remote']),
+  salaryAvailable: z.enum(['yes', 'no', 'not-disclosed']),
+  salaryMin: z.coerce.number().min(0).optional().or(z.literal('')),
+  salaryMax: z.coerce.number().min(0).optional().or(z.literal('')),
+  salaryCurrency: z.string().optional().or(z.literal('')),
+  salaryPeriod: z.enum(googleSalaryPeriods).optional(),
+  description: z.string().min(20, 'Job description is required.'),
+  responsibilities: z.string().min(10, 'List at least one responsibility.'),
+  requirements: z.string().min(10, 'List at least one requirement.'),
+  preferredQualifications: emptyString,
+  requiredSkills: z.string().min(2, 'Add at least one skill.'),
+  benefits: emptyString,
+  experienceRequired: emptyString,
+  experienceLevel: z.enum(['entry-level', 'junior', 'mid-level', 'senior', 'manager', 'director', 'not-specified']),
+  educationRequired: z.enum(['high-school', 'diploma', 'associate-degree', "bachelors", 'masters', 'doctorate', 'professional-certification', 'not-specified']),
+  vacancies: z.coerce.number().int().min(1).optional().or(z.literal('')),
+  applicationMethod: z.enum(googleApplicationMethods),
+  applicationUrl: emptyString,
+  applicationEmail: emptyString,
+  whatsappNumber: emptyString,
+  applicationDeadline: emptyString,
+  jobReferenceNumber: emptyString,
+  eligibleApplicantLocation: z.enum(['Worldwide', 'Specific Country', 'Specific Countries']).optional(),
+  eligibleApplicantCountry: emptyString,
+  eligibleApplicantCountries: emptyString,
+  sourceWebsite: emptyString,
+  sourceUrl: emptyString,
+  sourceDate: emptyString,
+  lastVerifiedAt: emptyString,
+  companyDescription: emptyString,
+  keywords: emptyString,
+  tags: emptyString,
   isFeatured: z.boolean().optional(),
   isUrgent: z.boolean().optional(),
-  isOriginalContent: z.boolean().optional(),
   postedDate: z.string().optional(),
-  expiryDate: z.string().optional(),
+  validThrough: emptyString,
 })
 
 type JobFormValues = z.infer<typeof jobSchema>
+
+const toArray = (value: string) => value.split(/\n|,/) .map((item) => item.trim()).filter(Boolean)
 
 export default function EmployerCreateJobPage() {
   const router = useRouter()
@@ -74,82 +95,123 @@ export default function EmployerCreateJobPage() {
       title: '',
       companyName: '',
       companyWebsite: '',
+      companyLogo: '',
       category: '',
-      employmentType: 'full-time',
-      workMode: 'remote',
-      country: '',
+      country: 'United Arab Emirates',
+      state: '',
       city: '',
-      location: '',
-      salaryMin: 0,
-      salaryMax: 0,
-      salaryCurrency: 'USD',
-      summary: '',
+      address: '',
+      postalCode: '',
+      employmentType: 'FULL_TIME',
+      workMode: 'onsite',
+      salaryAvailable: 'not-disclosed',
+      salaryMin: '',
+      salaryMax: '',
+      salaryCurrency: 'AED',
+      salaryPeriod: 'YEAR',
+      description: '',
       responsibilities: '',
       requirements: '',
       preferredQualifications: '',
       requiredSkills: '',
       benefits: '',
-      experienceLevel: 'mid',
-      educationLevel: 'bachelors',
+      experienceRequired: '',
+      experienceLevel: 'mid-level',
+      educationRequired: 'bachelors',
       vacancies: 1,
+      applicationMethod: 'company-website',
+      applicationUrl: '',
       applicationEmail: '',
       whatsappNumber: '',
-      applicationUrl: '',
       applicationDeadline: '',
+      jobReferenceNumber: '',
+      eligibleApplicantLocation: 'Specific Country',
+      eligibleApplicantCountry: '',
+      eligibleApplicantCountries: '',
+      sourceWebsite: '',
+      sourceUrl: '',
+      sourceDate: '',
+      lastVerifiedAt: '',
       companyDescription: '',
-      marketContext: '',
       keywords: '',
       tags: '',
       isFeatured: false,
       isUrgent: false,
-      isOriginalContent: true,
       postedDate: new Date().toISOString(),
-      expiryDate: '',
+      validThrough: '',
     },
   })
+
+  const selectedWorkMode = watch('workMode')
+  const selectedApplicationMethod = watch('applicationMethod')
+  const selectedSalaryAvailable = watch('salaryAvailable')
 
   const onSubmit = async (data: JobFormValues) => {
     setIsSubmitting(true)
     try {
+      const salaryAvailable = data.salaryAvailable
+      const salaryMin = salaryAvailable === 'yes' ? Number(data.salaryMin || 0) : 0
+      const salaryMax = salaryAvailable === 'yes' ? Number(data.salaryMax || 0) : 0
+      const salaryCurrency = salaryAvailable === 'yes' ? (data.salaryCurrency || 'AED') : 'AED'
+      const workModeValue = data.workMode
+      const normalizedCity = workModeValue === 'remote' ? '' : data.city
+      const eligibleApplicantLocationValue = workModeValue === 'remote'
+        ? (data.eligibleApplicantLocation === 'Worldwide' ? 'Worldwide' : data.eligibleApplicantCountry || data.eligibleApplicantCountries || data.country)
+        : data.country
+
       await createJob({
         title: data.title,
         companyName: data.companyName,
         companyWebsite: data.companyWebsite,
+        companyLogo: data.companyLogo,
         category: data.category,
         employmentType: data.employmentType,
-        workMode: data.workMode,
+        workMode: workModeValue,
         country: data.country,
-        city: data.city,
-        location: data.location,
-        salaryMin: data.salaryMin,
-        salaryMax: data.salaryMax,
-        salaryCurrency: data.salaryCurrency,
-        summary: data.summary,
-        description: data.summary,
-        responsibilities: data.responsibilities.split('\n').map((item) => item.trim()).filter(Boolean),
-        requirements: data.requirements.split('\n').map((item) => item.trim()).filter(Boolean),
-        preferredQualifications: data.preferredQualifications.split('\n').map((item) => item.trim()).filter(Boolean),
-        requiredSkills: data.requiredSkills.split(',').map((item) => item.trim()).filter(Boolean),
-        benefits: data.benefits.split('\n').map((item) => item.trim()).filter(Boolean),
+        state: data.state,
+        city: normalizedCity,
+        address: data.address,
+        postalCode: data.postalCode,
+        location: data.address || data.city || data.country,
+        salaryAvailable,
+        salaryMin,
+        salaryMax,
+        salaryCurrency,
+        salaryPeriod: data.salaryPeriod || 'YEAR',
+        description: data.description,
+        summary: data.description,
+        responsibilities: toArray(data.responsibilities),
+        requirements: toArray(data.requirements),
+        preferredQualifications: toArray(data.preferredQualifications || ''),
+        requiredSkills: toArray(data.requiredSkills),
+        skills: toArray(data.requiredSkills),
+        benefits: toArray(data.benefits || ''),
+        experienceRequired: data.experienceRequired,
         experienceLevel: data.experienceLevel,
-        educationLevel: data.educationLevel,
-        vacancies: data.vacancies,
+        educationRequired: data.educationRequired,
+        educationLevel: data.educationRequired,
+        vacancies: Number(data.vacancies || 1),
+        applicationMethod: data.applicationMethod,
+        applicationUrl: data.applicationUrl,
         applicationEmail: data.applicationEmail,
         whatsappNumber: data.whatsappNumber,
-        applicationUrl: data.applicationUrl,
         applicationDeadline: data.applicationDeadline ? new Date(data.applicationDeadline) : undefined,
+        validThrough: data.validThrough ? new Date(data.validThrough) : undefined,
         companyDescription: data.companyDescription,
-        marketContext: data.marketContext,
-        keywords: data.keywords.split(',').map((item) => item.trim()).filter(Boolean),
-        tags: data.tags.split(',').map((item) => item.trim()).filter(Boolean),
-        isFeatured: data.isFeatured,
-        isUrgent: data.isUrgent,
-        isOriginalContent: data.isOriginalContent,
+        eligibleApplicantLocation: eligibleApplicantLocationValue,
+        jobReferenceNumber: data.jobReferenceNumber,
+        sourceWebsite: data.sourceWebsite,
+        sourceUrl: data.sourceUrl,
+        sourceDate: data.sourceDate ? new Date(data.sourceDate) : undefined,
+        lastVerifiedAt: data.lastVerifiedAt ? new Date(data.lastVerifiedAt) : undefined,
+        keywords: toArray(data.keywords || ''),
+        tags: toArray(data.tags || ''),
+        isFeatured: Boolean(data.isFeatured),
+        isUrgent: Boolean(data.isUrgent),
         postedDate: data.postedDate ? new Date(data.postedDate) : new Date(),
-        expiryDate: data.expiryDate ? new Date(data.expiryDate) : undefined,
       })
       toast({ title: 'Job posted', description: 'The job was added successfully.' })
-      router.push('/employer')
+      router.push('/employer/jobs')
     } catch (error: any) {
       toast({ variant: 'destructive', title: 'Failed to create job', description: error.message || 'Please try again.' })
     } finally {
@@ -158,230 +220,335 @@ export default function EmployerCreateJobPage() {
   }
 
   return (
-    <div className="container mx-auto p-4 space-y-6">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Create Job Posting</h1>
-          <p className="text-sm text-slate-500">Fill in the fields below to publish a new job listing.</p>
-        </div>
+    <div className="container mx-auto max-w-6xl p-4 space-y-6">
+      <div className="space-y-2">
+        <h1 className="text-3xl font-bold text-slate-900">Google Jobs Posting Form</h1>
+        <p className="text-sm text-slate-600">Enter verified job facts. CareerHunt will generate the structured data automatically.</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Job Details</CardTitle>
+          <CardTitle>1. Job Information</CardTitle>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent className="grid gap-6">
+          <CardContent className="space-y-6">
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="title">Job Title</Label>
-                <Input id="title" placeholder="Senior Software Engineer" {...register('title')} />
-                {errors.title && <p className="text-sm text-destructive">{errors.title.message}</p>}
+              <div className="space-y-2 md:col-span-2">
+                <Label htmlFor="title">Job Title *</Label>
+                <Input id="title" placeholder="Senior Accountant" {...register('title')} />
+                {errors.title && <p className="text-sm text-red-600">{errors.title.message}</p>}
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description">Job Description *</Label>
+              <Textarea id="description" rows={8} placeholder="Add the full original job description here." {...register('description')} />
+              {errors.description && <p className="text-sm text-red-600">{errors.description.message}</p>}
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="space-y-2">
+                <Label htmlFor="employmentType">Employment Type *</Label>
+                <Select id="employmentType" {...register('employmentType')}>
+                  {googleEmploymentTypes.map((type) => (
+                    <option key={type} value={type}>{type.replace(/_/g, ' ')}</option>
+                  ))}
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="workMode">Work Arrangement *</Label>
+                <Select id="workMode" {...register('workMode')}>
+                  <option value="onsite">On-site</option>
+                  <option value="hybrid">Hybrid</option>
+                  <option value="remote">Remote</option>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="category">Category *</Label>
+                <Select id="category" {...register('category')}>
+                  <option value="">Select category</option>
+                  {jobCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-slate-900">2. Company Information</h2>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="companyName">Company Name</Label>
+                <Label htmlFor="companyName">Company Name *</Label>
                 <Input id="companyName" placeholder="Acme Studio" {...register('companyName')} />
-                {errors.companyName && <p className="text-sm text-destructive">{errors.companyName.message}</p>}
+                {errors.companyName && <p className="text-sm text-red-600">{errors.companyName.message}</p>}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="companyWebsite">Company Website</Label>
-                <Input id="companyWebsite" placeholder="https://acme.com" {...register('companyWebsite')} />
-                {errors.companyWebsite && <p className="text-sm text-destructive">{errors.companyWebsite.message}</p>}
+                <Input id="companyWebsite" placeholder="https://example.com" {...register('companyWebsite')} />
               </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-3">
-              <div className="space-y-2">
-                <Label htmlFor="category">Job Category</Label>
-                <Select id="category" {...register('category')}>
-                  <option value="">Select category</option>
-                  {jobCategories.map((cat) => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </Select>
-                {errors.category && <p className="text-sm text-destructive">{errors.category.message}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="employmentType">Employment Type</Label>
-                <Select id="employmentType" {...register('employmentType')}>
-                  <option value="full-time">Full-time</option>
-                  <option value="part-time">Part-time</option>
-                  <option value="contract">Contract</option>
-                  <option value="internship">Internship</option>
-                  <option value="freelance">Freelance</option>
-                </Select>
-                {errors.employmentType && <p className="text-sm text-destructive">{errors.employmentType.message}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="workMode">Work Mode</Label>
-                <Select id="workMode" {...register('workMode')}>
-                  <option value="remote">Remote</option>
-                  <option value="onsite">Onsite</option>
-                  <option value="hybrid">Hybrid</option>
-                </Select>
-                {errors.workMode && <p className="text-sm text-destructive">{errors.workMode.message}</p>}
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-3">
-              <div className="space-y-2">
-                <Label htmlFor="country">Country</Label>
-                <Select id="country" {...register('country')}>
-                  <option value="">Select country</option>
-                  <option value="United Arab Emirates">United Arab Emirates</option>
-                </Select>
-                {errors.country && <p className="text-sm text-destructive">{errors.country.message}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="city">City</Label>
-                <Input id="city" placeholder="Enter city name" {...register('city')} />
-                {errors.city && <p className="text-sm text-destructive">{errors.city.message}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="location">Complete Location</Label>
-                <Input id="location" placeholder="123 Main St, Suite 400" {...register('location')} />
-                {errors.location && <p className="text-sm text-destructive">{errors.location.message}</p>}
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-3">
-              <div className="space-y-2">
-                <Label htmlFor="salaryMin">Salary Min</Label>
-                <Input id="salaryMin" type="number" {...register('salaryMin', { valueAsNumber: true })} />
-                {errors.salaryMin && <p className="text-sm text-destructive">{errors.salaryMin.message}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="salaryMax">Salary Max</Label>
-                <Input id="salaryMax" type="number" {...register('salaryMax', { valueAsNumber: true })} />
-                {errors.salaryMax && <p className="text-sm text-destructive">{errors.salaryMax.message}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="salaryCurrency">Salary Currency</Label>
-                <Input id="salaryCurrency" {...register('salaryCurrency')} />
-                {errors.salaryCurrency && <p className="text-sm text-destructive">{errors.salaryCurrency.message}</p>}
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="summary">Job Summary</Label>
-              <Textarea id="summary" rows={4} {...register('summary')} />
-              {errors.summary && <p className="text-sm text-destructive">{errors.summary.message}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="responsibilities">Responsibilities</Label>
-              <Textarea id="responsibilities" rows={4} placeholder="One item per line" {...register('responsibilities')} />
-              {errors.responsibilities && <p className="text-sm text-destructive">{errors.responsibilities.message}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="requirements">Requirements</Label>
-              <Textarea id="requirements" rows={4} placeholder="One item per line" {...register('requirements')} />
-              {errors.requirements && <p className="text-sm text-destructive">{errors.requirements.message}</p>}
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="preferredQualifications">Preferred Qualifications</Label>
-                <Textarea id="preferredQualifications" rows={3} placeholder="One item per line" {...register('preferredQualifications')} />
+                <Label htmlFor="companyLogo">Company Logo URL</Label>
+                <Input id="companyLogo" placeholder="https://example.com/logo.png" {...register('companyLogo')} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="requiredSkills">Required Skills</Label>
-                <Textarea id="requiredSkills" rows={3} placeholder="Comma separated" {...register('requiredSkills')} />
-                {errors.requiredSkills && <p className="text-sm text-destructive">{errors.requiredSkills.message}</p>}
+                <Label htmlFor="companyDescription">Company Description</Label>
+                <Textarea id="companyDescription" rows={3} placeholder="Optional company summary." {...register('companyDescription')} />
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-slate-900">3. Job Location</h2>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <div className="space-y-2">
+                <Label htmlFor="country">Country *</Label>
+                <Select id="country" {...register('country')}>
+                  <option value="">Select country</option>
+                  {countries.map((country) => <option key={country} value={country}>{country}</option>)}
+                </Select>
+                {errors.country && <p className="text-sm text-red-600">{errors.country.message}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="state">State / Province</Label>
+                <Input id="state" placeholder="Dubai" {...register('state')} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="city">City *</Label>
+                <Input id="city" placeholder="Dubai" {...register('city')} />
+                {selectedWorkMode === 'remote' && <p className="text-xs text-slate-500">Leave blank if the role is remote worldwide.</p>}
+                {errors.city && <p className="text-sm text-red-600">{errors.city.message}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="postalCode">Postal Code</Label>
+                <Input id="postalCode" placeholder="00000" {...register('postalCode')} />
+              </div>
+            </div>
+
+            {selectedWorkMode !== 'remote' && (
+              <div className="space-y-2">
+                <Label htmlFor="address">Street Address</Label>
+                <Input id="address" placeholder="123 Business Bay, Dubai" {...register('address')} />
+              </div>
+            )}
+
+            {selectedWorkMode === 'remote' && (
+              <div className="space-y-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <div className="space-y-2">
+                  <Label htmlFor="eligibleApplicantLocation">Eligible Applicant Location *</Label>
+                  <Select id="eligibleApplicantLocation" {...register('eligibleApplicantLocation')}>
+                    <option value="Worldwide">Worldwide</option>
+                    <option value="Specific Country">Specific Country</option>
+                    <option value="Specific Countries">Specific Countries</option>
+                  </Select>
+                </div>
+                {watch('eligibleApplicantLocation') !== 'Worldwide' && (
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="eligibleApplicantCountry">Country</Label>
+                      <Select id="eligibleApplicantCountry" {...register('eligibleApplicantCountry')}>
+                        <option value="">Select country</option>
+                        {countries.map((country) => <option key={country} value={country}>{country}</option>)}
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="eligibleApplicantCountries">Countries (optional)</Label>
+                      <Input id="eligibleApplicantCountries" placeholder="USA, UAE, UK" {...register('eligibleApplicantCountries')} />
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-slate-900">4. Salary</h2>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-4">
+              <div className="space-y-2">
+                <Label htmlFor="salaryAvailable">Salary Available? *</Label>
+                <Select id="salaryAvailable" {...register('salaryAvailable')}>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                  <option value="not-disclosed">Not disclosed</option>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="salaryMin">Minimum Salary</Label>
+                <Input id="salaryMin" type="number" min={0} {...register('salaryMin')} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="salaryMax">Maximum Salary</Label>
+                <Input id="salaryMax" type="number" min={0} {...register('salaryMax')} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="salaryCurrency">Currency</Label>
+                <Input id="salaryCurrency" placeholder="AED" {...register('salaryCurrency')} />
+              </div>
+            </div>
+
+            {selectedSalaryAvailable === 'yes' && (
+              <div className="space-y-2">
+                <Label htmlFor="salaryPeriod">Salary Period</Label>
+                <Select id="salaryPeriod" {...register('salaryPeriod')}>
+                  {googleSalaryPeriods.map((period) => <option key={period} value={period}>{period}</option>)}
+                </Select>
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-slate-900">5. Experience</h2>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="experienceRequired">Experience Required</Label>
+                <Input id="experienceRequired" placeholder="2–4 years" {...register('experienceRequired')} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="experienceLevel">Experience Level</Label>
+                <Select id="experienceLevel" {...register('experienceLevel')}>
+                  {googleExperienceLevels.map((level) => <option key={level} value={level.toLowerCase().replace(/\s+/g, '-').replace(/-+$/, '') === 'not-specified' ? 'not-specified' : level.toLowerCase().replace(/\s+/g, '-')}>{level}</option>)}
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-slate-900">6. Education</h2>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="educationRequired">Education Required</Label>
+              <Select id="educationRequired" {...register('educationRequired')}>
+                {googleEducationLevelOptions.map((option) => (
+                  <option key={option} value={option.toLowerCase().replace(/[^a-z]+/g, '-').replace(/-+$/, '') === 'not-specified' ? 'not-specified' : option.toLowerCase().replace(/[^a-z]+/g, '-').replace(/-+$/, '')}>{option}</option>
+                ))}
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-slate-900">7. Skills</h2>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="requiredSkills">Required Skills</Label>
+              <Textarea id="requiredSkills" rows={4} placeholder="Excel
+Accounting
+Financial Reporting
+Communication" {...register('requiredSkills')} />
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-slate-900">8. Responsibilities</h2>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="responsibilities">Key Responsibilities</Label>
+              <Textarea id="responsibilities" rows={6} placeholder="Prepare financial reports
+Maintain accounting records
+Reconcile accounts" {...register('responsibilities')} />
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-slate-900">9. Qualifications</h2>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="requirements">Required Qualifications</Label>
+              <Textarea id="requirements" rows={6} placeholder="Bachelor's degree in accounting
+At least 2 years experience
+Strong analytical skills" {...register('requirements')} />
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-slate-900">10. Benefits</h2>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="benefits">Benefits</Label>
-              <Textarea id="benefits" rows={3} placeholder="One item per line" {...register('benefits')} />
+              <Textarea id="benefits" rows={4} placeholder="Health insurance
+Annual leave
+Transport allowance" {...register('benefits')} />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="marketContext">Market Context</Label>
-              <Textarea id="marketContext" rows={4} placeholder="Add market context such as salary trends, hiring demand, or visa sponsorship likelihood." {...register('marketContext')} />
-              <p className="text-sm text-slate-500">This will be displayed on the public job detail page to help candidates understand the opportunity context.</p>
+              <h2 className="text-xl font-semibold text-slate-900">11. Application</h2>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <Label htmlFor="isOriginalContent" className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                <input id="isOriginalContent" type="checkbox" className="h-4 w-4 rounded border-slate-300" {...register('isOriginalContent')} />
-                Mark this listing as original content (allow indexing)
-              </Label>
-              <p className="mt-2 text-sm text-slate-500">Leave unchecked to render a noindex tag until the description is rewritten with original content.</p>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="applicationMethod">Primary Application Method</Label>
+                <Select id="applicationMethod" {...register('applicationMethod')}>
+                  <option value="company-website">Company Website</option>
+                  <option value="email">Email</option>
+                  <option value="careerhunt-application">CareerHunt Application</option>
+                </Select>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="space-y-2">
+                  <Label htmlFor="applicationUrl">Application URL</Label>
+                  <Input id="applicationUrl" placeholder="https://company.com/careers" {...register('applicationUrl')} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="applicationEmail">Application Email</Label>
+                  <Input id="applicationEmail" type="email" placeholder="recruitment@company.com" {...register('applicationEmail')} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="whatsappNumber">WhatsApp URL / Number</Label>
+                  <Input id="whatsappNumber" placeholder="https://wa.me/971500000000 or +971500000000" {...register('whatsappNumber')} />
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-500">Add any of the contact methods that apply. Applicants can use the website, email, and WhatsApp link together.</p>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-slate-900">12. Dates and Vacancy</h2>
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="experienceLevel">Experience Level</Label>
-                <Select id="experienceLevel" {...register('experienceLevel')}>
-                  <option value="entry">Entry</option>
-                  <option value="junior">Junior</option>
-                  <option value="mid">Mid</option>
-                  <option value="senior">Senior</option>
-                  <option value="lead">Lead</option>
-                  <option value="executive">Executive</option>
-                </Select>
+                <Label htmlFor="postedDate">Date Posted</Label>
+                <Input id="postedDate" type="date" {...register('postedDate')} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="educationLevel">Education Level</Label>
-                <Select id="educationLevel" {...register('educationLevel')}>
-                  <option value="high-school">High School</option>
-                  <option value="bachelors">Bachelors</option>
-                  <option value="masters">Masters</option>
-                  <option value="phd">PhD</option>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="vacancies">Number Of Vacancies</Label>
-                <Input id="vacancies" type="number" {...register('vacancies', { valueAsNumber: true })} />
-                {errors.vacancies && <p className="text-sm text-destructive">{errors.vacancies.message}</p>}
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="applicationEmail">Application Email</Label>
-                <Input id="applicationEmail" type="email" {...register('applicationEmail')} />
-                {errors.applicationEmail && <p className="text-sm text-destructive">{errors.applicationEmail.message}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="whatsappNumber">WhatsApp Number</Label>
-                <Input id="whatsappNumber" placeholder="+971501234567" {...register('whatsappNumber')} />
-                {errors.whatsappNumber && <p className="text-sm text-destructive">{errors.whatsappNumber.message}</p>}
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-1">
-              <div className="space-y-2">
-                <Label htmlFor="applicationUrl">Application URL</Label>
-                <Input id="applicationUrl" type="url" {...register('applicationUrl')} />
-                {errors.applicationUrl && <p className="text-sm text-destructive">{errors.applicationUrl.message}</p>}
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="applicationDeadline">Application Deadline</Label>
+                <Label htmlFor="applicationDeadline">Application Deadline / Expiry Date</Label>
                 <Input id="applicationDeadline" type="date" {...register('applicationDeadline')} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="companyDescription">Company Description</Label>
-                <Textarea id="companyDescription" rows={3} {...register('companyDescription')} />
+                <Label htmlFor="vacancies">Number of Open Positions</Label>
+                <Input id="vacancies" type="number" min={1} {...register('vacancies')} />
               </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="keywords">Keywords</Label>
-                <Input id="keywords" placeholder="javascript, react, node" {...register('keywords')} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="tags">Tags</Label>
-                <Input id="tags" placeholder="full-stack, remote" {...register('tags')} />
+            <div className="space-y-2">
+              <Label htmlFor="jobReferenceNumber">Job Reference Number</Label>
+              <Input id="jobReferenceNumber" placeholder="REF-2045" {...register('jobReferenceNumber')} />
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <h2 className="text-lg font-semibold text-slate-900">13. Admin-only Source Information</h2>
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="sourceWebsite">Source Website</Label>
+                  <Input id="sourceWebsite" placeholder="https://linkedin.com" {...register('sourceWebsite')} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="sourceUrl">Source URL</Label>
+                  <Input id="sourceUrl" placeholder="https://example.com/careers/..." {...register('sourceUrl')} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="sourceDate">Original Posted Date</Label>
+                  <Input id="sourceDate" type="date" {...register('sourceDate')} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="lastVerifiedAt">Last Verified Date</Label>
+                  <Input id="lastVerifiedAt" type="date" {...register('lastVerifiedAt')} />
+                </div>
               </div>
             </div>
 
@@ -400,10 +567,7 @@ export default function EmployerCreateJobPage() {
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
                 <div className="flex items-center gap-3 text-sm text-slate-700">
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Your job posting is being processed. Please wait while we publish it.</span>
-                </div>
-                <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-200">
-                  <div className="h-full w-full animate-pulse rounded-full bg-slate-900" />
+                  <span>Generating structured data and publishing the job listing.</span>
                 </div>
               </div>
             )}
@@ -413,7 +577,7 @@ export default function EmployerCreateJobPage() {
                 Cancel
               </Button>
               <Button type="submit" className="sm:w-auto" disabled={isSubmitting}>
-                {isSubmitting ? 'Posting...' : 'Post Job'}
+                {isSubmitting ? 'Publishing...' : 'Publish Job'}
               </Button>
             </div>
           </CardContent>

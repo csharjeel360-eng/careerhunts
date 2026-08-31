@@ -7,6 +7,7 @@ import { formatDate, formatLocation, formatSalary, normalizeWebsiteUrl } from '@
 import JobDetailBreadcrumbs from '@/components/jobs/JobDetailBreadcrumbs'
 import JobDetailSeoLinks from '@/components/jobs/JobDetailSeoLinks'
 import MarketContextBlock from '@/components/jobs/MarketContextBlock'
+import { JobCard } from '@/components/jobs/JobCard'
 
 interface JobDetailProps {
   job: any
@@ -39,6 +40,7 @@ export default function JobDetail({ job }: JobDetailProps) {
   const applicationUrl = job.applicationUrl ? normalizeWebsiteUrl(job.applicationUrl) : ''
   const applicationEmail = job.applicationEmail || ''
   const whatsappNumber = job.whatsappNumber || ''
+  const relatedJobs = Array.isArray(job.relatedJobs) ? job.relatedJobs : []
   const whatsappLink = whatsappNumber ? `https://wa.me/${whatsappNumber.replace(/[^\d+]/g, '')}` : ''
   const initials = companyName
     .split(' ')
@@ -105,6 +107,110 @@ export default function JobDetail({ job }: JobDetailProps) {
 
     setApplyNotice('No email address is available for this opportunity at the moment. Please choose another application method.')
   }
+
+  const categoryText = (job.category || '').toString().trim().toLowerCase()
+  const roleTitleText = (job.title || '').toString().trim().toLowerCase()
+
+  const cvPreparationTips = (() => {
+    if (categoryText.includes('account') || categoryText.includes('finance') || roleTitleText.includes('account') || roleTitleText.includes('finance')) {
+      return [
+        'Highlight accounting experience and relevant financial reporting work.',
+        'Mention the accounting software and tools you have used in previous roles.',
+        'List professional certifications or memberships that strengthen your application.',
+        'Include measurable achievements such as reconciliations, reporting improvements, or close-cycle accuracy.'
+      ]
+    }
+
+    if (categoryText.includes('software') || categoryText.includes('developer') || roleTitleText.includes('developer') || roleTitleText.includes('engineer') || roleTitleText.includes('software')) {
+      return [
+        'Highlight the technologies listed in the vacancy and match them to your experience.',
+        'Include relevant projects, case studies, or GitHub/portfolio links where appropriate.',
+        'Show examples of systems you built, improved, or maintained with measurable outcomes.',
+        'Keep the CV focused on the tools, workflows, and problem-solving skills relevant to this role.'
+      ]
+    }
+
+    if (categoryText.includes('sales') || categoryText.includes('marketing') || roleTitleText.includes('sales') || roleTitleText.includes('marketing')) {
+      return [
+        'Emphasise deals, revenue targets, campaigns, or audience growth you have contributed to.',
+        'Match your achievements to the responsibilities and KPIs listed in the vacancy.',
+        'Add client-facing examples that show communication, negotiation, and commercial impact.',
+        'Keep the CV concise and focused on results that support this opportunity.'
+      ]
+    }
+
+    if (categoryText.includes('admin') || categoryText.includes('customer') || categoryText.includes('support') || roleTitleText.includes('administrator') || roleTitleText.includes('customer') || roleTitleText.includes('support')) {
+      return [
+        'Highlight relevant operational, scheduling, or customer service experience.',
+        'Mention tools and systems you have handled confidently in similar roles.',
+        'Show examples of organisation, communication, and problem-solving.',
+        'Keep your CV focused on tasks and outcomes that align with this opportunity.'
+      ]
+    }
+
+    return [
+      'Tailor your CV to the responsibilities and skills listed in this vacancy.',
+      'Highlight relevant experience and measurable results from similar roles.',
+      'Match the wording used in the job description to your experience and achievements.',
+      'Keep your CV clear, concise, and easy for recruiters to scan quickly.'
+    ]
+  })()
+
+  const applicationChecklist = [
+    'Check you meet the experience requirement',
+    'Check required education or qualification',
+    'Update your CV',
+    'Highlight relevant skills',
+    'Review the application deadline',
+    'Apply using the official application method',
+  ].filter((item, index) => {
+    if (index === 0 && !(job.experienceLevel || job.experienceRequired || job.experienceMin || job.experienceMax)) return false
+    if (index === 1 && !(job.educationLevel || job.educationRequired)) return false
+    if (index === 4 && !job.applicationDeadline) return false
+    if (index === 5 && !(applicationUrl || applicationEmail || whatsappLink)) return false
+    return true
+  })
+
+  const importantDetails = [
+    ...(workMode && workMode !== 'Not specified' ? [`${workMode} role`] : []),
+    ...(locationText && locationText !== 'Location not specified' ? [locationText] : []),
+    ...(salaryLabel && !salaryLabel.toLowerCase().includes('not') ? [salaryLabel] : []),
+    ...(job.experienceLevel && job.experienceLevel !== 'not-specified' ? [`${job.experienceLevel.replace('-', ' ')} experience`] : []),
+    ...(job.educationLevel ? [`${educationLevel} education`] : []),
+    ...(job.applicationDeadline ? [`Deadline: ${formatDate(job.applicationDeadline)}`] : []),
+    ...(job.applicationEmail || applicationUrl || whatsappLink ? ['Official application method available'] : []),
+  ]
+
+  const faqItems = [
+    ...(locationText && locationText !== 'Location not specified' ? [{ question: 'Where is this job located?', answer: `This role is based in ${locationText}.` }] : []),
+    ...(workMode && workMode !== 'Not specified' ? [{ question: 'Is this job remote?', answer: `This role is listed as ${workMode}.` }] : []),
+    ...(job.experienceLevel && job.experienceLevel !== 'not-specified' ? [{ question: 'What experience is required?', answer: `The job is listed at ${job.experienceLevel.replace('-', ' ')} level.` }] : []),
+    ...(salaryLabel && !salaryLabel.toLowerCase().includes('not') ? [{ question: 'What salary is offered?', answer: `The role lists ${salaryLabel}.` }] : []),
+    ...(job.educationLevel ? [{ question: 'What education is required?', answer: `The role lists ${educationLevel} as the education requirement.` }] : []),
+    ...(applicationUrl || applicationEmail || whatsappLink ? [{ question: 'How can I apply?', answer: applicationUrl ? 'Use the official application link listed for this role.' : applicationEmail ? `Send your application to ${applicationEmail}.` : 'Use the WhatsApp contact option listed for this role.' }] : []),
+  ]
+
+  const whoThisJobIsFor = (() => {
+    const descriptions: string[] = []
+
+    if (job.experienceLevel && job.experienceLevel !== 'not-specified') {
+      descriptions.push(`candidates with ${job.experienceLevel.replace('-', ' ')}-level experience`)
+    }
+
+    if (job.educationLevel) {
+      descriptions.push(`the relevant ${educationLevel} background`)
+    }
+
+    if (requiredSkills.length) {
+      descriptions.push(`experience with ${requiredSkills.slice(0, 3).join(', ')}`)
+    }
+
+    if (!descriptions.length) {
+      return 'This role appears suited to candidates who can match the experience and skills described in the listing and are comfortable applying through the stated application method.'
+    }
+
+    return `This role appears best suited to candidates who have ${descriptions.join(', ')} and can clearly show how their background matches the responsibilities described in the vacancy.`
+  })()
 
   return (
     <section className="bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)] py-6 sm:py-10 lg:py-14">
@@ -229,6 +335,45 @@ export default function JobDetail({ job }: JobDetailProps) {
                 )}
               </div>
 
+              <div className="rounded-2xl border border-sky-200 bg-sky-50 p-4">
+                <h3 className="text-base font-semibold text-slate-900">CV Preparation Tips</h3>
+                <p className="mt-1 text-sm text-slate-600">General CareerHunt guidance only — this is not an employer requirement.</p>
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-700">
+                  {cvPreparationTips.map((tip) => <li key={tip}>{tip}</li>)}
+                </ul>
+              </div>
+
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
+                <h3 className="text-base font-semibold text-slate-900">Who This Job Is For</h3>
+                <p className="mt-2 text-sm leading-7 text-slate-700">{whoThisJobIsFor}</p>
+              </div>
+
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+                <h3 className="text-base font-semibold text-slate-900">Application Checklist</h3>
+                <ul className="mt-3 space-y-2 text-sm text-slate-700">
+                  {applicationChecklist.map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="mt-1 inline-block h-2.5 w-2.5 rounded-full bg-emerald-600" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {faqItems.length ? (
+                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                  <h3 className="text-base font-semibold text-slate-900">Frequently Asked Questions</h3>
+                  <div className="mt-3 space-y-3">
+                    {faqItems.map(({ question, answer }) => (
+                      <div key={question} className="border-b border-slate-200 pb-3 last:border-b-0 last:pb-0">
+                        <p className="text-sm font-semibold text-slate-900">{question}</p>
+                        <p className="mt-1 text-sm leading-6 text-slate-600">{answer}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+
               <div>
                 <h3 className="mb-2 text-sm font-semibold text-slate-900">Benefits</h3>
                 {benefits.length ? (
@@ -265,8 +410,35 @@ export default function JobDetail({ job }: JobDetailProps) {
                 </div>
               </div>
 
+              {importantDetails.length ? (
+                <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4">
+                  <h3 className="text-sm font-semibold text-slate-900">Important Job Details</h3>
+                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-slate-700">
+                    {importantDetails.map((detail) => <li key={detail}>{detail}</li>)}
+                  </ul>
+                </div>
+              ) : null}
+
             </div>
           </div>
+
+          {relatedJobs.length ? (
+            <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sky-700">Related roles</p>
+                  <h3 className="mt-1 text-lg font-semibold text-slate-900">More opportunities you may like</h3>
+                </div>
+                <Link href="/jobs" className="text-sm font-semibold text-sky-700">View all jobs</Link>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {relatedJobs.slice(0, 6).map((relatedJob: any) => (
+                  <JobCard key={relatedJob._id || relatedJob.slug} job={relatedJob} variant="latest" />
+                ))}
+              </div>
+            </div>
+          ) : null}
 
           {isApplyModalOpen ? (
             <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/70 px-3 py-6">

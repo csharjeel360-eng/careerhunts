@@ -1,8 +1,13 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 
 export const SITE_URL = 'https://careerhunt.online'
 export const SITE_HOSTNAME = 'careerhunt.online'
 const SITE_NAME = 'CareerHunt'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+}
 
 export function getCanonicalUrl(path: string) {
   const normalizedPath = typeof path === 'string' ? path.trim() : ''
@@ -212,10 +217,6 @@ export function getDefaultMetadata(): Metadata {
     authors: [{ name: 'CareerHunt' }],
     creator: 'CareerHunt',
     publisher: 'CareerHunt',
-    viewport: {
-      width: 'device-width',
-      initialScale: 1,
-    },
     formatDetection: {
       email: false,
       address: false,
@@ -387,48 +388,38 @@ function mapEducationRequirements(value?: string) {
 }
 
 export function generateJobSchema(job: any) {
-  // CRITICAL: Only generate JobPosting schema for active jobs
-  // Return empty schema for expired or inactive jobs
-  if (job.status && job.status !== 'active') {
+  const activeStatus = (job.jobStatus || job.status || 'active').toString().toLowerCase()
+
+  if (['expired', 'filled', 'paused', 'removed', 'inactive'].includes(activeStatus)) {
     return {
       '@context': 'https://schema.org',
       '@type': 'JobPosting',
       title: job.title || '',
-      description: 'This job posting is no longer available.',
-      url: `${SITE_URL}/jobs/${job.slug}`,
-      // Do NOT include datePosted, validThrough, or hiring details for expired jobs
+      description: 'This job posting is no longer active.',
+      url: `${SITE_URL}/jobs/${job.slug || ''}`,
     }
   }
 
   const companyName = job.companyId?.name || job.companyName || 'Company'
   const companyWebsite = job.companyWebsite || job.companyId?.website || ''
   const companyLogo = job.companyLogo || job.companyId?.logo || ''
-  const description = stripHtml(job.summary || job.description || '')
+  const description = stripHtml(job.summary || job.description || job.requirements?.join(' ') || '')
   const postedDate = normalizeDateOnly(job.postedDate || job.createdAt)
-  
-  // Only use expiryDate or applicationDeadline if they're in the future
+
   let validThrough: string | undefined
-  if (job.expiryDate) {
-    const expiryTime = new Date(job.expiryDate).getTime()
-    const now = Date.now()
-    if (expiryTime > now) {
-      validThrough = normalizeDate(job.expiryDate)
-    }
-  } else if (job.applicationDeadline) {
-    const deadlineTime = new Date(job.applicationDeadline).getTime()
-    const now = Date.now()
-    if (deadlineTime > now) {
-      validThrough = normalizeDate(job.applicationDeadline)
+  const rawDeadline = job.validThrough || job.expiryDate || job.applicationDeadline
+  if (rawDeadline) {
+    const deadlineTime = new Date(rawDeadline).getTime()
+    if (!Number.isNaN(deadlineTime) && deadlineTime > Date.now()) {
+      validThrough = normalizeDate(rawDeadline)
     }
   }
-  // Do NOT generate a fake future date if validThrough is not provided
-  
+
   const salaryCurrency = job.salaryCurrency || 'USD'
-  const salaryPeriod = job.salaryPeriod || 'YEAR'
+  const salaryPeriod = (job.salaryPeriod || 'year').toString().toLowerCase()
   const salaryMin = job.salaryMin ?? job.salary?.min
   const salaryMax = job.salaryMax ?? job.salary?.max
-  
-  // Only include baseSalary if actual salary values exist
+
   const baseSalary = (salaryMin !== undefined && salaryMin !== null) || (salaryMax !== undefined && salaryMax !== null) ? {
     '@type': 'MonetaryAmount',
     currency: salaryCurrency,
@@ -441,20 +432,45 @@ export function generateJobSchema(job: any) {
     },
   } : undefined
 
-  const address = {
-    '@type': 'PostalAddress',
-    ...(job.streetAddress ? { streetAddress: job.streetAddress } : {}),
-    ...(job.city ? { addressLocality: normalizeLocationValue(job.city) } : {}),
-    ...(job.state || job.region ? { addressRegion: job.state || job.region } : {}),
-    ...(job.postalCode ? { postalCode: job.postalCode } : {}),
-    ...(job.country ? { addressCountry: job.country } : { addressCountry: 'AE' }),
+  const workMode = (job.workMode || 'not-specified').toString().toLowerCase()
+  const locationCountry = normalizeLocationValue(job.country || 'AE')
+  const locationCity = normalizeLocationValue(job.city)
+  const stateText = normalizeLocationValue(job.state)
+  const eligibleApplicantLocation = normalizeLocationValue(job.eligibleApplicantLocation || job.applicantLocationRequirements || (workMode === 'remote' ? 'Worldwide' : locationCountry))
+
+  const jobLocation: Record<string, any> = {
+    '@type': 'Place',
+  }
+
+  if (workMode === 'remote') {
+    jobLocation['@type'] = 'Place'
+    jobLocation.jobLocationType = 'TELECOMMUTE'
+    if (eligibleApplicantLocation) {
+      jobLocation.applicantLocationRequirements = {
+        '@type': 'Country',
+        name: eligibleApplicantLocation === 'Worldwide' ? 'Worldwide' : eligibleApplicantLocation,
+      }
+    }
+  } else {
+    const address: Record<string, any> = {
+      '@type': 'PostalAddress',
+      ...(job.address ? { streetAddress: job.address } : {}),
+      ...(job.postalCode ? { postalCode: job.postalCode } : {}),
+      ...(locationCity ? { addressLocality: locationCity } : {}),
+      ...(stateText ? { addressRegion: stateText } : {}),
+      ...(locationCountry ? { addressCountry: locationCountry } : {}),
+    }
+
+    if (Object.keys(address).length > 1) {
+      jobLocation.address = address
+    }
   }
 
   const schema: Record<string, any> = {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
     title: job.title || '',
-    description,
+    ...(description ? { description } : {}),
     ...(postedDate ? { datePosted: postedDate } : {}),
     ...(validThrough ? { validThrough } : {}),
     employmentType: normalizeEmploymentType(job.employmentType),
@@ -464,10 +480,7 @@ export function generateJobSchema(job: any) {
       ...(companyWebsite ? { sameAs: companyWebsite } : {}),
       ...(companyLogo ? { logo: companyLogo } : {}),
     },
-    jobLocation: {
-      '@type': 'Place',
-      ...(Object.keys(address).length > 1 ? { address } : {}),
-    },
+    jobLocation,
     ...(baseSalary ? { baseSalary } : {}),
     ...(job.requiredSkills?.length ? { skills: job.requiredSkills } : {}),
     ...(job.requirements?.length ? { qualifications: job.requirements } : {}),
@@ -476,14 +489,17 @@ export function generateJobSchema(job: any) {
     ...(job.educationLevel ? { educationRequirements: mapEducationRequirements(job.educationLevel) } : {}),
     ...(job.experienceLevel ? { experienceRequirements: mapExperienceRequirements(job.experienceLevel) } : {}),
     ...(job.category ? { occupationalCategory: job.category } : {}),
+    ...(job.applicationUrl ? { directApply: true } : {}),
     url: `${SITE_URL}/jobs/${job.slug}`,
     identifier: {
       '@type': 'PropertyValue',
       name: companyName,
       value: job._id || job.slug || job.title,
     },
-    // Only add directApply if the job has an application URL
-    ...(job.applicationUrl ? { directApply: true } : { directApply: false }),
+  }
+
+  if (workMode === 'remote' && !job.applicationUrl && !job.applicationEmail) {
+    schema.directApply = false
   }
 
   return schema
