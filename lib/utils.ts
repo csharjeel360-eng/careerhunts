@@ -21,6 +21,18 @@ export function formatDate(date: string | Date) {
   return `${Math.floor(diffDays / 365)} years ago`
 }
 
+export function formatDisplayDate(date: string | Date) {
+  const d = date instanceof Date ? date : new Date(date)
+
+  if (Number.isNaN(d.getTime())) return 'Date not specified'
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(d)
+}
+
 function normalizeCurrencyCode(currency: string = 'USD') {
   const normalized = typeof currency === 'string' ? currency.trim().toUpperCase() : ''
 

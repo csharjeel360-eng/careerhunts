@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { MapPin, Briefcase, Calendar, Globe, Mail, ExternalLink, Building2, Clock3, Share2, Flag, ArrowLeft, MessageCircle, AlertCircle, X } from 'lucide-react'
-import { formatDate, formatLocation, formatSalary, normalizeWebsiteUrl } from '@/lib/utils'
+import { formatDate, formatDisplayDate, formatLocation, formatSalary, normalizeWebsiteUrl } from '@/lib/utils'
 import JobDetailBreadcrumbs from '@/components/jobs/JobDetailBreadcrumbs'
 import JobDetailSeoLinks from '@/components/jobs/JobDetailSeoLinks'
 import MarketContextBlock from '@/components/jobs/MarketContextBlock'
@@ -42,6 +42,8 @@ export default function JobDetail({ job }: JobDetailProps) {
   const whatsappNumber = job.whatsappNumber || ''
   const relatedJobs = Array.isArray(job.relatedJobs) ? job.relatedJobs : []
   const whatsappLink = whatsappNumber ? `https://wa.me/${whatsappNumber.replace(/[^\d+]/g, '')}` : ''
+  const deadlineDate = job.applicationDeadline || job.validThrough || job.expiryDate || null
+  const deadlineLabel = deadlineDate ? formatDisplayDate(deadlineDate) : 'Deadline not specified'
   const initials = companyName
     .split(' ')
     .map((name: string) => name.charAt(0))
@@ -177,7 +179,7 @@ export default function JobDetail({ job }: JobDetailProps) {
     ...(salaryLabel && !salaryLabel.toLowerCase().includes('not') ? [salaryLabel] : []),
     ...(job.experienceLevel && job.experienceLevel !== 'not-specified' ? [`${job.experienceLevel.replace('-', ' ')} experience`] : []),
     ...(job.educationLevel ? [`${educationLevel} education`] : []),
-    ...(job.applicationDeadline ? [`Deadline: ${formatDate(job.applicationDeadline)}`] : []),
+    ...(job.applicationDeadline ? [`Deadline: ${formatDisplayDate(job.applicationDeadline)}`] : []),
     ...(job.applicationEmail || applicationUrl || whatsappLink ? ['Official application method available'] : []),
   ]
 
@@ -267,6 +269,9 @@ export default function JobDetail({ job }: JobDetailProps) {
               <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">{workMode}</span>
               <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">{salaryLabel}</span>
               <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">Posted {formatDate(job.postedDate)}</span>
+              <span className={`rounded-full border px-3 py-1 text-xs font-medium ${deadlineDate ? 'border-amber-200 bg-amber-50 text-amber-700' : 'border-slate-200 bg-white text-slate-600'}`}>
+                Deadline: {deadlineLabel}
+              </span>
             </div>
             <JobDetailSeoLinks
               city={job.city}
@@ -405,6 +410,7 @@ export default function JobDetail({ job }: JobDetailProps) {
                   <div className="flex items-start gap-2"><Calendar className="mt-0.5 h-4 w-4" /> <span>Experience: {experienceLevel}</span></div>
                   <div className="flex items-start gap-2"><Globe className="mt-0.5 h-4 w-4" /> <span>Education: {educationLevel}</span></div>
                   <div className="flex items-start gap-2"><Clock3 className="mt-0.5 h-4 w-4" /> <span>Vacancies: {job.vacancies ?? 1}</span></div>
+                  <div className="flex items-start gap-2"><Calendar className="mt-0.5 h-4 w-4" /> <span>Deadline: {deadlineLabel}</span></div>
                   <div className="flex items-start gap-2"><Mail className="mt-0.5 h-4 w-4" /> <span>{job.applicationEmail || 'Email not provided'}</span></div>
                   <div className="flex items-start gap-2"><ExternalLink className="mt-0.5 h-4 w-4" /> <span>{job.applicationUrl ? 'External application link available' : 'No external link'}</span></div>
                 </div>

@@ -193,9 +193,8 @@ export default async function HomePage() {
       />
 
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-sky-50 to-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">{/* Hero Section with Full Background Image */}
-          <div className="relative rounded-[24px] border border-slate-200 overflow-hidden h-96 sm:h-[450px] lg:h-[520px]">
-            {/* Background Image */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+          <div className="relative overflow-hidden rounded-[24px] border border-slate-200 h-[420px] sm:h-[450px] lg:h-[520px]">
             <div
               className="absolute inset-0 bg-cover bg-center"
               style={{
@@ -203,23 +202,20 @@ export default async function HomePage() {
                 backgroundPosition: 'center right',
               }}
             />
-            
-            {/* Dark Overlay for Text Readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-900/50 to-transparent" />
-            
-            {/* Content */}
-            <div className="relative z-10 flex flex-col justify-center h-full p-6 sm:p-8 lg:p-12 max-w-2xl">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-900/55 to-transparent" />
+
+            <div className="relative z-10 flex h-full max-w-2xl flex-col justify-center p-5 sm:p-8 lg:p-12">
+              <h1 className="mb-4 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 Find your next job<br />
-                in the <span className="text-sky-300 font-semibold">UAE</span>
+                in the <span className="font-semibold text-sky-300">UAE</span>
               </h1>
-              <p className="text-base sm:text-lg text-slate-100 mb-8 leading-relaxed max-w-lg">
+              <p className="mb-6 max-w-lg text-sm leading-relaxed text-slate-100 sm:text-base lg:text-lg">
                 Dubai · Abu Dhabi · Sharjah — with visa and Golden Visa guidance built in
               </p>
-              
-              {/* Search Bar */}
-              <form action="/jobs" method="get" className="flex flex-col sm:flex-row gap-3 w-full sm:w-fit">
-                <div className="flex flex-1 items-center gap-2 rounded-full border-2 border-slate-200 bg-white px-4 py-3 shadow-md focus-within:border-sky-500 hover:shadow-lg transition">
+
+              <form action="/jobs" method="get" className="flex w-full flex-col gap-3 sm:w-fit sm:flex-row">
+                <div className="flex w-full items-center gap-2 rounded-full border-2 border-slate-200 bg-white px-4 py-3 shadow-md transition hover:shadow-lg focus-within:border-sky-500 sm:min-w-[280px] lg:min-w-[360px]">
                   <Search className="h-5 w-5 text-slate-400" />
                   <input
                     type="text"
@@ -228,17 +224,16 @@ export default async function HomePage() {
                     className="w-full border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
                   />
                 </div>
-                <button type="submit" className="rounded-full bg-sky-600 px-8 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-sky-700 active:scale-95 whitespace-nowrap">
+                <button type="submit" className="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-sky-700 active:scale-95 sm:px-8">
                   Search
                 </button>
               </form>
             </div>
 
-            {/* Stats Badge */}
-            <div className="absolute top-6 right-6 z-20 bg-white rounded-2xl p-5 shadow-lg hover:shadow-xl transition">
+            <div className="absolute right-4 top-4 z-20 rounded-2xl bg-white/95 p-3 shadow-lg sm:right-6 sm:top-6 sm:p-5">
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-sky-600">10,000+</div>
-                <div className="text-xs sm:text-sm text-slate-600 font-medium leading-5">
+                <div className="text-xl font-bold text-sky-600 sm:text-2xl lg:text-3xl">10,000+</div>
+                <div className="text-[10px] font-medium leading-4 text-slate-600 sm:text-xs">
                   <span>Active Jobs</span>
                   <br />
                   <span>in UAE</span>
@@ -348,7 +343,7 @@ export default async function HomePage() {
 
           {/* Features Section */}
           <div className="mt-10 rounded-[24px] border border-slate-200 bg-white p-2 shadow-sm sm:p-3">
-            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+            <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 xl:grid-cols-5">
               {[
                 {
                   icon: Bell,
@@ -383,13 +378,13 @@ export default async function HomePage() {
                     key={index}
                     className="flex items-center gap-3 rounded-[16px] border border-slate-200 bg-white px-4 py-4 transition-all duration-300 hover:border-sky-200 hover:shadow-sm"
                   >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sky-100 text-sky-700">
-                      <Icon className="h-5 w-5" />
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-sky-100 text-sky-700 sm:h-12 sm:w-12">
+                      <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                     </div>
 
                     <div className="min-w-0">
-                      <h3 className="text-[15px] font-bold leading-tight text-slate-900">{feature.title}</h3>
-                      <p className="mt-1 text-xs leading-5 text-slate-600">{feature.description}</p>
+                      <h3 className="text-sm font-bold leading-tight text-slate-900 sm:text-[15px]">{feature.title}</h3>
+                      <p className="mt-1 text-[11px] leading-5 text-slate-600 sm:text-xs">{feature.description}</p>
                     </div>
                   </div>
                 )
@@ -397,18 +392,18 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="mt-8 rounded-[24px] border border-sky-200 bg-gradient-to-r from-sky-50 via-sky-50 to-slate-50 p-5 sm:p-6">
-            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-              <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-600 text-white shadow-sm">
-                  <Briefcase className="h-6 w-6" />
+          <div className="mt-8 rounded-[24px] border border-sky-200 bg-gradient-to-r from-sky-50 via-sky-50 to-slate-50 p-4 sm:p-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-600 text-white shadow-sm sm:h-12 sm:w-12">
+                  <Briefcase className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold leading-tight text-slate-900">
+                  <h3 className="text-xl font-bold leading-tight text-slate-900 sm:text-2xl">
                     Your next opportunity is just a search away
                   </h3>
-                  <p className="mt-1 text-base text-slate-600">
+                  <p className="mt-1 text-sm text-slate-600 sm:text-base">
                     Explore thousands of job openings across the UAE and take the next step in your career.
                   </p>
                 </div>
@@ -416,7 +411,7 @@ export default async function HomePage() {
 
               <Link
                 href="/jobs"
-                className="inline-flex items-center justify-center gap-2 rounded-[14px] bg-sky-600 px-6 py-4 text-base font-semibold text-white shadow-md transition hover:bg-sky-700"
+                className="inline-flex items-center justify-center gap-2 rounded-[14px] bg-sky-600 px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-sky-700 sm:px-6 sm:py-4 sm:text-base"
               >
                 Browse Jobs Now
                 <ArrowRight className="h-4 w-4" />
@@ -426,12 +421,12 @@ export default async function HomePage() {
 
           {/* Salary Guide and Career Resources Section */}
           <div className="mt-12 grid gap-8 lg:grid-cols-2">
-            <div className="rounded-[24px] border border-slate-200 bg-white p-6 sm:p-7">
+            <div className="rounded-[24px] border border-slate-200 bg-white p-5 sm:p-7">
               <div className="mb-5 flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700">
                   <TrendingUp className="h-5 w-5" />
                 </div>
-                <span className="text-xs font-bold uppercase tracking-[0.18em] text-sky-700">Salary guide preview</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-700 sm:text-xs">Salary guide preview</span>
               </div>
 
               <div className="space-y-3">
@@ -439,16 +434,16 @@ export default async function HomePage() {
                   <Link
                     key={item.role}
                     href={item.href}
-                    className="flex items-center justify-between gap-3 rounded-[14px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 transition-all duration-300 hover:border-sky-300 hover:bg-white hover:shadow-sm"
+                    className="flex flex-col items-start justify-between gap-2 rounded-[14px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 transition-all duration-300 hover:border-sky-300 hover:bg-white hover:shadow-sm sm:flex-row sm:items-center"
                   >
                     <span className="font-medium text-slate-700">{item.role}</span>
-                    <span className="whitespace-nowrap font-semibold text-emerald-600">{item.amount}</span>
+                    <span className="font-semibold text-emerald-600">{item.amount}</span>
                   </Link>
                 ))}
               </div>
 
               <div className="mt-8 border-t border-slate-200 pt-7">
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-slate-600">Featured company pages</p>
+                <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-600 sm:text-xs">Featured company pages</p>
                 <div className="space-y-3">
                   {featuredCompanies.map((company) => (
                     <Link
@@ -466,7 +461,7 @@ export default async function HomePage() {
                         </div>
                         <div className="min-w-0">
                           <div className="truncate font-semibold text-slate-900">{company.title}</div>
-                          <div className="mt-1 text-xs leading-5 text-slate-600">{company.desc}</div>
+                          <div className="mt-1 text-[11px] leading-5 text-slate-600 sm:text-xs">{company.desc}</div>
                         </div>
                       </div>
 
@@ -479,12 +474,12 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-[24px] border border-slate-200 bg-white p-6 sm:p-7">
+            <div className="rounded-[24px] border border-slate-200 bg-white p-5 sm:p-7">
               <div className="mb-5 flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700">
                   <BookOpenText className="h-5 w-5" />
                 </div>
-                <span className="text-xs font-bold uppercase tracking-[0.18em] text-sky-700">Featured career guides</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-700 sm:text-xs">Featured career guides</span>
               </div>
 
               <div className="space-y-4">
@@ -510,7 +505,7 @@ export default async function HomePage() {
 
                       <div className="min-w-0">
                         <div className="font-semibold text-slate-900">{item.title}</div>
-                        <div className="mt-1 text-xs leading-5 text-slate-600">
+                        <div className="mt-1 text-[11px] leading-5 text-slate-600 sm:text-xs">
                           {item.excerpt || item.description || 'Helpful guidance for your next career move.'}
                         </div>
                       </div>
