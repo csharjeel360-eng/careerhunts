@@ -13,6 +13,7 @@ export interface ArticleFrontmatter {
   authorName: string
   authorRole: string
   publishDate: string
+  updatedDate?: string
   authorImage: string
   lastVerified: string
   wordCount: number

@@ -44,8 +44,10 @@ const jobSchema = z.object({
   salaryCurrency: z.string().optional().or(z.literal('')),
   salaryPeriod: z.enum(googleSalaryPeriods).optional(),
   description: z.string().min(20, 'Job description is required.'),
+  marketContext: emptyString,
   responsibilities: z.string().min(10, 'List at least one responsibility.'),
   requirements: z.string().min(10, 'List at least one requirement.'),
+  qualifications: emptyString,
   preferredQualifications: emptyString,
   requiredSkills: z.string().min(2, 'Add at least one skill.'),
   benefits: emptyString,
@@ -110,8 +112,10 @@ export default function EmployerCreateJobPage() {
       salaryCurrency: 'AED',
       salaryPeriod: 'YEAR',
       description: '',
+      marketContext: '',
       responsibilities: '',
       requirements: '',
+      qualifications: '',
       preferredQualifications: '',
       requiredSkills: '',
       benefits: '',
@@ -137,7 +141,7 @@ export default function EmployerCreateJobPage() {
       tags: '',
       isFeatured: false,
       isUrgent: false,
-      postedDate: new Date().toISOString(),
+      postedDate: '',
       validThrough: '',
     },
   })
@@ -179,9 +183,12 @@ export default function EmployerCreateJobPage() {
         salaryCurrency,
         salaryPeriod: data.salaryPeriod || 'YEAR',
         description: data.description,
+        marketContext: data.marketContext,
         summary: data.description,
         responsibilities: toArray(data.responsibilities),
         requirements: toArray(data.requirements),
+        qualifications: toArray(data.qualifications || data.requirements || ''),
+        requiredQualifications: toArray(data.qualifications || data.requirements || ''),
         preferredQualifications: toArray(data.preferredQualifications || ''),
         requiredSkills: toArray(data.requiredSkills),
         skills: toArray(data.requiredSkills),
@@ -208,7 +215,7 @@ export default function EmployerCreateJobPage() {
         tags: toArray(data.tags || ''),
         isFeatured: Boolean(data.isFeatured),
         isUrgent: Boolean(data.isUrgent),
-        postedDate: data.postedDate ? new Date(data.postedDate) : new Date(),
+        postedDate: data.postedDate ? new Date(data.postedDate) : undefined,
       })
       toast({ title: 'Job posted', description: 'The job was added successfully.' })
       router.push('/employer/jobs')
@@ -244,6 +251,17 @@ export default function EmployerCreateJobPage() {
               <Label htmlFor="description">Job Description *</Label>
               <Textarea id="description" rows={8} placeholder="Add the full original job description here." {...register('description')} />
               {errors.description && <p className="text-sm text-red-600">{errors.description.message}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="marketContext">Market Context</Label>
+              <Textarea
+                id="marketContext"
+                rows={4}
+                placeholder="E.g. Hiring for growth across the UAE market as we expand our retail operations."
+                {...register('marketContext')}
+              />
+              <p className="text-xs text-slate-500">Optional context about the role, growth stage, market, or hiring strategy.</p>
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
@@ -457,10 +475,10 @@ Reconcile accounts" {...register('responsibilities')} />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="requirements">Required Qualifications</Label>
-              <Textarea id="requirements" rows={6} placeholder="Bachelor's degree in accounting
+              <Label htmlFor="qualifications">Required Qualifications</Label>
+              <Textarea id="qualifications" rows={6} placeholder="Bachelor's degree in accounting
 At least 2 years experience
-Strong analytical skills" {...register('requirements')} />
+Strong analytical skills" {...register('qualifications')} />
             </div>
 
             <div className="space-y-2">
@@ -528,28 +546,6 @@ Transport allowance" {...register('benefits')} />
             <div className="space-y-2">
               <Label htmlFor="jobReferenceNumber">Job Reference Number</Label>
               <Input id="jobReferenceNumber" placeholder="REF-2045" {...register('jobReferenceNumber')} />
-            </div>
-
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <h2 className="text-lg font-semibold text-slate-900">13. Admin-only Source Information</h2>
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="sourceWebsite">Source Website</Label>
-                  <Input id="sourceWebsite" placeholder="https://linkedin.com" {...register('sourceWebsite')} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="sourceUrl">Source URL</Label>
-                  <Input id="sourceUrl" placeholder="https://example.com/careers/..." {...register('sourceUrl')} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="sourceDate">Original Posted Date</Label>
-                  <Input id="sourceDate" type="date" {...register('sourceDate')} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastVerifiedAt">Last Verified Date</Label>
-                  <Input id="lastVerifiedAt" type="date" {...register('lastVerifiedAt')} />
-                </div>
-              </div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">

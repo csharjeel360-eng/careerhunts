@@ -18,6 +18,13 @@ export interface BlogPageCardData {
   updatedAt: string
 }
 
+export const TRENDING_GUIDES = [
+  '/visa/uae-employment-visa-guide',
+  '/salary-guide/software-engineer-dubai-abu-dhabi-2026',
+  '/career-resources/emiratisation-quota-2026-expat-jobseekers',
+  '/career-insights/adnoc-careers-uae-2026',
+] as const
+
 export const BLOG_PAGE_CARDS: BlogPageCardData[] = [
   {
     href: '/al-futtaim-careers-uae',

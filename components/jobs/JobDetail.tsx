@@ -13,6 +13,26 @@ interface JobDetailProps {
   job: any
 }
 
+const normalizeList = (value: unknown): string[] => {
+  if (Array.isArray(value)) {
+    return value
+      .flatMap((entry) => typeof entry === 'string' ? entry.split(/[\n,]+/) : [])
+      .map((entry) => entry.trim())
+      .filter(Boolean)
+  }
+
+  if (typeof value === 'string') {
+    return value
+      .split(/[\n,]+/)
+      .map((entry) => entry.trim())
+      .filter(Boolean)
+  }
+
+  return []
+}
+
+const normalizeSkillList = (value: unknown): string[] => normalizeList(value)
+
 export default function JobDetail({ job }: JobDetailProps) {
   const [shareMessage, setShareMessage] = useState('')
   const [showReportNotice, setShowReportNotice] = useState(false)
@@ -31,10 +51,11 @@ export default function JobDetail({ job }: JobDetailProps) {
   const salaryLabel = formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)
   const experienceLevel = job.experienceLevel ? job.experienceLevel.replace('-', ' ') : 'Not specified'
   const educationLevel = job.educationLevel ? job.educationLevel.replace('-', ' ') : 'Not specified'
-  const responsibilities = Array.isArray(job.responsibilities) ? job.responsibilities : []
-  const requirements = Array.isArray(job.requirements) ? job.requirements : []
-  const preferredQualifications = Array.isArray(job.preferredQualifications) ? job.preferredQualifications : []
-  const requiredSkills = Array.isArray(job.requiredSkills) ? job.requiredSkills : []
+  const responsibilities = normalizeList(job.responsibilities)
+  const requirements = normalizeList(job.requirements)
+  const qualifications = normalizeList(job.qualifications ?? job.requiredQualifications ?? job.requirements)
+  const preferredQualifications = normalizeList(job.preferredQualifications)
+  const requiredSkills = normalizeSkillList(job.requiredSkills ?? job.skills)
   const benefits = Array.isArray(job.benefits) ? job.benefits : []
   const summary = job.summary || job.description || 'No summary provided yet.'
   const applicationUrl = job.applicationUrl ? normalizeWebsiteUrl(job.applicationUrl) : ''
@@ -173,16 +194,6 @@ export default function JobDetail({ job }: JobDetailProps) {
     return true
   })
 
-  const importantDetails = [
-    ...(workMode && workMode !== 'Not specified' ? [`${workMode} role`] : []),
-    ...(locationText && locationText !== 'Location not specified' ? [locationText] : []),
-    ...(salaryLabel && !salaryLabel.toLowerCase().includes('not') ? [salaryLabel] : []),
-    ...(job.experienceLevel && job.experienceLevel !== 'not-specified' ? [`${job.experienceLevel.replace('-', ' ')} experience`] : []),
-    ...(job.educationLevel ? [`${educationLevel} education`] : []),
-    ...(job.applicationDeadline ? [`Deadline: ${formatDisplayDate(job.applicationDeadline)}`] : []),
-    ...(job.applicationEmail || applicationUrl || whatsappLink ? ['Official application method available'] : []),
-  ]
-
   const faqItems = [
     ...(locationText && locationText !== 'Location not specified' ? [{ question: 'Where is this job located?', answer: `This role is based in ${locationText}.` }] : []),
     ...(workMode && workMode !== 'Not specified' ? [{ question: 'Is this job remote?', answer: `This role is listed as ${workMode}.` }] : []),
@@ -315,6 +326,17 @@ export default function JobDetail({ job }: JobDetailProps) {
               </div>
 
               <div>
+                <h3 className="mb-2 text-sm font-semibold text-slate-900">Required Qualifications</h3>
+                {qualifications.length ? (
+                  <ul className="list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600">
+                    {qualifications.map((item: string) => <li key={item}>{item}</li>)}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-slate-500">No required qualifications specified.</p>
+                )}
+              </div>
+
+              <div>
                 <h3 className="mb-2 text-sm font-semibold text-slate-900">Preferred qualifications</h3>
                 {preferredQualifications.length ? (
                   <ul className="list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600">
@@ -329,10 +351,13 @@ export default function JobDetail({ job }: JobDetailProps) {
                 <h3 className="mb-2 text-sm font-semibold text-slate-900">Required skills</h3>
                 {requiredSkills.length ? (
                   <div className="flex flex-wrap gap-2">
-                    {requiredSkills.map((item: string) => (
-                      <Link key={item} href={`/jobs?skill=${encodeURIComponent(item)}`} className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700 transition hover:bg-slate-200">
+                    {requiredSkills.map((item: string, index: number) => (
+                      <span
+                        key={`${item}-${index}`}
+                        className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700"
+                      >
                         {item}
-                      </Link>
+                      </span>
                     ))}
                   </div>
                 ) : (
@@ -415,15 +440,6 @@ export default function JobDetail({ job }: JobDetailProps) {
                   <div className="flex items-start gap-2"><ExternalLink className="mt-0.5 h-4 w-4" /> <span>{job.applicationUrl ? 'External application link available' : 'No external link'}</span></div>
                 </div>
               </div>
-
-              {importantDetails.length ? (
-                <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4">
-                  <h3 className="text-sm font-semibold text-slate-900">Important Job Details</h3>
-                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-slate-700">
-                    {importantDetails.map((detail) => <li key={detail}>{detail}</li>)}
-                  </ul>
-                </div>
-              ) : null}
 
             </div>
           </div>

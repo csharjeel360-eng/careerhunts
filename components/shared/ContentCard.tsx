@@ -1,7 +1,8 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, BookOpenText, Briefcase, DollarSign, FileText } from 'lucide-react'
 
-export type ContentCardVariant = 'guide' | 'salary' | 'visa'
+export type ContentCardVariant = 'guide' | 'salary' | 'visa' | 'resources'
 
 interface ContentCardRow {
   label: string
@@ -43,7 +44,21 @@ const variantStyles = {
     border: 'border-[hsla(var(--border),0.5)] dark:border-slate-800',
     surface: 'bg-white dark:bg-slate-950',
     footer: 'border-[hsla(var(--border),0.2)] dark:border-slate-800'
+  },
+  resources: {
+    pill: 'bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-200',
+    body: 'text-slate-600 dark:text-slate-400',
+    border: 'border-[hsla(var(--border),0.5)] dark:border-slate-800',
+    surface: 'bg-white dark:bg-slate-950',
+    footer: 'border-[hsla(var(--border),0.2)] dark:border-slate-800'
   }
+} as const
+
+const categoryIcons = {
+  guide: Briefcase,
+  salary: DollarSign,
+  visa: FileText,
+  resources: BookOpenText,
 } as const
 
 function getReadTime(text?: string, fallback?: string) {
@@ -87,62 +102,99 @@ export default function ContentCard({
   rows
 }: ContentCardProps) {
   const styles = variantStyles[variant]
-  const footerLabel = publishedAt
-    ? `Published ${formatDate(publishedAt)}`
-    : updatedAt
-      ? `Last updated ${formatDate(updatedAt)}`
-      : 'Published recently'
+  const Icon = categoryIcons[variant] ?? Briefcase
+  const publishedDate = formatDate(publishedAt)
+  const updatedDate = formatDate(updatedAt)
+  const footerLabel = publishedDate && updatedDate
+    ? 'Updated recently'
+    : publishedDate
+      ? 'Published recently'
+      : updatedDate
+        ? 'Updated recently'
+        : 'New article'
   const displayReadTime = getReadTime(description, readTime)
-  const isAuthorRowVisible = variant === 'guide' || variant === 'visa'
+  const isAuthorRowVisible = variant === 'guide' || variant === 'visa' || variant === 'resources'
 
   return (
     <Link
       href={href}
-      className={`group flex h-full flex-col rounded-[12px] border border-[0.5px] ${styles.border} ${styles.surface} p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md`}
+      className={`group relative flex h-full flex-col overflow-hidden rounded-[18px] border border-slate-200/80 bg-white p-4 shadow-[0_8px_22px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_14px_30px_rgba(14,116,144,0.12)]`}
     >
-      <div className="flex items-center justify-start gap-3">
-        <span className={`inline-flex rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] ${styles.pill}`}>
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-500 via-cyan-400 to-indigo-500" />
+
+      <div className="flex items-center justify-between gap-2 pt-0.5">
+        <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[8px] font-semibold uppercase tracking-[0.16em] ${styles.pill}`}>
+          <Icon className="h-2.5 w-2.5" />
           {category}
+        </span>
+        <span className="rounded-full border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[8px] font-medium text-slate-500">
+          {displayReadTime}
         </span>
       </div>
 
-      <h3 className="mt-4 text-[16px] font-medium leading-7 text-slate-900 line-clamp-2 dark:text-slate-100">
+      <h3 className="mt-2 text-[0.96rem] font-semibold leading-5 text-slate-900 transition-colors duration-200 group-hover:text-sky-700 dark:text-slate-100">
         {title}
       </h3>
 
       {variant === 'salary' ? (
-        <div className="mt-4 overflow-hidden rounded-[10px] border border-slate-200/70 bg-slate-50/70 dark:border-slate-800 dark:bg-slate-900/50">
-          <div className="grid grid-cols-[1fr_auto] gap-4 border-b border-slate-200/70 px-3 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-slate-800 dark:text-slate-400">
-            <span>Role level</span>
+        <div className="mt-4 overflow-hidden rounded-[14px] border border-slate-200 bg-slate-50/80">
+          <div className="grid grid-cols-[1fr_auto] gap-4 border-b border-slate-200 bg-white/70 px-3 py-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+            <span>Role</span>
             <span>Range</span>
           </div>
           {rows?.slice(0, 3).map((row) => (
-            <div key={`${row.label}-${row.value}`} className="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-slate-200/70 px-3 py-3 last:border-b-0 dark:border-slate-800">
-              <span className="text-sm text-slate-700 dark:text-slate-300">{row.label}</span>
-              <span className="text-sm font-medium text-slate-900 dark:text-slate-100">{row.value}</span>
+            <div key={`${row.label}-${row.value}`} className="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-slate-200 px-3 py-3 last:border-b-0">
+              <span className="text-sm text-slate-700">{row.label}</span>
+              <span className="text-sm font-semibold text-slate-900">{row.value}</span>
             </div>
           ))}
         </div>
       ) : (
-        <p className={`mt-4 text-sm leading-7 ${styles.body} line-clamp-2`}>
+        <p className={`mt-2 text-[12.5px] leading-5 ${styles.body} line-clamp-3`}>
           {description}
         </p>
       )}
 
+      <div className="mt-2.5 flex items-center gap-1 overflow-hidden border-t border-slate-200 pt-2">
+        {publishedDate && (
+          <span className="inline-flex min-w-0 items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[7.5px] font-semibold uppercase tracking-[0.12em] text-emerald-700 whitespace-nowrap">
+            Publish {publishedDate}
+          </span>
+        )}
+        {updatedDate && (
+          <span className="inline-flex min-w-0 items-center rounded-full border border-sky-200 bg-sky-50 px-2 py-0.5 text-[7.5px] font-semibold uppercase tracking-[0.12em] text-sky-700 whitespace-nowrap">
+            Update {updatedDate}
+          </span>
+        )}
+        {!publishedDate && !updatedDate && (
+          <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-[7.5px] font-semibold uppercase tracking-[0.12em] text-slate-600 whitespace-nowrap">
+            {footerLabel}
+          </span>
+        )}
+      </div>
+
       {isAuthorRowVisible ? (
-        <div className="mt-4 flex items-center gap-2 text-[12px] text-slate-500 dark:text-slate-400">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
-            {authorInitials || 'A'}
+        <div className="mt-2.5 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-[10px] text-slate-500">
+            <div className="flex h-5 w-5 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-100">
+              <Image
+                src="/icon.svg"
+                alt="CareerHunt logo"
+                width={20}
+                height={20}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <span className="font-medium text-slate-700">{authorName || 'CareerHunt'}</span>
           </div>
-          <span className="font-medium text-slate-700 dark:text-slate-200">{authorName || 'CareerHunt'}</span>
-          <span>•</span>
-          <span>{displayReadTime}</span>
         </div>
       ) : null}
 
-      <div className={`mt-auto flex items-center justify-between border-t pt-4 text-sm ${styles.footer}`}>
-        <span className="text-slate-500 dark:text-slate-400">{footerLabel}</span>
-        <ArrowRight className="h-4 w-4 text-slate-500 transition group-hover:translate-x-1 dark:text-slate-400" />
+      <div className="mt-2.5 flex items-center justify-between rounded-full border border-slate-200 bg-slate-50 px-2 py-1 text-sm font-medium text-slate-700 transition-colors duration-200 group-hover:border-sky-200 group-hover:bg-sky-50 group-hover:text-sky-700">
+        <span className="text-xs">Read article</span>
+        <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white text-slate-700 shadow-sm transition-transform duration-200 group-hover:translate-x-1 group-hover:text-sky-700">
+          <ArrowRight className="h-3 w-3" />
+        </span>
       </div>
     </Link>
   )

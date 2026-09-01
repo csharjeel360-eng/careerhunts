@@ -420,9 +420,9 @@ export default async function HomePage() {
           </div>
 
           {/* Salary Guide and Career Resources Section */}
-          <div className="mt-12 grid gap-8 lg:grid-cols-2">
-            <div className="rounded-[24px] border border-slate-200 bg-white p-5 sm:p-7">
-              <div className="mb-5 flex items-center gap-3">
+          <div className="mt-8 grid gap-4 sm:mt-12 sm:gap-6 lg:grid-cols-2 lg:gap-8">
+            <div className="rounded-[20px] border border-slate-200 bg-white p-4 sm:rounded-[24px] sm:p-7">
+              <div className="mb-4 flex items-center gap-3 sm:mb-5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700">
                   <TrendingUp className="h-5 w-5" />
                 </div>
@@ -434,7 +434,7 @@ export default async function HomePage() {
                   <Link
                     key={item.role}
                     href={item.href}
-                    className="flex flex-col items-start justify-between gap-2 rounded-[14px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 transition-all duration-300 hover:border-sky-300 hover:bg-white hover:shadow-sm sm:flex-row sm:items-center"
+                    className="flex w-full flex-col items-start justify-between gap-2 rounded-[14px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 transition-all duration-300 hover:border-sky-300 hover:bg-white hover:shadow-sm sm:flex-row sm:items-center"
                   >
                     <span className="font-medium text-slate-700">{item.role}</span>
                     <span className="font-semibold text-emerald-600">{item.amount}</span>
@@ -442,16 +442,16 @@ export default async function HomePage() {
                 ))}
               </div>
 
-              <div className="mt-8 border-t border-slate-200 pt-7">
+              <div className="mt-6 border-t border-slate-200 pt-5 sm:mt-8 sm:pt-7">
                 <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-600 sm:text-xs">Featured company pages</p>
                 <div className="space-y-3">
                   {featuredCompanies.map((company) => (
                     <Link
                       key={company.href}
                       href={company.href}
-                      className="flex items-center justify-between gap-3 rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 transition-all duration-300 hover:border-sky-300 hover:bg-white hover:shadow-sm"
+                      className="flex flex-col items-start justify-between gap-3 rounded-[14px] border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 transition-all duration-300 hover:border-sky-300 hover:bg-white hover:shadow-sm sm:flex-row sm:items-center"
                     >
-                      <div className="flex min-w-0 items-center gap-3">
+                      <div className="flex w-full min-w-0 items-center gap-3 sm:w-auto">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
                           <img
                             src={company.logo}
@@ -459,7 +459,7 @@ export default async function HomePage() {
                             className="h-full w-full object-contain p-1"
                           />
                         </div>
-                        <div className="min-w-0">
+                        <div className="min-w-0 flex-1">
                           <div className="truncate font-semibold text-slate-900">{company.title}</div>
                           <div className="mt-1 text-[11px] leading-5 text-slate-600 sm:text-xs">{company.desc}</div>
                         </div>
@@ -474,15 +474,15 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-[24px] border border-slate-200 bg-white p-5 sm:p-7">
-              <div className="mb-5 flex items-center gap-3">
+            <div className="rounded-[20px] border border-slate-200 bg-white p-4 sm:rounded-[24px] sm:p-7">
+              <div className="mb-4 flex items-center gap-3 sm:mb-5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700">
                   <BookOpenText className="h-5 w-5" />
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-700 sm:text-xs">Featured career guides</span>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 <Link
                   href="/career-insights"
                   className="inline-flex w-full items-center justify-center rounded-[14px] bg-sky-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:bg-sky-700 active:scale-[0.99]"

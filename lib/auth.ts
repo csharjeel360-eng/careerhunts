@@ -26,9 +26,13 @@ const normalizeApiUrl = (url: string) => {
 
 const getDefaultApiUrl = () => {
   if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname
+    if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '0.0.0.0') {
+      return 'http://localhost:5000/api'
+    }
     return `${window.location.origin}/api`
   }
-  return '/api'
+  return 'http://localhost:5000/api'
 }
 
 const resolveApiUrl = (envUrl?: string) => {

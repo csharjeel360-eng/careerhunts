@@ -1,8 +1,26 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getArticleBySlug, getArticleSlugs } from '@/lib/articleData'
+import { getArticleBySlug, getArticleSlugs, getArticlesByCategory } from '@/lib/articleData'
 import { getCanonicalUrl } from '@/lib/seo'
+
+function formatArticleDate(value?: string) {
+  if (!value) return null
+
+  const trimmed = value.trim()
+  if (!trimmed) return null
+
+  const parsed = new Date(trimmed)
+  if (!Number.isNaN(parsed.getTime())) {
+    return new Intl.DateTimeFormat('en', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    }).format(parsed)
+  }
+
+  return trimmed
+}
 
 function renderInlineText(text: string) {
   const textClassName = 'break-words [overflow-wrap:anywhere]'
@@ -244,6 +262,9 @@ export default function CareerInsightsSlugPage({ params }: ArticlePageProps) {
   }
 
   const { frontmatter, content } = article
+  const relatedGuides = getArticlesByCategory(frontmatter.category)
+    .filter((entry) => entry.frontmatter.slug !== frontmatter.slug)
+    .slice(0, 3)
 
   return (
     <section className="overflow-x-hidden bg-[linear-gradient(135deg,_#f8fbff_0%,_#eef6ff_35%,_#f8fafc_100%)] py-6 sm:py-10 lg:py-14">
@@ -264,6 +285,11 @@ export default function CareerInsightsSlugPage({ params }: ArticlePageProps) {
           <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:mt-4 sm:text-base sm:leading-8">
             {frontmatter.metaDescription}
           </p>
+
+          <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-slate-500 sm:mt-6">
+            <span>Published {formatArticleDate(frontmatter.publishDate)}</span>
+            {frontmatter.updatedDate ? <span>Updated {formatArticleDate(frontmatter.updatedDate)}</span> : null}
+          </div>
 
           <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
             {frontmatter.secondaryKeywords.slice(0, 4).map((keyword) => (
@@ -317,6 +343,36 @@ export default function CareerInsightsSlugPage({ params }: ArticlePageProps) {
               </div>
             </aside>
           </div>
+
+          {relatedGuides.length > 0 && (
+            <div className="mt-12 border-t border-slate-200 pt-10">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-2xl font-semibold text-slate-900">Related guides</h2>
+              </div>
+
+              <div className="mt-6 grid gap-4 md:grid-cols-3">
+                {relatedGuides.map((entry) => (
+                  <Link
+                    key={entry.frontmatter.slug}
+                    href={entry.frontmatter.slug}
+                    className="group rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-sky-300 hover:bg-sky-50/40"
+                  >
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                      {entry.frontmatter.category}
+                    </span>
+                    <h3 className="mt-3 text-lg font-semibold text-slate-900 group-hover:text-sky-700">
+                      {entry.frontmatter.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">{entry.frontmatter.metaDescription}</p>
+                    <div className="mt-4 flex items-center gap-2 text-sm font-medium text-sky-700">
+                      <span>Read article</span>
+                      <span aria-hidden="true">→</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

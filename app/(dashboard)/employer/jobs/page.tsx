@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Search, Plus, Edit, Trash2 } from 'lucide-react'
-import { getJobs, deleteJob, getCurrentUser } from '@/lib/api'
+import { getJobs, deleteJob, getCurrentUser, updateJob } from '@/lib/api'
 import { useToast } from '@/components/ui/use-toast'
 
 export default function EmployerJobsPage() {
@@ -17,6 +17,7 @@ export default function EmployerJobsPage() {
   const [jobs, setJobs] = useState<any[]>([])
   const [search, setSearch] = useState('')
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [publishingId, setPublishingId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -60,6 +61,36 @@ export default function EmployerJobsPage() {
       toast({ variant: 'destructive', title: 'Unable to delete job', description: 'Please try again.' })
     } finally {
       setDeletingId(null)
+    }
+  }
+
+  const handlePublishToggle = async (job: any) => {
+    const nextStatus = job.status === 'active' ? 'inactive' : 'active'
+    setPublishingId(job._id)
+
+    try {
+      const updated = await updateJob(job._id, {
+        status: nextStatus,
+        jobStatus: nextStatus,
+      })
+
+      setJobs((current) =>
+        current.map((item) =>
+          item._id === job._id
+            ? { ...item, status: updated?.status || nextStatus, jobStatus: updated?.jobStatus || nextStatus }
+            : item
+        )
+      )
+
+      toast({
+        title: nextStatus === 'active' ? 'Job published' : 'Job unpublished',
+        description: nextStatus === 'active' ? 'The job is now live to applicants.' : 'The job is hidden from public listings.'
+      })
+    } catch (error) {
+      console.error(error)
+      toast({ variant: 'destructive', title: 'Unable to update publish status', description: 'Please try again.' })
+    } finally {
+      setPublishingId(null)
     }
   }
 
@@ -126,6 +157,14 @@ export default function EmployerJobsPage() {
                       <Link href={`/employer/jobs/${job.slug}/edit`}>
                         <Button variant="ghost" size="sm">Edit</Button>
                       </Link>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handlePublishToggle(job)}
+                        disabled={publishingId === job._id}
+                      >
+                        {publishingId === job._id ? 'Updating...' : job.status === 'active' ? 'Unpublish' : 'Publish'}
+                      </Button>
                       <Button
                         variant="ghost"
                         size="sm"
