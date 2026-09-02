@@ -172,6 +172,11 @@ export const updateJob = async (id: string, data: any) => {
   return response.data.data
 }
 
+export const publishJob = async (id: string, status: 'active' | 'inactive' = 'active') => {
+  const response = await api.patch(`/jobs/${id}/publish`, { status })
+  return response.data.data
+}
+
 export const deleteJob = async (id: string) => {
   const response = await api.delete(`/jobs/${id}`)
   return response.data

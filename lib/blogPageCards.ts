@@ -19,13 +19,53 @@ export interface BlogPageCardData {
 }
 
 export const TRENDING_GUIDES = [
+  '/visa/uae-emiratisation-and-visa-rules-2026',
   '/visa/uae-employment-visa-guide',
   '/salary-guide/software-engineer-dubai-abu-dhabi-2026',
   '/career-resources/emiratisation-quota-2026-expat-jobseekers',
   '/career-insights/adnoc-careers-uae-2026',
+  '/career-insights/fab-careers-uae-2026',
 ] as const
 
 export const BLOG_PAGE_CARDS: BlogPageCardData[] = [
+  {
+    href: '/visa/uae-emiratisation-and-visa-rules-2026',
+    title: 'UAE Emiratisation & Visa Rules 2026: What Job Seekers and Employers Need to Know',
+    description: 'A practical 2026 guide to UAE Emiratisation quotas, MoHRE fines, Golden Visa changes, and work permit reforms for both employers and job seekers.',
+    keywords: ['UAE Emiratisation 2026', 'UAE visa rules 2026', 'Golden Visa UAE', 'MoHRE quota'],
+    backgroundImage: '/uae-visa-emiratisation-2026-header.webp',
+    borderClass: 'border-[#0ea5e9]',
+    shadowClass: 'shadow-[0_25px_70px_-24px_rgba(14,165,233,0.24)]',
+    labelText: 'New',
+    labelBgClass: 'bg-[#0ea5e9]',
+    labelTextClass: 'text-white',
+    actionText: 'Read article',
+    category: 'Visa guide',
+    authorName: 'CareerHunt',
+    authorInitials: 'CH',
+    readTime: '10 min read',
+    publishedAt: 'Sep 2, 2026',
+    updatedAt: 'Sep 2, 2026'
+  },
+  {
+    href: '/career-insights/fab-careers-uae-2026',
+    title: 'FAB Careers UAE 2026: Jobs, Salary & How to Apply',
+    description: 'Explore FAB (First Abu Dhabi Bank) careers in the UAE, including open roles, salary ranges, Emiratisation programs, hiring criteria, and how to apply online in 2026.',
+    keywords: ['FAB careers UAE', 'First Abu Dhabi Bank careers', 'FAB jobs UAE', 'FAB salary UAE'],
+    backgroundImage: '/fab-careers-uae-2026-website-feature-section.webp',
+    borderClass: 'border-[#4f46e5]',
+    shadowClass: 'shadow-[0_25px_70px_-24px_rgba(79,70,229,0.22)]',
+    labelText: 'New',
+    labelBgClass: 'bg-[#4f46e5]',
+    labelTextClass: 'text-white',
+    actionText: 'Read article',
+    category: 'Career guide',
+    authorName: 'CareerHunt',
+    authorInitials: 'CH',
+    readTime: '8 min read',
+    publishedAt: 'Sep 1, 2026',
+    updatedAt: 'Sep 1, 2026'
+  },
   {
     href: '/al-futtaim-careers-uae',
     title: 'Al Futtaim Careers UAE 2026: Jobs, Salary & How to Apply',

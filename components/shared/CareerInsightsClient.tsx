@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { Search, Sparkles } from 'lucide-react'
 import { useMemo, useState } from 'react'
@@ -119,6 +120,17 @@ export default function CareerInsightsClient() {
                   className="group relative block overflow-hidden rounded-[20px] border border-sky-100 bg-gradient-to-br from-white via-sky-50/60 to-cyan-50/60 p-4 shadow-[0_10px_28px_rgba(14,116,144,0.08)] transition-all duration-200 hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_18px_36px_rgba(14,116,144,0.12)]"
                 >
                   <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-500 via-cyan-400 to-indigo-500" />
+                  {card.backgroundImage ? (
+                    <div className="mb-3 overflow-hidden rounded-[14px] border border-slate-200 bg-slate-100">
+                      <Image
+                        src={card.backgroundImage}
+                        alt={card.title}
+                        width={640}
+                        height={280}
+                        className="h-28 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                      />
+                    </div>
+                  ) : null}
                   <span className="inline-flex rounded-full bg-sky-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-sky-700">
                     {category}
                   </span>
@@ -167,6 +179,7 @@ export default function CareerInsightsClient() {
                 readTime={card.readTime ?? '6 min read'}
                 publishedAt={card.publishedAt}
                 updatedAt={card.updatedAt}
+                backgroundImage={card.backgroundImage}
               />
             )
           })

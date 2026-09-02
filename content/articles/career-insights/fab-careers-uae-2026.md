@@ -45,9 +45,9 @@ pillars:
   - Hiring Guide
 ---
 
-If you're searching for a stable, well-paying job in the UAE banking sector, First Abu Dhabi Bank — known simply as FAB — is one of the strongest names to have on your radar in 2026. It's the largest bank in the UAE by assets, it's growing its digital and technology teams fast, and it runs one of the most structured hiring processes of any employer in the country. This guide breaks down exactly what FAB does, which roles are open right now, how much you can expect to earn, and the exact steps to apply — so you're not guessing your way through the process.
-
 ![FAB Careers UAE 2026 website feature section highlighting career growth, job stability, benefits, and opportunities at First Abu Dhabi Bank](/fab-careers-uae-2026-website-feature-section.webp)
+
+If you're searching for a stable, well-paying job in the UAE banking sector, First Abu Dhabi Bank — known simply as FAB — is one of the strongest names to have on your radar in 2026. It's the largest bank in the UAE by assets, it's growing its digital and technology teams fast, and it runs one of the most structured hiring processes of any employer in the country. This guide breaks down exactly what FAB does, which roles are open right now, how much you can expect to earn, and the exact steps to apply — so you're not guessing your way through the process.
 
 ## What Is First Abu Dhabi Bank (FAB)?
 

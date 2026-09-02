@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Search, Plus, Edit, Trash2 } from 'lucide-react'
-import { getJobs, deleteJob, getCurrentUser, updateJob } from '@/lib/api'
+import { getJobs, deleteJob, getCurrentUser, publishJob } from '@/lib/api'
 import { useToast } from '@/components/ui/use-toast'
 
 export default function EmployerJobsPage() {
@@ -69,10 +69,7 @@ export default function EmployerJobsPage() {
     setPublishingId(job._id)
 
     try {
-      const updated = await updateJob(job._id, {
-        status: nextStatus,
-        jobStatus: nextStatus,
-      })
+      const updated = await publishJob(job._id, nextStatus)
 
       setJobs((current) =>
         current.map((item) =>

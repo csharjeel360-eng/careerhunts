@@ -20,6 +20,7 @@ interface ContentCardProps {
   readTime?: string
   publishedAt?: string
   updatedAt?: string
+  backgroundImage?: string
   rows?: ContentCardRow[]
 }
 
@@ -99,6 +100,7 @@ export default function ContentCard({
   readTime,
   publishedAt,
   updatedAt,
+  backgroundImage,
   rows
 }: ContentCardProps) {
   const styles = variantStyles[variant]
@@ -121,6 +123,18 @@ export default function ContentCard({
       className={`group relative flex h-full flex-col overflow-hidden rounded-[18px] border border-slate-200/80 bg-white p-4 shadow-[0_8px_22px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_14px_30px_rgba(14,116,144,0.12)]`}
     >
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-500 via-cyan-400 to-indigo-500" />
+
+      {backgroundImage ? (
+        <div className="mb-3 overflow-hidden rounded-[14px] border border-slate-200 bg-slate-100">
+          <Image
+            src={backgroundImage}
+            alt={title}
+            width={640}
+            height={300}
+            className="h-28 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+        </div>
+      ) : null}
 
       <div className="flex items-center justify-between gap-2 pt-0.5">
         <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[8px] font-semibold uppercase tracking-[0.16em] ${styles.pill}`}>

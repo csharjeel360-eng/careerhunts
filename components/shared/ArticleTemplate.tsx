@@ -29,6 +29,9 @@ function formatArticleDate(value?: string) {
 
 function renderInlineMarkdown(text: string) {
   return text
+    .replace(/!\[([^\]]*)\]\((https?:\/\/[^)]+|\/[^)]+)\)/g, (_match, alt, src) => {
+      return `<img src="${src}" alt="${alt}" class="my-6 w-full rounded-2xl border border-slate-200 object-cover shadow-sm" loading="lazy" />`
+    })
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+|\/[^)]+)\)/g, (_match, label, href) => {
       const isExternal = /^https?:\/\//.test(href)
@@ -119,6 +122,20 @@ function renderContent(content: string) {
 
       return `\n\n<div class="overflow-x-auto rounded-2xl border border-slate-200">\n<table class="min-w-[560px] w-full table-auto border-collapse bg-white text-left text-sm sm:min-w-0">${thead}${tbody}</table>\n</div>\n\n`
     })
+  }
+
+  const leadingImageMatch = content.match(/^\s*!\[([^\]]*)\]\(([^)]+)\)\s*/)
+  if (leadingImageMatch) {
+    const [, alt, src] = leadingImageMatch
+    const remainingContent = content.slice(leadingImageMatch[0].length).trim()
+    const remainingSections = remainingContent ? renderContent(remainingContent) : []
+
+    return [
+      <div key="article-hero-image" className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-100 shadow-sm">
+        <img src={src} alt={alt || 'Article feature image'} className="h-64 w-full object-cover sm:h-80 lg:h-[420px]" loading="eager" />
+      </div>,
+      ...remainingSections,
+    ]
   }
 
   content = convertTablesToHtml(content)
