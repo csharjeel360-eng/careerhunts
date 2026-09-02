@@ -33,7 +33,7 @@ const jobSchema = z.object({
   category: z.string().min(1, 'Category is required.'),
   country: z.string().min(1, 'Country is required.'),
   state: emptyString,
-  city: z.string().min(1, 'City is required unless the job is remote worldwide.'),
+  city: z.string(),
   address: emptyString,
   postalCode: emptyString,
   employmentType: z.enum(googleEmploymentTypes),
@@ -75,6 +75,14 @@ const jobSchema = z.object({
   isUrgent: z.boolean().optional(),
   postedDate: z.string().optional(),
   validThrough: emptyString,
+}).superRefine((values, context) => {
+  if (values.workMode !== 'remote' && !values.city.trim()) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['city'],
+      message: 'City is required for on-site and hybrid jobs.',
+    })
+  }
 })
 
 type JobFormValues = z.infer<typeof jobSchema>
@@ -287,6 +295,7 @@ export default function EmployerCreateJobPage() {
                   <option value="">Select category</option>
                   {jobCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
                 </Select>
+                {errors.category && <p className="text-sm text-red-600">{errors.category.message}</p>}
               </div>
             </div>
 
@@ -457,6 +466,7 @@ export default function EmployerCreateJobPage() {
 Accounting
 Financial Reporting
 Communication" {...register('requiredSkills')} />
+              {errors.requiredSkills && <p className="text-sm text-red-600">{errors.requiredSkills.message}</p>}
             </div>
 
             <div className="space-y-2">
@@ -468,10 +478,19 @@ Communication" {...register('requiredSkills')} />
               <Textarea id="responsibilities" rows={6} placeholder="Prepare financial reports
 Maintain accounting records
 Reconcile accounts" {...register('responsibilities')} />
+              {errors.responsibilities && <p className="text-sm text-red-600">{errors.responsibilities.message}</p>}
             </div>
 
             <div className="space-y-2">
               <h2 className="text-xl font-semibold text-slate-900">9. Qualifications</h2>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="requirements">Job Requirements *</Label>
+              <Textarea id="requirements" rows={6} placeholder="2+ years of relevant experience
+Strong communication skills
+Ability to work independently" {...register('requirements')} />
+              {errors.requirements && <p className="text-sm text-red-600">{errors.requirements.message}</p>}
             </div>
 
             <div className="space-y-2">
